@@ -1,0 +1,4 @@
+baseURL = 'https://zachle.info/'
+languageCode = 'en-us'
+title = 'Zach Le'
+theme = 'blowfish'
