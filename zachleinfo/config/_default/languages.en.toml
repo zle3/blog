@@ -13,8 +13,8 @@ copyright = "{ year } Zachary Le"
 description = ""
 
 [author]
-name = "Zachary Le"
+name = "Zach Le"
 image = "img/pfp.png"
 headline = "Systems Administration"
-bio = "Transforming my server into a jet engine"
+bio = "Transforming my server rack into a jet engine"
 links = [ { email = "mailto:hello@zachle.info" }, { github = "https://github.com/zle3" }, { linkedin = "https://linkedin.com/in/zle" }, { youtube = "https://youtube.com/@Zachary-Le" }, { bluesky = "https://bsky.app/profile/zachle.info" } ]
