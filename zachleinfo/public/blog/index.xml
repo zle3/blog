@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Zach Le</title>
-    <link>http://localhost:1313/tags/</link>
-    <description>Recent content in Tags on Zach Le</description>
+    <title>Blogs on Zach Le</title>
+    <link>http://localhost:1313/blog/</link>
+    <description>Recent content in Blogs on Zach Le</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>2024 Zachary Le</copyright>
-    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog</title>
-      <link>http://localhost:1313/tags/blog/</link>
+      <title></title>
+      <link>http://localhost:1313/blog/blog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/blog/</guid>
+      <guid>http://localhost:1313/blog/blog/</guid>
       <description></description>
       
     </item>

@@ -1,10 +1,12 @@
 colorScheme = "zli-ppr-custom"
-defaultAppearance = "light"
+defaultAppearance = "dark"
 autoSwitchAppearance = true
 enableSearch = true
-enableCodeCopy = false
+enableCodeCopy = true
 disableImageOptimization = false
 disableTextInHeader = false
+
+mainSections = ["Blog", "Porfolio"]
 
 [header]
 layout = "basic"
@@ -18,22 +20,22 @@ showScrollToTop = true
 
 [homepage]
 layout = "profile"
-showRecent = false
-showRecentItems = 5
+showRecent = true
+showRecentItems = 6
 showMoreLink = false
 showMoreLinkDest = "/posts"
-cardView = false
+cardView = true
 cardViewScreenWidth = false
 layoutBackgroundBlur = false
 
 [article]
 showDate = true
-showViews = false
-showLikes = false
+showViews = true
+showLikes = true
 showDateOnlyInArticle = false
-showDateUpdated = false
+showDateUpdated = true
 showAuthor = true
-showHero = false
+showHero = true
 layoutBackgroundBlur = true
 layoutBackgroundHeaderSpace = true
 showBreadcrumbs = false
@@ -57,12 +59,12 @@ layoutBackgroundBlur = true
 layoutBackgroundHeaderSpace = true
 showBreadcrumbs = false
 showSummary = false
-showViews = false
-showLikes = false
-showTableOfContents = false
+showViews = true
+showLikes = true
+showTableOfContents = true
 showCards = false
 groupByYear = true
-cardView = false
+cardView = true
 cardViewScreenWidth = false
 constrainItemsWidth = false
 
@@ -73,9 +75,9 @@ excludedKinds = [ "taxonomy", "term" ]
 showTermCount = true
 showHero = false
 showBreadcrumbs = false
-showViews = false
-showLikes = false
-showTableOfContents = false
+showViews = true
+showLikes = true
+showTableOfContents = true
 cardView = false
 
 [term]

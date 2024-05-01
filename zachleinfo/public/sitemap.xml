@@ -15,7 +15,7 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>http://localhost:1313/blog/blog/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -25,12 +25,27 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost:1313/portfolio/</loc>
+    <loc>http://localhost:1313/portfolio/portfolio/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://localhost:1313/resume/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://localhost:1313/why-blog/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://localhost:1313/blog/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://localhost:1313/portfolio/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
