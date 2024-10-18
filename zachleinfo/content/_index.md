@@ -1,6 +1,6 @@
 ---
-title: "Zach Le Intro"
-description: " "
+title: "Zach Le Personal Website"
+description: "A Website Showcasing My Personal Abilities"
 ---
 Hello, my name is Zach and welcome to my blog!
 I'm interested in modern systems administration including cloud technologies, traditional systems administration, and DevOps.
