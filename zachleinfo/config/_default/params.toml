@@ -5,16 +5,15 @@ enableSearch = true
 enableCodeCopy = true
 disableImageOptimization = false
 disableTextInHeader = false
-
-mainSections = ["Blog", "Porfolio"]
+mainSections = [ "Blog", "Porfolio" ]
 
 [header]
 layout = "basic"
 
 [footer]
 showMenu = true
-showCopyright = true
-showThemeAttribution = true
+showCopyright = false
+showThemeAttribution = false
 showAppearanceSwitcher = true
 showScrollToTop = true
 
@@ -91,6 +90,15 @@ cardView = false
 cardViewScreenWidth = false
 
 [firebase]
+showViews = true
+showLikes = true
+firebase.apiKey = "$FIREBASE_API_KEY"
+firebase.authDomain = "$FIREBASE_AUTH_DOMAIN"
+firebase.projectId = "$FIREBASE_PROJECT_ID"
+firebase.storageBucket = "$FIREBASE_STORAGE_BUCKET"
+firebase.messagingSenderId = "$FIREBASE_MESSAGING_SENDER_ID"
+firebase.appId = "$FIREBASE_APP_ID"
+firebase.measurementId = "$FIREBASE_MEASUREMENT_ID"
 
 [fathomAnalytics]
 

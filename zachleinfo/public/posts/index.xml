@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Zach Le</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>http://localhost:64641/posts/</link>
     <description>Recent content in Posts on Zach Le</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>2024 Zachary Le</copyright>
-    <lastBuildDate>Mon, 29 Apr 2024 06:04:58 -0700</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    <atom:link href="http://localhost:64641/posts/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Resumes on Zach Le</title>
+    <link>http://localhost:64641/resume/</link>
+    <description>Recent content in Resumes on Zach Le</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+    <lastBuildDate>Mon, 29 Apr 2024 06:04:58 -0700</lastBuildDate><atom:link href="http://localhost:64641/resume/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

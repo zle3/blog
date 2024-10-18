@@ -1,6 +1,6 @@
 ---
 title: "Configuration"
-date: 2020-08-14
+weight: 4
 draft: false
 description: "All the configuration variables available in Blowfish."
 slug: "configuration"
@@ -43,7 +43,7 @@ Note that the variable names provided in this table use dot notation to simplify
 | `baseURL`                | _Not set_                 | The URL to the root of the website.                                                                                                                                                                                                                                                                                                                                          |
 | `defaultContentLanguage` | `"en"`                    | This value determines the default language of theme components and content. Refer to the [language and i18n](#language-and-i18n) section below for supported language codes.                                                                                                                                                                                                 |
 | `enableRobotsTXT`        | `true`                    | When enabled, a `robots.txt` file will be created in the site root that allows search engines to crawl the entire site. If you prefer to provide your own pre-made `robots.txt`, set to `false` and place your file in the `static` directory. For complete control, you may provide a [custom layout]({{< ref "content-examples#custom-layouts" >}}) to generate this file. |
-| `paginate`               | `10`                      | The number of articles listed on each page of the article listing.                                                                                                                                                                                                                                                                                                           |
+| `pagination.pagerSize`   | `10`                      | The number of articles listed on each page of the article listing.                                                                                                                                                                                                                                                                                                           |
 | `summaryLength`          | `0`                       | The number of words that are used to generate the article summary when one is not provided in the [front matter]({{< ref "front-matter" >}}). A value of `0` will use the first sentence. This value has no effect when summaries are hidden.                                                                                                                                |
 | `outputs.home`           | `["HTML", "RSS", "JSON"]` | The output formats that are generated for the site. Blowfish requires HTML, RSS and JSON for all theme components to work correctly.                                                                                                                                                                                                                                         |
 | `permalinks`             | _Not set_                 | Refer to the [Hugo docs](https://gohugo.io/content-management/urls/#permalinks) for permalink configuration.                                                                                                                                                                                                                                                                 |
@@ -71,9 +71,11 @@ The theme currently supports the following languages by default:
 | Czech                        | `cs`    |
 | German                       | `de`    |
 | English                      | `en`    |
+| Esperanto                    | `eo`    |
 | Spanish (Spain)              | `es`    |
 | Finnish                      | `fi`    |
 | French                       | `fr`    |
+| Galician                     | `gl`    |
 | Hebrew                       | `he`    |
 | Croatian                     | `hr`    |
 | Hungarian                    | `hu`    |
@@ -81,6 +83,7 @@ The theme currently supports the following languages by default:
 | Italian                      | `it`    |
 | Japanese                     | `ja`    |
 | Korean                       | `ko`    |
+| Persian                      | `fa`    |
 | Polish                       | `pl`    |
 | Portuguese (Brazil)          | `pt-br` |
 | Portuguese (Portugal)        | `pt-pt` |
@@ -134,14 +137,16 @@ The default file can be used as a template to create additional languages, or re
 
 <!-- prettier-ignore-end -->
 
-#### Author
-| Name              | Default   | Description                                                                                                                                                                                                                                                                                                                 |
-| ----------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `author.name`     | _Not set_ | The author's name. This will be displayed in article footers, and on the homepage when the profile layout is used.                                                                                                                                                                                                          |
-| `author.image`    | _Not set_ | Path to the image file of the author. The image should be a 1:1 aspect ratio. The image can be placed in the site's `assets/` folder or can be external url.                                                                                                                                                                |
-| `author.headline` | _Not set_ | A Markdown string containing the author's headline. It will be displayed on the profile homepage under the author's name.                                                                                                                                                                                                   |
-| `author.bio`      | _Not set_ | A Markdown string containing the author's bio. It will be displayed in article footers.                                                                                                                                                                                                                                     |
-| `author.links`    | _Not set_ | The links to display alongside the author's details. The config file contains example links which can simply be uncommented to enable. The order that the links are displayed is determined by the order they appear in the array. Custom links can be added by providing corresponding SVG icon assets in `assets/icons/`. |
+##### Author
+| Name                  | Default   | Description                                                                                                                                                                                                                                                                                                                 |
+| --------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params.author.name`         | _Not set_ | The author's name. This will be displayed in article footers, and on the homepage when the profile layout is used.                                                                                                                                                                                                          |
+| `params.author.email`    | _Not set_ | The author's email. This will be used if the reply-via-email functionality is enabled.                                                                                                                                                                                                                                      |
+| `params.author.image`        | _Not set_ | Path to the image file of the author. The image should be a 1:1 aspect ratio. The image can be placed in the site's `assets/` folder or can be external url.                                                                                                                                                                |
+| `params.author.imageQuality` | `96`      | The author's image file will be treated as a "high quality" image to minimize artifacts on the front page. Value range 1-100.                                                                                                                                                                                               |
+| `params.author.headline`     | _Not set_ | A Markdown string containing the author's headline. It will be displayed on the profile homepage under the author's name.                                                                                                                                                                                                   |
+| `params.author.bio`          | _Not set_ | A Markdown string containing the author's bio. It will be displayed in article footers.                                                                                                                                                                                                                                     |
+| `params.author.links`        | _Not set_ | The links to display alongside the author's details. The config file contains example links which can simply be uncommented to enable. The order that the links are displayed is determined by the order they appear in the array. Custom links can be added by providing corresponding SVG icon assets in `assets/icons/`. |
 <!-- prettier-ignore-end -->
 
 ### Menus
@@ -169,12 +174,16 @@ Many of the article defaults here can be overridden on a per article basis by sp
 | `autoSwitchAppearance`          | `true`       | Whether the theme appearance automatically switches based upon the visitor's operating system preference. Set to `false` to force the site to always use the `defaultAppearance`.                                                                                                                             |
 | `enableSearch`                  | `false`      | Whether site search is enabled. Set to `true` to enable search functionality. Note that the search feature depends on the `outputs.home` setting in the [site configuration](#site-configuration) being set correctly.                                                                                        |
 | `enableCodeCopy`                | `false`      | Whether copy-to-clipboard buttons are enabled for `<code>` blocks. The `highlight.noClasses` parameter must be set to `false` for code copy to function correctly. Read more about [other configuration files](#other-configuration-files) below.                                                             |
+| `replyByEmail`                  | `false`      | Whether the reply-by-email link is enabled after post. The `author.email` parameter in `config/_default/languages.en.toml` must be set.                                                                                                                                                                       |
+| `forgejoDefaultServer`          | _Not set_    | The default `server` parameter for the `forgejo` shortcode.                                                                                                                                                                                                                                                   |
+| `giteaDefaultServer`            | _Not set_    | The default `server` parameter for the `gitea` shortcode.                                                                                                                                                                                                                                                     |
 | `mainSections`                  | _Not set_    | The sections that should be displayed in the recent articles list. If not provided the section with the greatest number of articles is used.                                                                                                                                                                  |
 | `showViews`                     | _Not set_    | Whether or not articles and list views are displayed. This requires firebase integrations to be enabled, look below.                                                                                                                                                                                          |
 | `showLikes`                     | _Not set_    | Whether or not articles and list likes are displayed. This requires firebase integrations to be enabled, look below.                                                                                                                                                                                          |
 | `robots`                        | _Not set_    | String that indicates how robots should handle your site. If set, it will be output in the page head. Refer to [Google's docs](https://developers.google.com/search/docs/advanced/robots/robots_meta_tag#directives) for valid values.                                                                        |
 | `disableImageZoom`              | `false`      | Disables image zoom feature across all the images in the site.                                                                                                                                                                                                                                                |
 | `disableImageOptimization`      | `false`      | Disables image resize and optimization features across all the images in the site.                                                                                                                                                                                                                            |
+| `backgroundImageWidth`          | `1200`       | Width (in pixels) to scale background images to.                                                                                                                                                                                                                                                              |
 | `disableTextInHeader`           | `false`      | Disables text in header, useful for logo based headers.                                                                                                                                                                                                                                                       |
 | `defaultBackgroundImage`        | _Not set_    | Default background image for both `background` homepage layout and `background` hero style                                                                                                                                                                                                                    |
 | `defaultFeaturedImage`          | _Not set_    | Default background image for all `featured` images across articles, will be overridden by a local `featured` image.                                                                                                                                                                                           |
@@ -258,6 +267,7 @@ Many of the article defaults here can be overridden on a per article basis by sp
 | `list.showViews`                   | `false`   | Whether or not list views are displayed. This requires firebase integrations to be enabled, look below.                                                                                                                                                        |
 | `list.showLikes`                   | `false`   | Whether or not list likes are displayed. This requires firebase integrations to be enabled, look below.                                                                                                                                                        |
 | `list.showCards`                   | `false`   | Whether or not each article is displayed as a card or as simple inline text.                                                                                                                                                                                   |
+| `list.orderByWeight`               | `false`   | Whether or not articles are sorted by [weights](https://gohugo.io/methods/page/weight/).                                                                                                                                                                       |
 | `list.groupByYear`                 | `true`    | Whether or not articles are grouped by year on list pages.                                                                                                                                                                                                     |
 | `list.cardView`                    | `false`   | Display lists as a gallery of cards.                                                                                                                                                                                                                           |
 | `list.cardViewScreenWidth`         | `false`   | Enhance the width of card galleries in lists to take the full width available.                                                                                                                                                                                 |
@@ -316,11 +326,19 @@ Many of the article defaults here can be overridden on a per article basis by sp
 
 ### Umami Analytics
 
-| Name                       | Default   | Description                                                                                                                                   |
-| -------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `umamiAnalytics.websiteid` | _Not set_ | The site code generated by Umami Analytics for the website. Refer to the [Analytics docs]({{< ref "partials#analytics" >}}) for more details. |
-| `umamiAnalytics.domain`    | _Not set_ | If using a custom domain with Umami Analytics, provide it here to serve `script.js` from the custom domain.                                   |
+| Name                       | Default   | Description                                                                                                                                                                      |
+| -------------------------- |-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `umamiAnalytics.websiteid` | _Not set_ | The site code generated by Umami Analytics for the website. Refer to the [Analytics docs]({{< ref "partials#analytics" >}}) for more details.                                    |
+| `umamiAnalytics.domain`    | _Not set_ | If using a custom domain with Umami Analytics, provide it here to serve `script.js` from the custom domain.                                                                      |
+| `umamiAnalytics.dataDomains`    | _Not set_ | If you want the tracker to only run on specific domains, provide it for your tracker script. This is a comma delimited list of domain names. Such as "yoursite.com,yoursite2.com". |
+| `umamiAnalytics.enableTrackEvent`    | true      | When set to `true` track event will add automatically. If you do not want to add track event, set it to `false`.                                                            |
 
+### Seline Analytics
+
+| Name                              | Default   | Description                                                                                                                               |
+|-----------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `selineAnalytics.token`           | _Not set_ | The token generated by Seline Analytics for the website. Refer to the [Analytics docs]({{< ref "partials#analytics" >}}) for more details. |
+| `selineAnalytics.enableTrackEvent` | true      | When set to `true` track event will add automatically. If you do not want to add track event, set it to `false`.                          |
 
 ### BuyMeACoffee
 

@@ -10,11 +10,12 @@ rtl = false
 dateFormat = "2 January 2006"
 logo = "img/icon.png"
 copyright = "{ year } Zachary Le"
-description = ""
+description = "Zachary Le's portfolio and blog"
+secondaryLogo = "img/icon.png"
 
-[author]
+[params.author]
 name = "Zach Le"
 image = "img/pfp.png"
-headline = "Systems Administration"
+headline = "Systems Administrator"
 bio = "Transforming my server rack into a jet engine"
 links = [ { email = "mailto:hello@zachle.info" }, { github = "https://github.com/zle3" }, { linkedin = "https://linkedin.com/in/zle" }, { youtube = "https://youtube.com/@Zachary-Le" }, { bluesky = "https://bsky.app/profile/zachle.info" } ]

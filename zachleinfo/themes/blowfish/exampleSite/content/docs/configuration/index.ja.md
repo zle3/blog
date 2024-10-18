@@ -1,6 +1,6 @@
 ---
 title: "Configuration"
-date: 2020-08-14
+weight: 4
 draft: false
 description: "All the configuration variables available in Blowfish."
 slug: "configuration"
@@ -43,7 +43,7 @@ Note that the variable names provided in this table use dot notation to simplify
 | `baseURL`                | _Not set_                 | The URL to the root of the website.                                                                                                                                                                                                                                                                                                                                          |
 | `defaultContentLanguage` | `"en"`                    | This value determines the default language of theme components and content. Refer to the [language and i18n](#language-and-i18n) section below for supported language codes.                                                                                                                                                                                                 |
 | `enableRobotsTXT`        | `true`                    | When enabled, a `robots.txt` file will be created in the site root that allows search engines to crawl the entire site. If you prefer to provide your own pre-made `robots.txt`, set to `false` and place your file in the `static` directory. For complete control, you may provide a [custom layout]({{< ref "content-examples#custom-layouts" >}}) to generate this file. |
-| `paginate`               | `10`                      | The number of articles listed on each page of the article listing.                                                                                                                                                                                                                                                                                                           |
+| `pagination.pagerSize`   | `10`                      | The number of articles listed on each page of the article listing.                                                                                                                                                                                                                                                                                                           |
 | `summaryLength`          | `0`                       | The number of words that are used to generate the article summary when one is not provided in the [front matter]({{< ref "front-matter" >}}). A value of `0` will use the first sentence. This value has no effect when summaries are hidden.                                                                                                                                |
 | `outputs.home`           | `["HTML", "RSS", "JSON"]` | The output formats that are generated for the site. Blowfish requires HTML, RSS and JSON for all theme components to work correctly.                                                                                                                                                                                                                                         |
 | `permalinks`             | _Not set_                 | Refer to the [Hugo docs](https://gohugo.io/content-management/urls/#permalinks) for permalink configuration.                                                                                                                                                                                                                                                                 |
@@ -71,6 +71,7 @@ The theme currently supports the following languages by default:
 | Czech                        | `cs`    |
 | German                       | `de`    |
 | English                      | `en`    |
+| Esperanto                    | `eo`    |
 | Spanish (Spain)              | `es`    |
 | Finnish                      | `fi`    |
 | French                       | `fr`    |
@@ -258,6 +259,7 @@ Many of the article defaults here can be overridden on a per article basis by sp
 | `list.showViews`                   | `false`   | Whether or not list views are displayed. This requires firebase integrations to be enabled, look below.                                                                                                                                                        |
 | `list.showLikes`                   | `false`   | Whether or not list likes are displayed. This requires firebase integrations to be enabled, look below.                                                                                                                                                        |
 | `list.showCards`                   | `false`   | Whether or not each article is displayed as a card or as simple inline text.                                                                                                                                                                                   |
+| `list.orderByWeight`               | `false`   | Whether or not articles are sorted by [weights](https://gohugo.io/methods/page/weight/).                                                                                                                                                                       |
 | `list.groupByYear`                 | `true`    | Whether or not articles are grouped by year on list pages.                                                                                                                                                                                                     |
 | `list.cardView`                    | `false`   | Display lists as a gallery of cards.                                                                                                                                                                                                                           |
 | `list.cardViewScreenWidth`         | `false`   | Enhance the width of card galleries in lists to take the full width available.                                                                                                                                                                                 |
@@ -316,10 +318,19 @@ Many of the article defaults here can be overridden on a per article basis by sp
 
 ### Umami Analytics
 
-| Name                       | Default   | Description                                                                                                                                   |
-| -------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `umamiAnalytics.websiteid` | _Not set_ | The site code generated by Umami Analytics for the website. Refer to the [Analytics docs]({{< ref "partials#analytics" >}}) for more details. |
-| `umamiAnalytics.domain`    | _Not set_ | If using a custom domain with Umami Analytics, provide it here to serve `script.js` from the custom domain.                                   |
+| Name                       | Default   | Description                                                                                                                                                                        |
+| -------------------------- | --------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `umamiAnalytics.websiteid` | _Not set_ | The site code generated by Umami Analytics for the website. Refer to the [Analytics docs]({{< ref "partials#analytics" >}}) for more details.                                      |
+| `umamiAnalytics.domain`    | _Not set_ | If using a custom domain with Umami Analytics, provide it here to serve `script.js` from the custom domain.                                                                        |
+| `umamiAnalytics.dataDomains`    | _Not set_ | If you want the tracker to only run on specific domains, provide it for your tracker script. This is a comma delimited list of domain names. Such as "yoursite.com,yoursite2.com". |
+| `umamiAnalytics.enableTrackEvent`    | true      | When set to `true` track event will add automatically. If you do not want to add track event, set it to `false`.                                                            |
+
+### Seline Analytics
+
+| Name                              | Default   | Description                                                                                                                               |
+|-----------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| `selineAnalytics.token`           | _Not set_ | The token generated by Seline Analytics for the website. Refer to the [Analytics docs]({{< ref "partials#analytics" >}}) for more details. |
+| `selineAnalytics.enableTrackEvent` | true      | When set to `true` track event will add automatically. If you do not want to add track event, set it to `false`.                          |
 
 ### BuyMeACoffee
 

@@ -209,14 +209,6 @@
     ]
   },
   {
-    "title": "muhalvin.github.io",
-    "url": "https://muhalvin.github.io/",
-    "source": "n/a",
-    "tags": [
-      "Personal site"
-    ]
-  },
-  {
     "title": "mariuskimmina.com",
     "url": "https://mariuskimmina.com/",
     "source": "n/a",
@@ -532,15 +524,6 @@
     ]
   },
   {
-    "title": "datatodroids.tech",
-    "url": "https://datatodroids.tech/",
-    "source": "n/a",
-    "tags": [
-      "Personal site",
-      "Blog"
-    ]
-  },
-  {
     "title": "DXPetti.com",
     "url": "https://www.dxpetti.com/",
     "source": "n/a",
@@ -634,6 +617,180 @@
     "tags": [
       "Blog",
       "Personal Site"
+    ]
+  },
+  {
+    "title": "Synaptic Sugar",
+    "url": "https://synapticsugar.games",
+    "source": "n/a",
+    "tags": [
+      "Videogame Developer"
+    ]
+  },
+  {
+    "title": "michaeldorner.de",
+    "url": "https://www.michaeldorner.de",
+    "source": "n/a",
+    "tags": [
+      "Blog",
+      "Personal Site",
+      "Academia"
+    ]
+  },
+  {
+    "title": "Ignacio Conde",
+    "url": "http://www.ignaciomconde.com/",
+    "source": "https://github.com/DJKero/djkero.github.io",
+    "tags": [
+      "Personal Site",
+      "Portfolio Site",
+      "Software Developer",
+      "Videogame Developer"
+    ]
+  },
+  {
+    "title": "MEM v ENNBEE",
+    "url": "https://memv.ennbee.uk/",
+    "source": "https://github.com/ennnbeee/ennnbeee.github.io",
+    "tags": [
+      "Technology Blog",
+      "Personal site"
+    ]
+  },
+  {
+    "title": "Joshua Blais",
+    "url": "https://joshblais.com/",
+    "source": "n/a",
+    "tags": [
+      "Personal Site",
+      "Author",
+      "Digital Garden"
+    ]
+  },
+  {
+    "title": "Beauty Formulation",
+    "url": "https://www.beautyformulation.com/",
+    "source": "n/a",
+    "tags": [
+      "Company site"
+    ]
+  },
+  {
+    "title": "Middle of Nowhere",
+    "url": "https://blog.wtcx.dev/",
+    "source": "n/a",
+    "tags": [
+      "Personal Site",
+      "Blog"
+    ]
+  },
+  {
+    "title": "UmmIt - Blog",
+    "url": "https://blog.ummit.dev/",
+    "source": "n/a",
+    "tags": [
+      "Personal Site",
+      "Blog",
+      "Technology Blog"
+    ]
+  },
+  {
+    "title": "江ノ島エスカー",
+    "url": "https://zen96k.github.io/enoshima-escar",
+    "source": "https://github.com/zen96k/enoshima-escar",
+    "tags": [
+      "Portfolio Site",
+      "Software Developer"
+    ]
+  },
+  {
+    "title": "Jinbo Pan - Blog",
+    "url": "https://www.panjinbo.com/",
+    "source": "n/a",
+    "tags": [
+      "Personal Site",
+      "Blog",
+      "Technology Blog"
+    ]
+  },
+  {
+    "title": "nveshaan",
+    "url": "https://nveshaan.github.io/",
+    "source": "n/a",
+    "tags": [
+      "Personal Site"
+    ]
+  },
+  {
+    "title": "micheledinelli.github.io",
+    "url": "https://micheledinelli.github.io",
+    "source": "n/a",
+    "tags": [
+      "Personal Site",
+      "Portfolio Site",
+      "Academia"
+    ]
+  },
+  {
+    "title": "kumacat.pages.dev",
+    "url": "https://kumacat.pages.dev",
+    "source": "https://github.com/LesserCat/LesserCat.github.io",
+    "tags": [
+      "Personal Site",
+      "Blog"
+    ]
+  },  
+  {
+    "title": "andrealucchini.com",
+    "url": "https://andrealucchini.com",
+    "source": "https://github.com/CommanderKen/commanderken.github.io",
+    "tags": [
+      "Personal site",
+      "Blog"
+    ]
+  },
+  {
+    "title": "glomyer.dev",
+    "url": "https://luizglomyer.github.io/",
+    "source": "https://github.com/LuizGlomyer/luizglomyer.github.io",
+    "tags": [
+      "Personal site"
+    ]
+  },
+  {
+    "title": "utrodus.com",
+    "url": "https://utrodus.com",
+    "source": "https://github.com/utrodus/utrodus.com",
+    "tags": [
+      "Portfolio Site",
+      "Blog"    
+    ]
+  },
+  {
+    "title": "hetong-re4per.com",
+    "url": "https://hetong-re4per.com",
+    "source": "https://github.com/HeTongRe4per/HeTongRe4per.github.io",
+    "tags": [
+      "Personal site",
+      "Blog"
+    ]
+  },
+  {
+    "title": "Xeonzilla’s Note",
+    "url": "https://xeonzilla.github.io",
+    "source": "https://github.com/Xeonzilla/Xeonzilla.github.io",
+    "tags": [
+      "Personal site",
+      "Blog"
+    ]
+  },
+  {
+    "title": "lazarusoverlook.com",
+    "url": "https://lazarusoverlook.com",
+    "source": "https://github.com/RolandMarchand/lazarus-manor",
+    "tags": [
+      "Personal site",
+      "Blog"
     ]
   }
 ]
