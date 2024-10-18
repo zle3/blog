@@ -7,6 +7,20 @@
   data-auto-appearance="{{ .Site.Params.autoSwitchAppearance | default " true" }}">
 {{- partial "head.html" . -}}
 
+<script>
+  const firebaseConfig = {
+    apiKey: "{{ .Site.Params.FIREBASE_API_KEY }}",
+    authDomain: "{{ .Site.Params.FIREBASE_AUTH_DOMAIN }}",
+    projectId: "{{ .Site.Params.FIREBASE_PROJECT_ID }}",
+    storageBucket: "{{ .Site.Params.FIREBASE_STORAGE_BUCKET }}",
+    messagingSenderId: "{{ .Site.Params.FIREBASE_MESSAGING_SENDER_ID }}",
+    appId: "{{ .Site.Params.FIREBASE_APP_ID }}",
+    measurementId: "{{ .Site.Params.FIREBASE_MEASUREMENT_ID }}"
+  };
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
 <body
   class="flex flex-col h-screen px-6 m-auto text-lg leading-7 max-w-7xl bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32 scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
   <div id="the-top" class="absolute flex self-center">
