@@ -5,7 +5,7 @@ enableSearch = true
 enableCodeCopy = true
 disableImageOptimization = false
 disableTextInHeader = false
-mainSections = [ "Blog", "Porfolio" ]
+mainSections = "Blog"
 
 [header]
 layout = "basic"
@@ -21,8 +21,8 @@ showScrollToTop = true
 layout = "profile"
 showRecent = true
 showRecentItems = 6
-showMoreLink = false
-showMoreLinkDest = "/posts"
+showMoreLink = true
+showMoreLinkDest = "/blog"
 cardView = true
 cardViewScreenWidth = false
 layoutBackgroundBlur = false
@@ -46,11 +46,12 @@ showHeadingAnchors = true
 showPagination = true
 invertPagination = false
 showReadingTime = true
-showTableOfContents = false
-showTaxonomies = false
+showTableOfContents = true
+showTaxonomies = true
 showAuthorsBadges = false
 showWordCount = true
 showZenMode = false
+article.showRelatedContent = true
 
 [list]
 showHero = false
@@ -58,8 +59,8 @@ layoutBackgroundBlur = true
 layoutBackgroundHeaderSpace = true
 showBreadcrumbs = false
 showSummary = false
-showViews = true
-showLikes = true
+showViews = false
+showLikes = false
 showTableOfContents = true
 showCards = false
 groupByYear = true
@@ -74,8 +75,8 @@ excludedKinds = [ "taxonomy", "term" ]
 showTermCount = true
 showHero = false
 showBreadcrumbs = false
-showViews = true
-showLikes = true
+showViews = false
+showLikes = false
 showTableOfContents = true
 cardView = false
 
