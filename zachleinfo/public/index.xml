@@ -29,11 +29,31 @@
     </item>
     
     <item>
+      <title>Current Infrastructure as of 20241017</title>
+      <link>http://localhost:1313/portfolio/2024/first-infrastructure-update/</link>
+      <pubDate>Fri, 18 Oct 2024 02:49:36 +0000</pubDate>
+      
+      <guid>http://localhost:1313/portfolio/2024/first-infrastructure-update/</guid>
+      <description>Current Infrastructure</description>
+      
+    </item>
+    
+    <item>
       <title>Now</title>
       <link>http://localhost:1313/now/</link>
       <pubDate>Fri, 18 Oct 2024 02:49:36 +0000</pubDate>
       
       <guid>http://localhost:1313/now/</guid>
+      <description>Intro post</description>
+      
+    </item>
+    
+    <item>
+      <title>My First Post</title>
+      <link>http://localhost:1313/blog/2024/my-first-post/</link>
+      <pubDate>Sat, 29 Jun 2024 20:33:45 +0800</pubDate>
+      
+      <guid>http://localhost:1313/blog/2024/my-first-post/</guid>
       <description>Intro post</description>
       
     </item>
