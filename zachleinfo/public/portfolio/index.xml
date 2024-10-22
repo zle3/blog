@@ -2,21 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Portfolios on Zach Le</title>
-    <link>https://zachle.info/portfolio/</link>
+    <link>http://localhost:1313/portfolio/</link>
     <description>Recent content in Portfolios on Zach Le</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Fri, 18 Oct 2024 02:49:36 +0000</lastBuildDate><atom:link href="https://zachle.info/portfolio/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Current Infrastructure as of 20241017</title>
-      <link>https://zachle.info/portfolio/2024/first-infrastructure-update/</link>
-      <pubDate>Fri, 18 Oct 2024 02:49:36 +0000</pubDate>
-      
-      <guid>https://zachle.info/portfolio/2024/first-infrastructure-update/</guid>
-      <description>Current Infrastructure</description>
-      
-    </item>
-    
+    <lastBuildDate>Fri, 18 Oct 2024 02:49:36 +0000</lastBuildDate><atom:link href="http://localhost:1313/portfolio/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
