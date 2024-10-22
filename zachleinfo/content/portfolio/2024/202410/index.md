@@ -20,4 +20,4 @@ url: "/portfolio/2024/first-infrastructure-update"
 
 Current infrastructure:
 
-![CurrentServerRack](/20241017-rack.jpg)
+![CurrentServerRack](20241017-rack.jpg)
