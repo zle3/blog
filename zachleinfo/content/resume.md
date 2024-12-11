@@ -9,7 +9,7 @@ keywords:
 url: "/resume"
 ---
 
-**PDF Version: [Google Drive](https://drive.google.com/file/d/1Y_PpbskNvbz9sitS5eEUmIMkSHCXoaNF/view?usp=drive_link)**
+**PDF Version: [Google Drive](https://drive.google.com/file/d/1oceju5vm47Wtdi6PJdlNi7NUizCdepyF/view?usp=sharing)**
 
 ## Introduction
 

@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Sat, 29 Jun 2024 20:33:45 +0800</lastBuildDate><atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Nov 2024 12:57:40 +0800</lastBuildDate><atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cost of Infrastructure to 11/2024</title>
+      <link>http://localhost:1313/blog/2024/cost-to-date/</link>
+      <pubDate>Fri, 01 Nov 2024 12:57:40 +0800</pubDate>
+      
+      <guid>http://localhost:1313/blog/2024/cost-to-date/</guid>
+      <description>Post Detailing Cost of Infrastructure to 11/2024</description>
+      
+    </item>
+    
     <item>
       <title>My First Post</title>
       <link>http://localhost:1313/blog/2024/my-first-post/</link>
