@@ -1,21 +1,18 @@
 ---
 title: "Resume"
-date: 2024-10-18T02:58:00+00:00
+date: 2026-07-03T02:58:00+00:00
 tags: ["blog","info"]
-lastmod: true
 summary: "About me"
 description: "About me"
 keywords: 
 url: "/resume"
 ---
 
-**PDF Version: [Google Drive](https://drive.google.com/file/d/1oceju5vm47Wtdi6PJdlNi7NUizCdepyF/view?usp=sharing)**
+**PDF Version: [Google Drive](https://drive.google.com/file/d/1g2WWIUGleKm4XO2qXuZNbcx4KdR1kyTi/view?usp=sharing)**
 
 ## Introduction
 
-Location: Sacramento, CA
-
-Phone: +1 \*\*\*. \*\*\*. **84
+Current Location: Sacramento, CA
 
 Email: [hello@zachle.info](mailto:hello@zachle.info)
 
@@ -23,22 +20,31 @@ LinkedIn: [linkedIn.com/in/zle](https://linkedin.com/in/zle)
 
 Portfolio: [zachle.info](https://www.zachle.info/)
 
+Github: [github.com/zle3](https://github.com/zle3)
+
+Systems administrator with over three years across Active Directory, Entra ID, and VMware vSphere, automating identity and endpoint provisioning with PowerShell to cut manual labor across technician teams. I emphasize documentation and root cause analysis, having eliminated recurring ticket categories rather than treating them as routine. US Citizen based in Sacramento and actively relocating to the San Francisco Bay Area within two weeks of a formal offer.
+
 ## Work Experience
 
 ### Systems Administrator
+
+*02/2025 – Present*
+
+Medical Board of California | Sacramento, CA
+
+- Decrease onboarding and offboarding provisioning time by 20 minutes per user by automating identity lifecycle workflows across Active Directory, Microsoft Entra ID, and SCCM/MCM for consistent endpoint provisioning.
+- Migrate domain controllers to Windows Server 2022 across two production sites with zero authentication downtime on VMware vSphere.
+- Reduce one hour of manual labor per endpoint and standardized deployment across the technician team by engineering a modular PowerShell provisioning framework.
+- Eliminate an entire recurring ticket category and reduced support volume by 89 tickets over a two-month tracking period by driving root cause analysis on repeat support and security incidents.
+
+### Systems Administrator (Contract)
 
 *08/2024 – 10/2024*
 
 San Joaquin Regional Transit District | Stockton, CA
 
-- Performed general systems administration duties including mail trace, shared mailbox, license assignments, Active Directory creation in M365 Exchange, M365 Admin, Teams, Entra ID, and other related Microsoft portals.
-- Utilized PowerShell to automate creation of Active Directory users and integrate Power Apps to allow managers to expedite account creation.
-- Resolved 300 tickets of varying difficulty within 25 business days providing excellent customer service to executives, stakeholders, and business users.
-- Verified environment requirements and scope of work for Autopilot deployment and Entra ID device enrollment, including Entra ID and Intune audit.
-- Provided excellent oral and written justification to executive level staff and stakeholders in the subject matter of procurement, systems, and service desk.
-- Utilized creative skillset to produce training videos to reduce in-person appearances at training events and orientations including a general informational security overview.
-- Balanced various priorities including service desk, systems administration, procurements, vendor/stakeholder meetings, and emergency changes.
-- Created and improved documentation for poorly documented workflows and operations, implementing version control through GitHub, and storing materials in Markdown and SharePoint.
+- Recovered $10,000 in annual licensing costs by developing PowerShell automation for Active Directory user lifecycle management and Microsoft 365/SugarCRM access provisioning.
+- Cleared a backlog of 300+ L2 through L3 incidents left unresolved by a vacant support role within 25 business days, while simultaneously maintaining full SLA compliance on new incoming tickets.
 
 ### Junior Systems Administrator
 
@@ -46,64 +52,29 @@ San Joaquin Regional Transit District | Stockton, CA
 
 California Department of Alcoholic Beverage Control | Sacramento, CA
 
-- Improved manual autopilot registration using Batch and PowerShell scripts reducing 5-minute manual process to 30 seconds automated.
-- Implemented Batch and PowerShell scripts to automate post-Autopilot setup reducing technician interactions with laptops from over 20 to 4.
-- Assist with basic configuration/deployment of Windows Server 2022 MCM (SCCM/MECM) servers and system administrator test VM in VMWare vSphere.
-- Conduct QA testing on Autopilot deployment, PXE boot, updates, automation scripts, and security patches on physical Dell and virtualized workstations.
-- Install and cable manage various rack equipment including switches, patch panels, servers, and SAN/DAS.
-- Provide training to level 2 support staff as subject matter expert in service desk operations and receive escalations as needed.
-- Configured accounts and information for various systems including Active Directory, Entra ID, Intune, printers, internal licensing accounts, 0365, Zoom, Adobe, Verizon, and Cornerstone.
+- Streamlined per-device manual deployment time by 80% across all new endpoint agency-wide by reducing Windows Autopilot deployment from 20 technician steps to 4 through PowerShell and Batch scripting.
+- Stood up an ITSM platform processing roughly 800 tickets per month within a 4-month deployment by leading end-to-end rollout of ManageEngine ServiceDesk Plus.
 
 ## Projects
 
-### Virtualization/Server Administration
+### Virtualization and Hybrid Cloud Lab (Ongoing)
 
-Initialize Proxmox hypervisor virtualization technology to manage virtual machines for various tasks including automation, web hosting, game hosting, databases, and backups.
+- Unified identity across Windows and Linux systems by implementing hybrid identity management with Windows Server 2022 Active Directory, SSSD/Kerberos for Linux domain join, and Entra Connect password hash sync.
+- Hosted Active Directory, WireGuard VPN, backup infrastructure, DNS/DHCP, and storage services onto a self-managed virtualization platform by administering a multi-host Proxmox VE environment across two physical servers running 6 to 10 Ubuntu/Debian Linux VMs and containers.
+- Achieved a 2-hour full-environment VM restore time and validated recovery of a full 40TB data set within one week by establishing a multi-target backup strategy across Veeam Backup and Replication and Proxmox Backup Server.
 
-- Implemented robust data security measures, including automation, RAID configurations, NAS, and redundant backups including ZFS raids, ensuring the resilience and integrity of data restores.
-- Maintain 5+ services for 10 local users and over 20 users remotely, including game servers, DNS server, mail server (MXroute), virtual machine, patching, VPN, VPS, and file share.
-- Created basic Active Directory Forest in Windows Server 2022 with basic user permissions, group policies, and login scripts.
+### GCP Cloud Infrastructure and Delivery Pipeline (Ongoing)
 
-### Networking
+- Provisioned and operate a containerized application on Google Cloud Run by defining VPC networking, IAM, Cloud SQL for PostgreSQL, Secret Manager, and Cloudflare DNS proxying entirely through Terraform infrastructure as code.
+- Automated the path from code commit to live deployment by configuring a Cloud Build CI/CD pipeline that builds a Docker image, pushes to Artifact Registry, and redeploys to Cloud Run on every push.
 
-- Administered DNS, domain, IP, patching, and VPN as a Linux server administrator for two clients with 5+ concurrent game servers across client personal and IaaS devices.
-- Managed end-to-end responsibilities for network routing/switching, VLAN, monitoring, domains, and network shares (Openmediavault NFS/SMB), ensuring 99% uptime and optimal functionality.
-- Managed Cloudflare DNS infrastructure, implementing redirect rules, server-pointing entries, email security, routing, and diverse record types.
-- Knowledge of Cisco, Brocade L2/L3 switch and Access Points, Mikrotik router (RouterOS) configuration.
+## CERTIFICATIONS
 
-### Creative Works
+AWS Certified Cloud Practitioner | CompTIA A+ | LPI Linux Essentials | ITIL 4 Foundation
 
-Proficient in creating high quality, livestream or recorded training videos utilizing audio visual tools and content creation/delivery tools including Photoshop, Premiere Pro, PowerPoint, OBS, Microsoft Teams, Audacity, and Zoom.
+## EDUCATION
 
-## Language Proficiency
-
-- English
-- Chinese (Cantonese)
-- Japanese N5
-
-## Certificiations
-
-- CompTIA A+ 07/2024
-
-## Education
-
-### (In-Progress) Bachelor of Science, Cloud Computing
-
-Western Governors University, Salt Lake City, UT 84107
-
-Expected: 08/2025
-
-Relevant Coursework: Introduction to IT, IT Applications, IT Foundations
-
-Credits: 18 Semester Units
-
-### Coursework Towards Associate of Computer Science
-
-Cosumnes River College, Sacramento, CA 95823
-
-Relevant Coursework: Intro Structured Programming C/C++, Obj Oriented Prog C++, Algorithm Design
-
-Credits: 53 Semester Units
+**Bachelor of Science, Cloud and Network Engineering** | Western Governors University | Expected September 2027
 
 ## Skills and Deployments
 

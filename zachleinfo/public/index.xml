@@ -20,6 +20,16 @@
     </item>
     
     <item>
+      <title>Resume</title>
+      <link>http://localhost:44945/resume/</link>
+      <pubDate>Fri, 03 Jul 2026 02:58:00 +0000</pubDate>
+      
+      <guid>http://localhost:44945/resume/</guid>
+      <description>About me</description>
+      
+    </item>
+    
+    <item>
       <title>Now</title>
       <link>http://localhost:44945/now/</link>
       <pubDate>Fri, 03 Jul 2026 02:49:36 +0000</pubDate>
@@ -36,16 +46,6 @@
       
       <guid>http://localhost:44945/blog/2024/cost-to-date/</guid>
       <description>Post Detailing Cost of Infrastructure to 11/2024</description>
-      
-    </item>
-    
-    <item>
-      <title>Resume</title>
-      <link>http://localhost:44945/resume/</link>
-      <pubDate>Fri, 18 Oct 2024 02:58:00 +0000</pubDate>
-      
-      <guid>http://localhost:44945/resume/</guid>
-      <description>About me</description>
       
     </item>
     

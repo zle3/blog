@@ -5,7 +5,6 @@ date: 	2024-10-18T02:49:36+00:00
 
 tags: ["blog", "portfolio"]
 
-lastmod: true
 
 summary: "Current Infrastructure"
 

@@ -2,7 +2,6 @@
 title: "About"
 date: 2024-10-18T02:51:00+00:00
 tags: ["blog","info"]
-lastmod: true
 summary: "About me"
 description: "About me"
 keywords: 
@@ -10,7 +9,7 @@ url: "/about"
 ---
 ## Introduction
 
-I'm a dedicated **Systems Administrator** with a passion for delivering innovative IT solutions. With a solid foundation in IT systems management and automation, I bring 2 years of experience helping organizations streamline their operations and enhance their technical infrastructure. While I may be currently focused on systems and cloud technologies, I am well-rounded in business analyst, software development, and devops strategies/techniques. Currently looking to branch out in Linux, Cloud, SRE, or DevOps positions
+I'm a dedicated **Systems Administrator** with a passion for delivering innovative IT solutions. With a solid foundation in IT systems management and automation, I bring 3.5 years of experience helping organizations streamline their operations and enhance their technical infrastructure. While I may be currently focused on systems and cloud technologies, I am well-rounded in business analyst, software development, and devops strategies/techniques. Currently looking to branch out in Linux, Cloud, SRE, or DevOps positions
 
 ## Core Skills
 

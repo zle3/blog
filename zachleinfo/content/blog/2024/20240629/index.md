@@ -2,7 +2,6 @@
 title: "My First Post"
 date: 2024-06-29T20:33:45+08:00
 tags: ["Blog"]
-lastmod: true
 summary: "Intro post"
 description: "intro post"
 keywords: 
