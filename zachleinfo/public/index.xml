@@ -2,68 +2,79 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zach Le Personal Website on Zach Le</title>
-    <link>http://localhost:1313/</link>
+    <link>http://localhost:44945/</link>
     <description>Recent content in Zach Le Personal Website on Zach Le</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Fri, 01 Nov 2024 12:57:40 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Jul 2026 14:00:00 -0700</lastBuildDate><atom:link href="http://localhost:44945/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Closing the Cloud Gap: A GCP &#43; Terraform &#43; Cloudflare Demo</title>
+      <link>http://localhost:44945/portfolio/2026/gcp-terraform-demo/</link>
+      <pubDate>Fri, 03 Jul 2026 14:00:00 -0700</pubDate>
+      
+      <guid>http://localhost:44945/portfolio/2026/gcp-terraform-demo/</guid>
+      <description>Standing up a small GCP stack with Terraform, Cloud Run, Cloud SQL, and Cloudflare in front, so I have real answers instead of textbook ones.</description>
+      
+    </item>
+    
+    <item>
+      <title>Now</title>
+      <link>http://localhost:44945/now/</link>
+      <pubDate>Fri, 03 Jul 2026 02:49:36 +0000</pubDate>
+      
+      <guid>http://localhost:44945/now/</guid>
+      <description>Intro post</description>
+      
+    </item>
+    
     <item>
       <title>Cost of Infrastructure to 11/2024</title>
-      <link>http://localhost:1313/blog/2024/cost-to-date/</link>
+      <link>http://localhost:44945/blog/2024/cost-to-date/</link>
       <pubDate>Fri, 01 Nov 2024 12:57:40 +0800</pubDate>
       
-      <guid>http://localhost:1313/blog/2024/cost-to-date/</guid>
+      <guid>http://localhost:44945/blog/2024/cost-to-date/</guid>
       <description>Post Detailing Cost of Infrastructure to 11/2024</description>
       
     </item>
     
     <item>
       <title>Resume</title>
-      <link>http://localhost:1313/resume/</link>
+      <link>http://localhost:44945/resume/</link>
       <pubDate>Fri, 18 Oct 2024 02:58:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/resume/</guid>
+      <guid>http://localhost:44945/resume/</guid>
       <description>About me</description>
       
     </item>
     
     <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>http://localhost:44945/about/</link>
       <pubDate>Fri, 18 Oct 2024 02:51:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/about/</guid>
+      <guid>http://localhost:44945/about/</guid>
       <description>About me</description>
       
     </item>
     
     <item>
       <title>Current Infrastructure as of 20241017</title>
-      <link>http://localhost:1313/portfolio/2024/first-infrastructure-update/</link>
+      <link>http://localhost:44945/portfolio/2024/first-infrastructure-update/</link>
       <pubDate>Fri, 18 Oct 2024 02:49:36 +0000</pubDate>
       
-      <guid>http://localhost:1313/portfolio/2024/first-infrastructure-update/</guid>
+      <guid>http://localhost:44945/portfolio/2024/first-infrastructure-update/</guid>
       <description>Current Infrastructure</description>
       
     </item>
     
     <item>
-      <title>Now</title>
-      <link>http://localhost:1313/now/</link>
-      <pubDate>Fri, 18 Oct 2024 02:49:36 +0000</pubDate>
-      
-      <guid>http://localhost:1313/now/</guid>
-      <description>Intro post</description>
-      
-    </item>
-    
-    <item>
       <title>My First Post</title>
-      <link>http://localhost:1313/blog/2024/my-first-post/</link>
+      <link>http://localhost:44945/blog/2024/my-first-post/</link>
       <pubDate>Sat, 29 Jun 2024 20:33:45 +0800</pubDate>
       
-      <guid>http://localhost:1313/blog/2024/my-first-post/</guid>
+      <guid>http://localhost:44945/blog/2024/my-first-post/</guid>
       <description>Intro post</description>
       
     </item>

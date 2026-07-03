@@ -2,18 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Portfolios on Zach Le</title>
-    <link>http://localhost:1313/portfolio/</link>
+    <link>http://localhost:44945/portfolio/</link>
     <description>Recent content in Portfolios on Zach Le</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Fri, 18 Oct 2024 02:49:36 +0000</lastBuildDate><atom:link href="http://localhost:1313/portfolio/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Jul 2026 14:00:00 -0700</lastBuildDate><atom:link href="http://localhost:44945/portfolio/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Closing the Cloud Gap: A GCP &#43; Terraform &#43; Cloudflare Demo</title>
+      <link>http://localhost:44945/portfolio/2026/gcp-terraform-demo/</link>
+      <pubDate>Fri, 03 Jul 2026 14:00:00 -0700</pubDate>
+      
+      <guid>http://localhost:44945/portfolio/2026/gcp-terraform-demo/</guid>
+      <description>Standing up a small GCP stack with Terraform, Cloud Run, Cloud SQL, and Cloudflare in front, so I have real answers instead of textbook ones.</description>
+      
+    </item>
+    
     <item>
       <title>Current Infrastructure as of 20241017</title>
-      <link>http://localhost:1313/portfolio/2024/first-infrastructure-update/</link>
+      <link>http://localhost:44945/portfolio/2024/first-infrastructure-update/</link>
       <pubDate>Fri, 18 Oct 2024 02:49:36 +0000</pubDate>
       
-      <guid>http://localhost:1313/portfolio/2024/first-infrastructure-update/</guid>
+      <guid>http://localhost:44945/portfolio/2024/first-infrastructure-update/</guid>
       <description>Current Infrastructure</description>
       
     </item>
