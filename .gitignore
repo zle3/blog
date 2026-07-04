@@ -1,0 +1,5 @@
+# Editor / tool settings
+.vscode/
+.claude/
+.idea/
+*.code-workspace

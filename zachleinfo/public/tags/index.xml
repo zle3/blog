@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Zach Le</title>
-    <link>http://localhost:44945/tags/</link>
+    <link>https://zachle.info/tags/</link>
     <description>Recent content in Tags on Zach Le</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Fri, 03 Jul 2026 14:00:00 -0700</lastBuildDate><atom:link href="http://localhost:44945/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Jul 2026 14:00:00 -0700</lastBuildDate><atom:link href="https://zachle.info/tags/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Blog</title>
-      <link>http://localhost:44945/tags/blog/</link>
+      <link>https://zachle.info/tags/blog/</link>
       <pubDate>Fri, 03 Jul 2026 14:00:00 -0700</pubDate>
       
-      <guid>http://localhost:44945/tags/blog/</guid>
+      <guid>https://zachle.info/tags/blog/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Portfolio</title>
-      <link>http://localhost:44945/tags/portfolio/</link>
+      <link>https://zachle.info/tags/portfolio/</link>
       <pubDate>Fri, 03 Jul 2026 14:00:00 -0700</pubDate>
       
-      <guid>http://localhost:44945/tags/portfolio/</guid>
+      <guid>https://zachle.info/tags/portfolio/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Info</title>
-      <link>http://localhost:44945/tags/info/</link>
-      <pubDate>Fri, 03 Jul 2026 02:49:36 +0000</pubDate>
+      <link>https://zachle.info/tags/info/</link>
+      <pubDate>Fri, 03 Jul 2026 02:58:00 +0000</pubDate>
       
-      <guid>http://localhost:44945/tags/info/</guid>
+      <guid>https://zachle.info/tags/info/</guid>
       <description></description>
       
     </item>

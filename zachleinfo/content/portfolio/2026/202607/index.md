@@ -1,8 +1,8 @@
 ---
-title: "Closing the Cloud Gap: A GCP + Terraform + Cloudflare Demo"
+title: "A GCP + Terraform + Cloudflare Demo"
 date: 2026-07-03T14:00:00-07:00
 tags: ["blog", "portfolio"]
-summary: "Standing up a small GCP stack with Terraform, Cloud Run, Cloud SQL, and Cloudflare in front, so I have real answers instead of textbook ones."
+summary: "Standing up a small GCP stack with Terraform, Cloud Run, Cloud SQL, and Cloudflare."
 description: "A walkthrough of demo1, a GCP infrastructure project built with Terraform, Docker, Cloud Run, and Cloudflare."
 keywords: "gcp, terraform, cloudflare, cloud run, devops"
 url: "/portfolio/2026/gcp-terraform-demo"
@@ -15,6 +15,14 @@ Nearly all of my hands-on infrastructure experience lives on a rack in my living
 So instead of reading more about it, I built something on it.
 
 Live at [demo1.zachle.info](https://demo1.zachle.info), source at [zle3/demo1](https://github.com/zle3/demo1), for anyone who wants to take a quick look at it.
+
+<iframe
+  src="https://demo1.zachle.info"
+  title="demo1 live demo"
+  loading="lazy"
+  class="w-full rounded-md border border-neutral-200 dark:border-neutral-700"
+  style="height: 640px;"
+></iframe>
 
 ## What it actually is
 
