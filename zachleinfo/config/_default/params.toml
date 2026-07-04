@@ -29,8 +29,8 @@ layoutBackgroundBlur = false
 
 [article]
 showDate = true
-showViews = false
-showLikes = false
+showViews = true
+showLikes = true
 showDateOnlyInArticle = false
 showDateUpdated = true
 showAuthor = true
@@ -51,7 +51,7 @@ showTaxonomies = true
 showAuthorsBadges = false
 showWordCount = true
 showZenMode = false
-article.showRelatedContent = true
+showRelatedContent = true
 
 [list]
 showHero = false
@@ -59,8 +59,8 @@ layoutBackgroundBlur = true
 layoutBackgroundHeaderSpace = true
 showBreadcrumbs = false
 showSummary = false
-showViews = false
-showLikes = false
+showViews = true
+showLikes = true
 showTableOfContents = true
 showCards = false
 groupByYear = true
@@ -75,31 +75,29 @@ excludedKinds = [ "taxonomy", "term" ]
 showTermCount = true
 showHero = false
 showBreadcrumbs = false
-showViews = false
-showLikes = false
+showViews = true
+showLikes = true
 showTableOfContents = true
 cardView = false
 
 [term]
 showHero = false
 showBreadcrumbs = false
-showViews = false
-showLikes = false
+showViews = true
+showLikes = true
 showTableOfContents = true
 groupByYear = false
 cardView = false
 cardViewScreenWidth = false
 
 [firebase]
-showViews = true
-showLikes = true
-firebase.apiKey = "$FIREBASE_API_KEY"
-firebase.authDomain = "$FIREBASE_AUTH_DOMAIN"
-firebase.projectId = "$FIREBASE_PROJECT_ID"
-firebase.storageBucket = "$FIREBASE_STORAGE_BUCKET"
-firebase.messagingSenderId = "$FIREBASE_MESSAGING_SENDER_ID"
-firebase.appId = "$FIREBASE_APP_ID"
-firebase.measurementId = "$FIREBASE_MEASUREMENT_ID"
+# Populated at build time via Cloudflare Pages environment variables:
+# HUGO_PARAMS_FIREBASE_APIKEY, HUGO_PARAMS_FIREBASE_AUTHDOMAIN,
+# HUGO_PARAMS_FIREBASE_PROJECTID, HUGO_PARAMS_FIREBASE_STORAGEBUCKET,
+# HUGO_PARAMS_FIREBASE_MESSAGINGSENDERID, HUGO_PARAMS_FIREBASE_APPID,
+# HUGO_PARAMS_FIREBASE_MEASUREMENTID
+# Left blank here on purpose -- Hugo merges the env vars into these keys
+# at build time, so no secret ever needs to be committed to the repo.
 
 [fathomAnalytics]
 

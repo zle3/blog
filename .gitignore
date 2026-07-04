@@ -3,3 +3,6 @@
 .claude/
 .idea/
 *.code-workspace
+
+# Hugo build output (Cloudflare Pages rebuilds this on every deploy)
+zachleinfo/public/
