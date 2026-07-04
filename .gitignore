@@ -6,3 +6,5 @@
 
 # Hugo build output (Cloudflare Pages rebuilds this on every deploy)
 zachleinfo/public/
+zachleinfo/resources/
+zachleinfo/.hugo_build.lock
