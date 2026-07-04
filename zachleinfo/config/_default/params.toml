@@ -52,6 +52,7 @@ showAuthorsBadges = false
 showWordCount = true
 showZenMode = false
 showRelatedContent = true
+relatedContentLimit = 3
 
 [list]
 showHero = false
