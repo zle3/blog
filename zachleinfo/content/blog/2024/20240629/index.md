@@ -1,7 +1,7 @@
 ---
 title: "My First Post"
 date: 2024-06-29T20:33:45+08:00
-tags: ["Blog"]
+tags: ["blog", "meta", "cloudflare", "self-hosted"]
 summary: "Intro post"
 description: "intro post"
 keywords: 

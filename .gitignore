@@ -4,6 +4,10 @@
 .idea/
 *.code-workspace
 
+# Private source notes, not for publishing
+BLOG-NOTES.md
+.reference/
+
 # Hugo build output (Cloudflare Pages rebuilds this on every deploy)
 zachleinfo/public/
 zachleinfo/resources/

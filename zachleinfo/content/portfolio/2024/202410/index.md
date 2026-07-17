@@ -3,7 +3,7 @@ title: "Current Infrastructure as of 20241017"
 
 date: 	2024-10-18T02:49:36+00:00
 
-tags: ["blog", "portfolio"]
+tags: ["blog", "portfolio", "homelab", "server-rack"]
 
 
 summary: "Current Infrastructure"

@@ -1,7 +1,7 @@
 ---
 title: "A GCP + Terraform + Cloudflare Demo"
 date: 2026-07-03T14:00:00-07:00
-tags: ["blog", "portfolio"]
+tags: ["blog", "portfolio", "gcp", "terraform", "cloudflare", "cloud-run", "devops"]
 summary: "Standing up a small GCP stack with Terraform, Cloud Run, Cloud SQL, and Cloudflare."
 description: "A walkthrough of demo1, a GCP infrastructure project built with Terraform, Docker, Cloud Run, and Cloudflare."
 keywords: "gcp, terraform, cloudflare, cloud run, devops"

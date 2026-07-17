@@ -1,7 +1,7 @@
 ---
 title: "Cost of Infrastructure to 11/2024"
 date: 	2024-11-01T12:57:40+08:00
-tags: ["Blog"]
+tags: ["homelab", "hardware", "dell", "server-rack", "budget"]
 summary: "Post Detailing Cost of Infrastructure to 11/2024"
 description: "Post Detailing Cost of Infrastructure to 11/2024"
 keywords: "cost"
