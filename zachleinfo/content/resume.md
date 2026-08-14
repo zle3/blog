@@ -8,13 +8,12 @@ keywords:
 url: "/resume"
 ---
 
-**PDF Version: [Google Drive](https://drive.google.com/file/d/1g2WWIUGleKm4XO2qXuZNbcx4KdR1kyTi/view?usp=sharing)**
+# PDF Resume
+[Google Drive](https://drive.google.com/file/d/1g2WWIUGleKm4XO2qXuZNbcx4KdR1kyTi/view?usp=sharing)
 
 ## Introduction
 
 Current Location: Sacramento, CA
-
-Email: [hello@zachle.info](mailto:hello@zachle.info)
 
 LinkedIn: [linkedIn.com/in/zle](https://linkedin.com/in/zle)
 
