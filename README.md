@@ -18,6 +18,20 @@ back end: firebase auth, firestore
 
 devops: github, cloudflare pages, dns
 
+## Build
+
+Cloudflare Pages runs `bash build.sh` from `zachleinfo/`. The script pins the
+Hugo version (currently 0.169.0, extended) and verifies its checksum, so the
+build does not depend on the Cloudflare image default. When upgrading Hugo or
+the theme, bump `HUGO_VERSION` and `HUGO_SHA256` in `zachleinfo/build.sh`.
+
+The theme (Blowfish v3.10.0) is vendored in `zachleinfo/themes/blowfish/`.
+Local overrides that must be re-checked on theme upgrades:
+
+- `zachleinfo/layouts/partials/article-meta/basic.html` (views/likes on single pages only)
+- `zachleinfo/layouts/partials/vendor.html` (Firebase loader as external file, for CSP)
+- `zachleinfo/assets/css/custom.css` (design refinements)
+
 ## Deployment
 
 this blog automatically updates via CI/CD when a commit is pushed to the github repo

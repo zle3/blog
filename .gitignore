@@ -12,3 +12,6 @@ BLOG-NOTES.md
 zachleinfo/public/
 zachleinfo/resources/
 zachleinfo/.hugo_build.lock
+
+# Local code-index cache
+zachleinfo/.codegraph/
