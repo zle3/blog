@@ -1,0 +1,213 @@
+/*
+ * Apple-style refinements layered over Blowfish + zli-ppr-custom.
+ * Palette, layout and content stay as-is; this file only tunes
+ * type, feedback, motion, depth and accessibility.
+ */
+
+:root {
+  /* Critically damped feel: fast start, soft settle, no overshoot */
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --press-duration: 100ms;
+  --settle-duration: 400ms;
+  --radius-card: 14px;
+}
+
+/* ---------- Typography: size-specific tracking + leading ---------- */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+}
+
+h1 {
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+h2 {
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+}
+h3 {
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+h4, h5, h6 {
+  letter-spacing: -0.005em;
+}
+
+.prose {
+  line-height: 1.7;
+}
+.prose :where(p, li) {
+  letter-spacing: 0;
+}
+
+/* Small metadata text: slight positive tracking for legibility */
+.text-xs,
+.text-sm {
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Response: feedback on press, not release ---------- */
+
+a,
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /* drop the 300ms tap delay */
+}
+
+button:active,
+[role="button"]:active,
+.main-menu a:active,
+#appearance-switcher:active,
+#scroll-to-top a:active {
+  transform: scale(0.96);
+  transition: transform var(--press-duration) ease-out;
+}
+
+.main-menu a,
+button,
+#appearance-switcher {
+  transition:
+    transform var(--settle-duration) var(--ease-settle),
+    color 200ms ease,
+    opacity 200ms ease;
+}
+
+/* ---------- Cards: depth, lift, press ---------- */
+
+.article-link--card,
+.article-link--related,
+.article-link--simple,
+.article-link--shortcode {
+  border-radius: var(--radius-card) !important;
+  transition:
+    transform var(--settle-duration) var(--ease-settle),
+    box-shadow var(--settle-duration) var(--ease-settle),
+    border-color 200ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .article-link--card:hover,
+  .article-link--related:hover {
+    transform: translateY(-3px);
+    border-color: rgba(var(--color-primary-400), 0.7);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.06),
+      0 12px 32px -8px rgba(var(--color-primary-900), 0.28);
+  }
+  .dark .article-link--card:hover,
+  .dark .article-link--related:hover {
+    border-color: rgba(var(--color-primary-500), 0.6);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.3),
+      0 14px 36px -10px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Thumbnail drifts slightly, hinting toward the open */
+  .article-link--card .thumbnail_card img,
+  .article-link--related .thumbnail_card img {
+    transition: transform 600ms var(--ease-settle);
+  }
+  .article-link--card:hover .thumbnail_card img,
+  .article-link--related:hover .thumbnail_card img {
+    transform: scale(1.03);
+  }
+}
+
+.article-link--card:active,
+.article-link--related:active {
+  transform: scale(0.985);
+  transition: transform var(--press-duration) ease-out;
+}
+
+/* ---------- Media ---------- */
+
+.prose img:not(.nozoom),
+.prose figure img {
+  border-radius: 12px;
+}
+
+/* Profile photo: soft ring of light, like a material edge */
+header img.rounded-full {
+  box-shadow:
+    0 0 0 1px rgba(var(--color-neutral-300), 0.6),
+    0 10px 30px -10px rgba(var(--color-primary-800), 0.45);
+}
+.dark header img.rounded-full {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* Code blocks: rounded, quieter */
+.prose pre {
+  border-radius: 12px;
+}
+
+/* ---------- Materials: translucent header ---------- */
+
+#menu-blur {
+  /* bright top-edge = light catching the material */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+.dark #menu-blur {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- Ease theme switches, no brightness jump ---------- */
+
+body {
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+/* ---------- Focus: visible, soft, on-brand ---------- */
+
+:focus-visible {
+  outline: 2px solid rgba(var(--color-primary-500), 0.9);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Accessibility preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  .article-link--card:hover,
+  .article-link--related:hover,
+  .article-link--card:hover .thumbnail_card img,
+  .article-link--related:hover .thumbnail_card img,
+  :active {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  #menu-blur {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgb(var(--color-primary-200)) !important;
+  }
+  .dark #menu-blur {
+    background-color: rgb(var(--color-neutral-800)) !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .article-link--card,
+  .article-link--related {
+    border-color: rgb(var(--color-neutral-500)) !important;
+  }
+}

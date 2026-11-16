@@ -8,7 +8,7 @@ disableTextInHeader = false
 mainSections = ["blog", "portfolio"]
 
 [header]
-layout = "basic"
+layout = "fixed-fill-blur"
 
 [footer]
 showMenu = true
