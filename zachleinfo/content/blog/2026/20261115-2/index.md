@@ -13,6 +13,16 @@ url: "/blog/2026/ai-agent-platform-part-2"
 
 [Part 1](/blog/2026/ai-agent-platform-part-1) covered what the platform is and the headline number: 945 merged pull requests across two repos in 29 days. This part is about how that number happens without the whole thing turning into a pile of half-merged branches, and honestly, it's the part of this project that felt most like my actual job. Writing code was never the bottleneck. Keeping 29 very fast, very literal coworkers from stepping on each other was.
 
+## What 945 pull requests looks like
+
+Before the how, here's the what, because the shape of the numbers says a lot about the process behind them:
+
+{{< carousel images="{merged-prs-daily.webp,cumulative-merged.webp,areas-changed.webp}" captions="{merged-prs-daily.webp:Merged pull requests per day across both repos with a peak of 118 on November 9,cumulative-merged.webp:Cumulative merged pull requests per repo with both past 460,areas-changed.webp:Where the merged pull requests landed by folder in each repo}" aspectRatio="16-9" interval="7000" >}}
+
+The app and server repo started first and climbed steadily from October 19th. pyaaa didn't really get going until about a week later, then reached 463 merged pull requests in roughly three weeks, which is how both repos ended up past 460 at almost the same time.
+
+The third chart is where the work actually landed, and it's my favorite of the three. 95% of pyaaa's pull requests changed tests. A third of the app repo's pull requests changed ops, deploy or host gate code, which is a lot of infrastructure work for what started as a cube radar. And docs got touched by 46% of the app repo's pull requests and 60% of pyaaa's. A lot of the numbers in this series exist only because the agents were made to write down what they did and how they verified it, every time. The rest of this post is the machinery that makes that happen.
+
 ## An agent is a Markdown file
 
 Every one of the 29 agents is a Markdown file. The top of the file is a little block of frontmatter: a name, a description, which model it runs on, and how much effort it's allowed to spend thinking. The body is its job.
@@ -150,14 +160,6 @@ The app has a beta channel. Betas used to be named after the stable release they
 The fix turned betas into proper pre-releases: 1.2.17b comes before 1.2.17b2, which comes before 1.2.17, with the version check changed on both the app and the server. Version 1.2.16 will never ship as stable, and the build scripts refuse to build it, so the ambiguous number simply can't exist. For older apps that can't parse "b2," the server keeps a "bridge" copy of the previous signed beta manifest with its bytes unchanged, so it still verifies and no signing key had to touch the server to make it work. Beta testers now always reach the full release of their beta's number, and stable users never see betas.
 
 This is also part of why the merge queue assigns versions at merge time. When versions are handed out in one place, by one agent, in merge order, the numbering stays boring. Boring numbering is what you want.
-
-## Where the work actually went
-
-Last thing, because I think it says something about what this pipeline produces:
-
-![Where the 945 merged PRs landed: in the app and server repo, 46 percent touched the desktop app crates, 46 percent docs, 39 percent the server and website and 34 percent ops, deploy or host gate code; in pyaaa, 95 percent touched tests, 82 percent the bot core, games and economy, 60 percent docs and 44 percent the web dashboard](areas-changed.webp)
-
-95% of pyaaa PRs changed tests. A third of the app repo's PRs changed ops, deploy or host gate code, which is a lot of infrastructure work for what started as a cube radar. And docs got touched by 46% of the app repo's PRs and 60% of pyaaa's. A lot of the numbers in this series exist only because the agents were made to write down what they did and how they verified it, every time.
 
 ## Wrapping up
 

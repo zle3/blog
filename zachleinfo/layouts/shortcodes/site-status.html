@@ -1,0 +1,58 @@
+{{- $sha := os.Getenv "CF_PAGES_COMMIT_SHA" -}}
+<div class="not-prose">
+  <div class="status-banner" id="status-banner" data-state="checking" role="status" aria-live="polite">
+    <span class="status-dot" aria-hidden="true"></span>
+    <span><span id="status-summary">Loading status…</span><small id="status-since" class="status-sub"></small></span>
+  </div>
+
+  <div id="status-history" hidden>
+    <div class="status-cards" id="status-cards"></div>
+
+    <h3 class="status-heading">Last 24 hours</h3>
+    <div class="status-panel" id="status-hours"></div>
+
+    <h3 class="status-heading">Last 90 days</h3>
+    <div class="status-panel" id="status-days"></div>
+
+    <ul class="status-legend" aria-label="Legend">
+      <li><span class="status-sq" data-s="up"></span>Up</li>
+      <li><span class="status-sq" data-s="short"></span>Short outage</li>
+      <li><span class="status-sq" data-s="outage"></span>Outage</li>
+      <li><span class="status-sq" data-s="mostly-down"></span>Mostly down</li>
+      <li><span class="status-sq" data-s="none"></span>No data</li>
+    </ul>
+
+    <h3 class="status-heading">Outages</h3>
+    <div class="status-table-wrap">
+      <table class="status-table">
+        <thead><tr><th>What</th><th>From (UTC)</th><th>Until (UTC)</th><th>Lasted</th></tr></thead>
+        <tbody id="status-outages"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3 class="status-heading">Right now, from your browser</h3>
+
+
+  <ul class="status-list" id="status-checks">
+    <li data-check="/" data-state="checking"><span class="status-dot" aria-hidden="true"></span><span class="status-name">Website<small>Home page and assets</small></span><span class="status-result">…</span></li>
+    <li data-check="/resume/Zachary-Le-Resume.pdf" data-state="checking"><span class="status-dot" aria-hidden="true"></span><span class="status-name">Resume PDF<small>Download and viewer</small></span><span class="status-result">…</span></li>
+    <li data-check="/index.json" data-state="checking"><span class="status-dot" aria-hidden="true"></span><span class="status-name">Search<small>Site search index</small></span><span class="status-result">…</span></li>
+    <li data-check="/index.xml" data-state="checking"><span class="status-dot" aria-hidden="true"></span><span class="status-name">RSS feed<small>New posts feed</small></span><span class="status-result">…</span></li>
+    <li data-check="https://firestore.googleapis.com/" data-mode="no-cors" data-state="checking"><span class="status-dot" aria-hidden="true"></span><span class="status-name">View and like counters<small>Google Firebase</small></span><span class="status-result">…</span></li>
+  </ul>
+
+  <ul class="status-list">
+    <li><span class="status-name">Served from<small>Cloudflare edge location for your request</small></span><span class="status-result" id="status-edge">…</span></li>
+    <li><span class="status-name">Connection<small>HTTP version and TLS</small></span><span class="status-result" id="status-conn">…</span></li>
+    <li><span class="status-name">Last deployed<small>When this version of the site was built</small></span><span class="status-result"><time datetime="{{ now.UTC.Format "2006-01-02T15:04:05Z" }}">{{ now.UTC.Format "Jan 2, 2006 15:04 UTC" }}</time></span></li>
+    {{- with $sha }}
+    <li><span class="status-name">Version<small>Git commit of this build</small></span><span class="status-result"><code>{{ substr . 0 7 }}</code></span></li>
+    {{- end }}
+    <li><span class="status-name">Built with<small>Static site generator</small></span><span class="status-result">Hugo {{ hugo.Version }}</span></li>
+  </ul>
+  <p style="font-size:0.8rem;opacity:0.75;margin:0">
+    <button type="button" id="status-recheck" role="button" style="text-decoration:underline">Check again</button>
+  </p>
+</div>
+<script src="{{ "js/status.js" | relURL }}" defer></script>

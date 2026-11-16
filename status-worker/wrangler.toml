@@ -1,0 +1,26 @@
+name = "zachle-status"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Served on the site's own domain so the status page can fetch it
+# same-origin (no CSP change). Takes precedence over Pages for this path.
+routes = [
+  { pattern = "zachle.info/api/status*", zone_name = "zachle.info" }
+]
+
+# Check every 5 minutes.
+[triggers]
+crons = ["*/5 * * * *"]
+
+
+[vars]
+SITE_URL = "https://zachle.info/"
+# Optional second row: the Pages project's own address, which skips the
+# custom domain. Set to your project's *.pages.dev URL, or remove.
+ORIGIN_URL = "https://zachle.pages.dev/"
+INTERVAL_SECONDS = "300"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zachle-status"
+database_id = "3dc3cd7b-cfbb-49e1-a760-96363cbd3780"

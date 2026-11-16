@@ -1,12 +1,17 @@
 ---
 title: "My First Post"
 date: 2024-06-29T20:33:45+08:00
-tags: ["blog", "meta", "cloudflare", "self-hosted"]
+tags: ["meta", "cloudflare", "self-hosted"]
 summary: "Intro post"
 description: "intro post"
 keywords: 
 url: "/blog/2024/my-first-post"
 
+showHero: false
+thumbnailCard:
+  kicker: "Blog"
+  title: ["My First Post"]
+  subtitle: "Where this site started"
 ---
 ## Introduction
 

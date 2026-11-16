@@ -76,13 +76,11 @@ Here's how a request actually flows:
 5. **The helper verifies and applies.** The root helper checks the passkey signature itself and acts only on its own stored summary. A deploy that isn't confirmed within its window gets undone automatically.
 6. **Everything gets logged.** Every event lands in an ops log where each row's hash covers the row before it, so nobody can quietly edit history after the fact.
 
-![Staff console ops request waiting for approval: the commit and image digest to compare against the Discord message, five host-written checks all passing (compose pinned to the image digest, compose resolves to this image, image pulled by digest, image names its commit, nothing else waiting for confirmation), a field for the code from Discord, and an Approve with the passkey button. Demo data, host name hidden](ops-approve.webp)
+The checks on that page aren't written by the server either. They come from the host. And if one fails, the page doesn't give me the option to approve at all, only to decline. Flagged install diffs get one more guard: the console shows the diff with its verified SHA-256 and every line verbatim, and tells me to read the copy the host sent to Discord, because that's the one I'm actually approving.
 
-The checks on that page aren't written by the server either. They come from the host. And if one fails, the page doesn't give me the option to approve at all:
+{{< carousel images="{c-ops-approve.webp,c-ops-check-failed.webp,c-ops-diff.webp}" captions="{c-ops-approve.webp:An ops request with five host-written checks passing and the passkey approval (demo data and host name hidden),c-ops-check-failed.webp:The same request with a failed check where approval is hidden and Decline is the only option,c-ops-diff.webp:The install diff viewer with the verified sha256 and every line shown verbatim (test fixture)}" aspectRatio="16-9" interval="7000" >}}
 
-![The same ops request with one failed check, image could not be pulled, showing a red warning that says don't approve, decline, and the approval controls hidden so the only option is Decline. Demo data, host name hidden](ops-check-failed.webp)
-
-I like this a lot, mostly because I know myself. At some point I'll be half-asleep, an agent will want something, and I'll be tempted to just tap Approve. Hiding the button when a check fails takes that decision out of my hands. There's a similar guard for diffs: when an install diff gets flagged, the console makes me type the check value before it'll let me approve, and the diff viewer shows the verified SHA-256 with every line verbatim instead of a summary.
+I like this a lot, mostly because I know myself. At some point I'll be half-asleep, an agent will want something, and I'll be tempted to just tap Approve. Hiding the button when a check fails takes that decision out of my hands. The flagged-diff guard goes one step further: the console makes me type a check value from the end of the diff before it'll let me approve, which is a polite way of making sure I actually scrolled to the bottom.
 
 The end result is that a compromised runner, server or console can queue requests and show me things, but none of them can make the root helper run anything my passkey didn't sign.
 
@@ -96,7 +94,7 @@ Lesson learned, and it's an old one: if every request that reaches the approver 
 
 The other half of "can only run what I approved" is the images themselves. Images get built from clean checkouts of the merged commit and pushed to GHCR. That part's normal. What isn't normal is how they get deployed.
 
-A tag like `latest` is a pointer, and pointers move. If a deploy just pulls `latest`, it's running whatever that tag pointed at in the moment, which might not be the image I looked at. So deploys are pinned by **digest**, the image's SHA-256. A deploy restarts only the exact GHCR digest I approved, and it refuses outright if the compose file doesn't match. That's what those checks in the screenshot above are verifying: compose is pinned to the digest, compose resolves to that image, the image was pulled by digest, and the image names its commit.
+A tag like `latest` is a pointer, and pointers move. If a deploy just pulls `latest`, it's running whatever that tag pointed at in the moment, which might not be the image I looked at. So deploys are pinned by **digest**, the image's SHA-256. A deploy restarts only the exact GHCR digest I approved, and it refuses outright if the compose file doesn't match. That's what those host-written checks in the console are verifying: compose is pinned to the digest, compose resolves to that image, the image was pulled by digest, and the image names its commit.
 
 The containers themselves are locked down about as far as they'll go:
 
@@ -136,7 +134,33 @@ Each release has a manifest with the version, the SHA-256, the size and an expir
 
 The expiry is the part people tend to skip. Without it, an attacker who got hold of an old, validly signed manifest could replay it forever to push users back onto an old version with a known bug. With a 180-day expiry, old manifests eventually just stop being accepted.
 
-The beta channel had its own versioning saga, where testers on a beta could never be offered the stable release that came after it, and fixing it without needing the signing key anywhere near the server took some creative bridging. That one's a story for another time.
+The beta channel had its own versioning saga, where testers on a beta could never be offered the stable release that came after it, and fixing it without needing the signing key anywhere near the server took some creative bridging. That one's in [Part 2](/blog/2026/ai-agent-platform-part-2).
+
+## What the admin side looks like day to day
+
+Everything so far is about how changes get *onto* a host. The other half of running a platform is knowing what it's doing once they're there, and for that there are two places I look: the website's admin pages, and the staff console.
+
+### The website's admin pages
+
+The admin pages live inside the members site, visible only to owners, and they're split into tabs:
+
+- **Overview** is the dashboard I open first: server version and uptime, how many apps are active now and today, which app versions are out there and sharing finds, how many members signed in, how much data the database holds and how fast the disk is filling. It also keeps a row for old Cube Radar builds, which the server now refuses, so I can see whether anybody is still stuck on one. If free disk drops under 15%, or the database, app logs or combat records start growing at over three times their recent daily average, an alert goes to the server's log at most once a day.
+- **Usage** is where the adoption numbers in this series come from: 54 monthly active installs, 27 monthly signed-in members and 27 linked accounts. Those totals are real. The 90-day daily curve in the screenshots is generated demo data.
+- **Access** decides who may sign in at all (by Discord role, an allow list, or any member of the server), which app features need which level, and who may edit the legion roster. Sign-ins last 7 days after their last use and 30 days at most, changed rules reach signed-in members within about five minutes, and there's a big red **Sign everyone out** button for when that isn't fast enough.
+- **Signed-in apps** lists every app sign-in with its features and link state, with a revoke button on each.
+- **Logs and recordings** is where a bug report starts. A member gives me a code from the app's Status and logs window, and I can find the log they uploaded, search app logs, or pull a developer recording of a session. Logs arrive already scrubbed on the member's PC, and they're kept for 30 days.
+- **Traffic** shows requests per route, error rates and the live server log.
+- **Moderation and cleanup** covers the rest: merging misread item names and removing bad entries in the market data, reviewing the DPS meter banner images members upload (and pausing an account if needed), and the legion chat relay's own page with reader health, characters the reader doesn't know yet, and join applications. There's also a version of the leaderboard *with* names, which exists purely for owners troubleshooting. Members never see it.
+
+{{< carousel images="{a-overview.webp,a-usage.webp,a-logs.webp,a-status.webp}" captions="{a-overview.webp:Admin overview with server and players and app versions and how apps update (demo data),a-usage.webp:Admin usage with the real totals over a generated 90-day daily curve,a-logs.webp:Logs and recordings where uploaded logs and developer recordings are found,a-status.webp:The public status page with uptime measured from inside and through Cloudflare}" aspectRatio="16-9" interval="7000" >}}
+
+The last slide is the one page here that isn't private. The public status page shows 24-hour and 90-day uptime, measured two ways: from inside the server, and through Cloudflare the way a member actually reaches it. When one is green and the other isn't, that says whether the problem is the server or the path to it.
+
+### The staff console
+
+The staff console is separate from the members site and sits behind Cloudflare Access. Its home page shows each app's state, alerts and totals at a glance, each app has a detail page with its own log, and the console log records every action along with which Access and Discord accounts are linked. Linking a Cloudflare Access account to a Discord account is its own small page, and so is enrolling the passkey that approves owner operations. Completed requests keep their outcome, the host's report and the full log, so "what happened to that deploy last Tuesday" has an answer.
+
+None of this is glamorous. It's the same set of screens any ops team ends up building: what's running, who's using it, who's allowed in, what broke and where the logs are. The difference is that the agents built it to my spec, and I'm the one who uses it every day.
 
 ## What I'd tell anyone else doing this
 

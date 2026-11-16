@@ -9,6 +9,11 @@ summary: "A player-initiated restart bot, offsite backups to an OpenMediaVault N
 description: "Part 2 of a series on self-hosting a Palworld dedicated server: Discord alerting, a restart-vote bot, offsite NAS backups, and the reliability bugs that followed."
 keywords: "palworld, discord.py, lgsm, homelab, self-hosted, cron, systemd, openmediavault"
 url: "/blog/2026/self-hosted-palworld-part-2"
+showHero: false
+thumbnailCard:
+  kicker: "Self-Hosting Palworld · Part 2"
+  title: ["Bot and Backups"]
+  subtitle: "Restart-vote bot and offsite NAS backups"
 ---
 
 [Part 1](/blog/2026/self-hosted-palworld-part-1) covered planning, the SSH lockout I walked myself into, and getting LGSM running. Server was up, patched, documented. This part is where the community actually started asking for things, and where I found out exactly how many small, dumb bugs it takes to make "Discord alerting" and "a restart bot" trustworthy enough that I stop getting pinged about it personally.

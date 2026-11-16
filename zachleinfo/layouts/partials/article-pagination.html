@@ -1,0 +1,38 @@
+{{- /* Site override of Blowfish's article pagination: two equal cards
+     with a chevron, a label, a two-line title and the date, so long
+     titles wrap cleanly and the arrows line up. */ -}}
+{{ if .Params.showPagination | default (.Site.Params.article.showPagination | default true) }}
+  {{ if or .NextInSection .PrevInSection }}
+    {{ $next := .NextInSection }}
+    {{ $prev := .PrevInSection }}
+    {{ if .Params.invertPagination | default (.Site.Params.article.invertPagination | default false) }}
+      {{ $next = .PrevInSection }}
+      {{ $prev = .NextInSection }}
+    {{ end }}
+    {{ $showDate := .Params.showDate | default (.Site.Params.article.showDate | default true) }}
+    <nav class="post-nav" aria-label="More posts">
+      {{ with $prev }}
+        <a class="post-nav-card post-nav-prev" href="{{ .RelPermalink }}">
+          <span class="post-nav-label">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            Previous
+          </span>
+          <span class="post-nav-title">{{ .Title | emojify }}</span>
+          {{ if $showDate }}<span class="post-nav-date">{{ partial "meta/date.html" .Date }}</span>{{ end }}
+        </a>
+      {{ else }}
+        <span class="post-nav-spacer" aria-hidden="true"></span>
+      {{ end }}
+      {{ with $next }}
+        <a class="post-nav-card post-nav-next" href="{{ .RelPermalink }}">
+          <span class="post-nav-label">
+            Next
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+          <span class="post-nav-title">{{ .Title | emojify }}</span>
+          {{ if $showDate }}<span class="post-nav-date">{{ partial "meta/date.html" .Date }}</span>{{ end }}
+        </a>
+      {{ end }}
+    </nav>
+  {{ end }}
+{{ end }}

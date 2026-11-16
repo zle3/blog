@@ -9,6 +9,11 @@ summary: "Discovering the restart button had been silently broken since containe
 description: "Part 4 of a series on self-hosting a Palworld dedicated server: four stacked bugs behind a silently broken restart button, async blocking calls freezing the bot, learning Ansible on the side with a throwaway nginx demo, packaging the stack as an Ansible-based portfolio project, and what its first real deploy against a disposable VM actually turned up."
 keywords: "palworld, docker, ansible, ansible-vault, discord.py, asyncio, systemd, homelab, self-hosted, jinja2"
 url: "/blog/2026/self-hosted-palworld-part-4"
+showHero: false
+thumbnailCard:
+  kicker: "Self-Hosting Palworld · Part 4"
+  title: ["Making It Reusable"]
+  subtitle: "Ansible, a throwaway test VM and real deploy bugs"
 ---
 
 [Part 3](/blog/2026/self-hosted-palworld-part-3) covered containerizing the whole stack and shipping a public status page. Everything looked done. Genuinely, I thought I was finished. Then a small feature request, a slightly better in-game restart notice, cracked open the fact that the actual restart button hadn't worked since the container migration, at all, for who knows how long, and fixing that turned up two more bugs hiding behind Discord's own UI. This part covers that whole mess, plus the very different project that came after it once I'd had enough: turning the whole build into something a stranger could actually stand up themselves, and teaching myself Ansible properly along the way instead of just YOLO-ing it against the live server.

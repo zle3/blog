@@ -1,11 +1,16 @@
 ---
 title: "A GCP + Terraform + Cloudflare Demo"
 date: 2026-07-03T14:00:00-07:00
-tags: ["blog", "portfolio", "gcp", "terraform", "cloudflare", "cloud-run", "devops"]
+tags: ["portfolio", "gcp", "terraform", "cloudflare", "cloud-run", "devops"]
 summary: "Standing up a small GCP stack with Terraform, Cloud Run, Cloud SQL, and Cloudflare."
 description: "A walkthrough of demo1, a GCP infrastructure project built with Terraform, Docker, Cloud Run, and Cloudflare."
 keywords: "gcp, terraform, cloudflare, cloud run, devops"
 url: "/portfolio/2026/gcp-terraform-demo"
+showHero: false
+thumbnailCard:
+  kicker: "Portfolio"
+  title: ["GCP + Terraform", "+ Cloudflare"]
+  subtitle: "Cloud Run, Cloud SQL and a CI/CD pipeline"
 ---
 
 ## The gap
@@ -14,15 +19,7 @@ Nearly all of my hands-on infrastructure experience lives on a rack in my living
 
 So instead of reading more about it, I built something on it.
 
-Live at [demo1.zachle.info](https://demo1.zachle.info), source at [zle3/demo1](https://github.com/zle3/demo1), for anyone who wants to take a quick look at it.
-
-<iframe
-  src="https://demo1.zachle.info"
-  title="demo1 live demo"
-  loading="lazy"
-  class="w-full rounded-md border border-neutral-200 dark:border-neutral-700"
-  style="height: 640px;"
-></iframe>
+The live demo has since been taken down, but the source is still at [zle3/demo1](https://github.com/zle3/demo1) for anyone who wants to look at how it was built.
 
 ## What it actually is
 
@@ -54,7 +51,7 @@ I already run Cloudflare for DNS and CDN on other projects, so rather than migra
 
 ## Proving it to myself, not just saying it
 
-The laziest version of this project would've been a "hello world" container and a screenshot. Instead the demo app has a handful of endpoints whose only purpose is to prove the infrastructure underneath is real, since I didn't want to just take my own word for it either:
+The laziest version of this project would've been a "hello world" container and a screenshot. Instead the demo app had a handful of endpoints whose only purpose is to prove the infrastructure underneath is real, since I didn't want to just take my own word for it either:
 
 - `/api/verify` reads the GCP instance metadata and checks the incoming request headers for Cloudflare's fingerprints (`CF-Ray`, `CF-Connecting-IP`, `CF-IPCountry`), and reports whether the request landed on Cloud Run or the Compute Engine VM.
 - `/api/docker` peeks at `/.dockerenv` and `/proc/1/cgroup` to confirm it's actually inside a container and not just pretending.
@@ -62,7 +59,7 @@ The laziest version of this project would've been a "hello world" container and 
 - `/api/builds` calls the Cloud Build API and lists recent build history, so you can watch the pipeline's own receipts.
 - `/api/uptime/history` pulls the last month of uptime straight from Cloud Monitoring.
 
-If you don't believe any of it, the site will happily argue its own case for you.
+While it was live, the site argued its own case. The code for every one of those checks is still in the repo.
 
 ## What's left
 

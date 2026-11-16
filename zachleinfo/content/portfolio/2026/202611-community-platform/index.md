@@ -6,6 +6,8 @@ summary: "A self-hosted Aion 2 community platform, Nyerkulator 3000: a Windows d
 description: "Showcase of a self-hosted Aion 2 community platform built and operated with a team of AI coding agents: desktop app, website, Discord bot, homelab infrastructure, change control and security."
 keywords: "claude code, ai agents, ai operations, rust, egui, axum, sqlite, discord.py, proxmox, cloudflare tunnels, litestream, aion 2"
 url: "/portfolio/2026/ai-community-platform"
+thumbnailReview: 2027-02-16
+thumbnailReviewNote: "Thumbnail is the platform architecture diagram (two Proxmox hosts, Cloudflare Tunnels, GHCR). Replace it if the infrastructure changes."
 ---
 
 ## What this is
@@ -25,6 +27,9 @@ The full build log is a series on the blog:
 - [Part 5: Fixing Minimap Tracking from User Reports](/blog/2026/ai-agent-platform-part-5)
 - [Part 6: Faster Without Changing a Single Output](/blog/2026/ai-agent-platform-part-6)
 - [Part 7: A Provably Fair Play-Money Economy](/blog/2026/ai-agent-platform-part-7)
+- [Part 8: What It's Like to Use](/blog/2026/ai-agent-platform-part-8)
+- [Part 9: A Discord Bot That Asks Before It Changes Things](/blog/2026/ai-agent-platform-part-9)
+- [Part 10: Raids, Boss Timers and the Party Finder](/blog/2026/ai-agent-platform-part-10)
 
 The repos are private and still in active development, so there's no source link this time.
 

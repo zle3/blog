@@ -6,6 +6,11 @@ summary: "Post Detailing Cost of Infrastructure to 11/2024"
 description: "Post Detailing Cost of Infrastructure to 11/2024"
 keywords: "cost"
 url: "/blog/2024/cost-to-date"
+showHero: false
+thumbnailCard:
+  kicker: "Homelab"
+  title: ["Cost of", "Infrastructure"]
+  subtitle: "What the rack cost, up to November 2024"
 ---
 
 ## Wow what a nice server rack

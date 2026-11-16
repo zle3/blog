@@ -171,6 +171,8 @@
       {{ range $translations }}
         {{ $path = replace $path (print "." .Lang ".md") ".md" }}
       {{ end }}
+      {{/* Local: keep a page's original counter key after it moves, e.g. about.md -> about/index.md */}}
+      {{ $path = $.Params.firebasePath | default $path }}
       {{ partial "inline/firebase-config.html" (dict "views" (printf "views_%s" $path) "likes" (printf "likes_%s" $path)) }}
     {{ end }}
   {{ else if eq .Kind "term" }}

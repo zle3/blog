@@ -1,0 +1,21 @@
+{{- /* Thumbnail review flag. A page whose feature image shows details
+     that can go out of date sets, in front matter:
+       thumbnailReview: 2027-02-16
+       thumbnailReviewNote: "what to check"
+     Once the date has passed, every build (local and Cloudflare) prints
+     a warning naming the page, so it gets looked at and the date bumped. */ -}}
+{{- with .Params.thumbnailReview -}}
+  {{- if lt (time.AsTime .) now -}}
+    {{- warnf "THUMBNAIL REVIEW DUE (%s): %s. %s" (time.Format "2006-01-02" .) $.RelPermalink ($.Params.thumbnailReviewNote | default "Check the feature image is still accurate.") -}}
+  {{- end -}}
+{{- end -}}
+{{- /* Missing thumbnail check: every regular page should have a feature
+     image (or a title card generated from its thumbnailCard front matter
+     with scripts/thumbnail-card.py). */ -}}
+{{- if and .IsPage (not (or (.Resources.GetMatch "*feature*") (.Resources.GetMatch "*cover*") (.Resources.GetMatch "*thumbnail*"))) -}}
+  {{- if .Params.thumbnailCard -}}
+    {{- warnf "THUMBNAIL MISSING: %s has thumbnailCard but no feature image. Run: python3 scripts/thumbnail-card.py content/%s" .RelPermalink .File.Path -}}
+  {{- else -}}
+    {{- warnf "THUMBNAIL MISSING: %s has no feature image. Add one, or add thumbnailCard front matter and run scripts/thumbnail-card.py." .RelPermalink -}}
+  {{- end -}}
+{{- end -}}

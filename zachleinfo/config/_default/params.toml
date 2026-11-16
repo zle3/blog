@@ -11,7 +11,7 @@ mainSections = ["blog", "portfolio"]
 layout = "fixed-fill-blur"
 
 [footer]
-showMenu = true
+showMenu = false
 showCopyright = false
 showThemeAttribution = false
 showAppearanceSwitcher = true

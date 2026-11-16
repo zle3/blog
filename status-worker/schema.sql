@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS checks (
+  ts INTEGER NOT NULL,
+  target TEXT NOT NULL,
+  ok INTEGER NOT NULL,
+  ms INTEGER NOT NULL,
+  status INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS checks_ts ON checks (ts);

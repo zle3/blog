@@ -17,7 +17,7 @@ buildFuture = false
 # googleAnalytics = "G-XXXXXXXXX"
 
 [pagination]
-  pagerSize = 10
+  pagerSize = 12
 
 [imaging]
   anchor = 'Center'
@@ -37,7 +37,8 @@ buildFuture = false
   home = ["HTML", "RSS", "JSON"]
 
 [related]
-  threshold = 0
+  includeNewer = true
+  threshold = 80
   toLower = false
 
     [[related.indices]]
@@ -46,11 +47,11 @@ buildFuture = false
 
     [[related.indices]]
         name = "categories"
-        weight = 100
+        weight = 20
 
     [[related.indices]]
         name = "series"
-        weight = 50
+        weight = 100
 
     [[related.indices]]
         name = "authors"
@@ -65,3 +66,8 @@ buildFuture = false
       name = 'fragmentrefs'
       type = 'fragments'
       weight = 10
+
+# Let templates read the deploy commit/branch that Cloudflare Pages sets,
+# for the build info on /status. Keeps Hugo's default allowlist.
+[security.funcs]
+  getenv = ['^HUGO_', '^CI$', '^CF_PAGES_COMMIT_SHA$', '^CF_PAGES_BRANCH$']

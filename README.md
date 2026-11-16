@@ -80,9 +80,8 @@ blog/
     │       └── params.toml          # theme + site params (Firebase, article/list flags, etc.)
     ├── content/
     │   ├── _index.md                # homepage content
-    │   ├── about.md
-    │   ├── now.md
-    │   ├── resume.md
+    │   ├── about/ now/ resume/      # page bundles: index.md + feature.webp (resume/ also holds the PDF)
+    │   ├── privacy/ status/
     │   ├── blog/                    # posts go here
     │   │   └── 2024/
     │   │       ├── 20240629/
@@ -109,3 +108,46 @@ blog/
                 ├── package-lock.json
                 └── seed-firebase-views.js   # manual GA→Firestore view-count backfill script
 ```
+
+## Thumbnails
+
+Every page should have a `feature.*` image in its folder (page bundle).
+The theme uses it for list cards, related posts, link previews and,
+unless `showHero: false`, as a banner on the page. Cards display it at
+**3:2**, so make thumbnails 1500x1000 and keep the subject centred.
+
+Pages without a suitable image get a **text title card**, generated from
+front matter so it can always be rebuilt from the repo:
+
+```yaml
+thumbnailCard:
+  kicker: "Self-Hosting Palworld · Part 1"
+  title: ["Foundation and", "Digging In"]   # one string or a list of lines (max ~24 chars each)
+  subtitle: "Proxmox, LinuxGSM and the config traps"
+showHero: false   # the card repeats the title, so don't show it as a banner
+```
+
+```sh
+cd zachleinfo
+python3 scripts/thumbnail-card.py                        # render any missing cards
+python3 scripts/thumbnail-card.py --all                  # re-render every card
+python3 scripts/thumbnail-card.py content/about/index.md # one page
+```
+
+Needs `ffmpeg` and PyYAML. Fonts are committed in `scripts/fonts/` (DejaVu,
+see its license file), so cards look the same on any machine. Keep card
+text evergreen: no job titles, counts or dates that will go stale.
+
+Builds warn about thumbnail problems (visible in Cloudflare build logs):
+
+- `THUMBNAIL MISSING`: a page has no feature image.
+- `THUMBNAIL REVIEW DUE`: a page's `thumbnailReview: YYYY-MM-DD` date has
+  passed. Use it for images that can go out of date (for example an
+  architecture diagram), with a `thumbnailReviewNote` saying what to check.
+
+## Status page and uptime monitor
+
+`/status` shows uptime bars from the `zachle-status` Cloudflare Worker
+(`status-worker/` at the repo root), which checks the site every 5
+minutes and serves history at `https://zachle.info/api/status`. See
+`status-worker/README.md` to redeploy it.

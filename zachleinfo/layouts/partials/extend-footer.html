@@ -1,0 +1,16 @@
+<div class="site-footer-meta">
+  <nav aria-label="Footer">
+    <ul>
+      {{ range .Site.Menus.footer }}
+        <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+      {{ end }}
+    </ul>
+  </nav>
+  <p class="site-footer-line">
+    zachle.info · built with Hugo on Cloudflare Pages · © {{ now.Year }} Zachary Le
+  </p>
+  <p class="site-footer-note">
+    Trademarks and screenshots belong to their respective owners. Mentions of companies or products do not imply endorsement.
+  </p>
+</div>
+<script src="{{ "js/reduced-motion.js" | relURL }}" defer></script>

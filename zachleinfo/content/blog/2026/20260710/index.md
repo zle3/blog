@@ -9,6 +9,11 @@ summary: "Standing up a self-hosted Palworld server on Proxmox for a ~200-member
 description: "Part 1 of a series on self-hosting a Palworld dedicated server on Proxmox for a Discord community, covering planning, LGSM setup, a port-change saga, and early config traps."
 keywords: "palworld, lgsm, proxmox, homelab, self-hosted game server, ubuntu, linux"
 url: "/blog/2026/self-hosted-palworld-part-1"
+showHero: false
+thumbnailCard:
+  kicker: "Self-Hosting Palworld · Part 1"
+  title: ["Foundation and", "Digging In"]
+  subtitle: "Proxmox, LinuxGSM and the config traps"
 ---
 
 ## So the Discord wanted a Palworld server

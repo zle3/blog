@@ -1,11 +1,15 @@
 ---
 title: "Self-Hosted Palworld Server Platform"
 date: 2026-07-14T18:00:00-07:00
-tags: ["blog", "portfolio", "palworld", "docker", "homelab", "discord"]
+tags: ["portfolio", "palworld", "docker", "homelab", "discord"]
 summary: "A self-hosted Palworld game server for a ~200-member Discord community: Proxmox and LGSM, a restart-vote Discord bot, offsite backups, a Docker Compose stack, a public status page, and the dependency map and knowledge graph used to keep it all honest."
 description: "Full showcase of a self-hosted Palworld dedicated server platform: infrastructure, a Discord bot, offsite backups, containerization, a public status page, and the dependency/knowledge-graph tooling used to audit it."
 keywords: "palworld, lgsm, proxmox, docker, discord bot, homelab, dependency mapping, knowledge graph"
 url: "/portfolio/2026/palworld-server-showcase"
+thumbnailCard:
+  kicker: "Portfolio"
+  title: ["Self-Hosted", "Palworld Server"]
+  subtitle: "Proxmox, LinuxGSM, a Discord bot and backups"
 ---
 
 ## What this is

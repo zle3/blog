@@ -1,0 +1,28 @@
+{{- /* Site override of Blowfish's related posts: an image-led grid the same
+     width as the article text, so it lines up with the post and the
+     previous/next cards below it. */ -}}
+{{ if .Params.showRelatedContent | default (.Site.Params.article.showRelatedContent | default false) }}
+  {{ $related := .Site.RegularPages.Related . | first .Site.Params.article.relatedContentLimit }}
+  {{ with $related }}
+    <section class="related-posts max-w-prose" aria-labelledby="related-heading">
+      <h2 id="related-heading">{{ i18n "article.related_articles" | emojify }}</h2>
+      <ul>
+        {{ range . }}
+          {{ $img := or (.Resources.GetMatch "*feature*") (.Resources.GetMatch "*cover*") (.Resources.GetMatch "*thumbnail*") }}
+          <li>
+            <a class="related-card" href="{{ .RelPermalink }}">
+              {{ with $img }}
+                {{ $thumb := .Process "fill 720x480 Center webp q82" }}
+                <span class="related-img"><img src="{{ $thumb.RelPermalink }}" width="360" height="240" alt="" loading="lazy" decoding="async"></span>
+              {{ end }}
+              <span class="related-text">
+                <span class="related-title">{{ .Title | emojify }}</span>
+                <span class="related-date">{{ partial "meta/date.html" .Date }}</span>
+              </span>
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+{{ end }}
