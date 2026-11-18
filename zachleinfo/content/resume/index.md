@@ -29,7 +29,10 @@ firebasePath: "resume.md"
   .resume-embed { display: none; margin: 1.5rem 0; width: min(1024px, calc(100vw - 2rem)); max-width: none; }
   .resume-embed iframe { width: 100%; height: 90vh; border: 1px solid rgb(var(--color-neutral-300)); border-radius: 12px; }
   .dark .resume-embed iframe { border-color: rgb(var(--color-neutral-700)); }
-  @media (min-width: 768px) { .resume-embed { display: block; } }
+  .resume-pages { margin: 1.5rem 0; display: grid; gap: 1rem; }
+  .resume-pages img { width: 100%; height: auto; margin: 0; border: 1px solid rgb(var(--color-neutral-300)); border-radius: 12px; background: #fff; }
+  .dark .resume-pages img { border-color: rgb(var(--color-neutral-700)); }
+  @media (min-width: 768px) { .resume-embed { display: block; } .resume-pages { display: none; } }
   @media (prefers-contrast: more) { .resume-actions .secondary { border-width: 2px; } }
 </style>
 
@@ -40,4 +43,9 @@ firebasePath: "resume.md"
 
 <div class="resume-embed not-prose">
   <iframe src="/resume/Zachary-Le-Resume.pdf#view=FitH" title="Zachary Le resume (PDF)" loading="lazy"></iframe>
+</div>
+
+<div class="resume-pages not-prose">
+  <a href="/resume/page-1.webp"><img src="/resume/page-1.webp" width="1240" height="1605" alt="Resume page 1 of 2" loading="lazy" decoding="async"></a>
+  <a href="/resume/page-2.webp"><img src="/resume/page-2.webp" width="1240" height="1605" alt="Resume page 2 of 2" loading="lazy" decoding="async"></a>
 </div>

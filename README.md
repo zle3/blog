@@ -145,6 +145,17 @@ Builds warn about thumbnail problems (visible in Cloudflare build logs):
   passed. Use it for images that can go out of date (for example an
   architecture diagram), with a `thumbnailReviewNote` saying what to check.
 
+## Resume
+
+`content/resume/` holds the PDF. Screens 768px and wider embed it; smaller
+screens show `page-N.webp` images, since mobile browsers don't render PDFs
+in an iframe. After replacing the PDF, re-render the images:
+
+```sh
+cd zachleinfo
+python3 scripts/resume-images.py   # needs: pip install pypdfium2 pillow (venv OK)
+```
+
 ## Status page and uptime monitor
 
 `/status` shows uptime bars from the `zachle-status` Cloudflare Worker
