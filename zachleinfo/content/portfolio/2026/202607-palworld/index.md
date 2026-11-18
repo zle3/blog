@@ -9,7 +9,7 @@ url: "/portfolio/2026/palworld-server-showcase"
 thumbnailCard:
   kicker: "Portfolio"
   title: ["Self-Hosted", "Palworld Server"]
-  subtitle: "Proxmox, LinuxGSM, a Discord bot and backups"
+  subtitle: "Proxmox, LinuxGSM, a Discord bot, and backups"
 ---
 
 ## What this is

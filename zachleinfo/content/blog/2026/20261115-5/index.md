@@ -6,7 +6,7 @@ categories: ["blog"]
 series: ["building a game community platform with ai agents"]
 series_order: 5
 summary: "Three user reports, one stubborn minimap: how Radar went from mistaking the HP bar and skill bar for a minimap to finding it by the icons on its frame, why the player's dot kept running ahead and snapping back, and how a nameplate drawn over the chat turned \"hopefully\" into \"nopefully\"."
-description: "Part 5 of a series on building an Aion 2 community platform with AI coding agents: fixing minimap detection, position tracking and chat OCR from real user reports, with before and after detector output."
+description: "Part 5 of a series on building an Aion 2 community platform with AI coding agents: fixing minimap detection, position tracking, and chat OCR from real user reports, with before and after detector output."
 keywords: "minimap detection, screen reading, ocr, template matching, windows graphics capture, user reports, rust, ai agents, aion 2"
 url: "/blog/2026/ai-agent-platform-part-5"
 ---
@@ -25,15 +25,15 @@ Where that pays off is the screen pointer, the 3D arrow Radar draws over the gam
 
 {{< carousel images="{cube-approach.webp,cube-at-5m.webp,cube-ring.webp}" captions="{cube-approach.webp:Approach with the arrow reading 55 m and 7 m down (composite),cube-at-5m.webp:At the cube with the arrow at 5 m (composite),cube-ring.webp:Within 4 m the arrow becomes a ring while the cube opens (composite)}" aspectRatio="16-9" interval="6000" >}}
 
-Those are composites, same as the video: the game picture is my own recording, and the arrow and Radar window are the app's real per-frame output replayed from that session's traffic. The pointer in them runs on my own Radar settings, size 160 with a −140 offset, 0.85 opacity, rings on and the sphere off. [Part 1](/blog/2026/ai-agent-platform-part-1) has the full story of how the clip was put together, and [Part 8](/blog/2026/ai-agent-platform-part-8) goes through the pointer and the rest of the app from a member's point of view.
+Those are composites, same as the video: the game picture is my own recording, and the arrow and Radar window are the app's real per-frame output replayed from that session's traffic. The pointer in them runs on my own Radar settings, size 160 with a −140 offset, 0.85 opacity, rings on, and the sphere off. [Part 1](/blog/2026/ai-agent-platform-part-1) has the full story of how the clip was put together, and [Part 8](/blog/2026/ai-agent-platform-part-8) goes through the pointer and the rest of the app from a member's point of view.
 
 That's the happy path: default layout, minimap in its usual top-right spot, game window in front, nothing covering it. Every report in this post is someone stepping off that happy path in a perfectly reasonable way, and Radar falling over because of it.
 
 ## How the reports came in
 
-The reports were numbered, and they came with a description and, where possible, screenshots, videos or a debug dump from the app. The app has a Status and logs page for exactly this: it shows what every tool thinks is going on right now, and it can export the log so a report arrives with the app's side of the story attached.
+The reports were numbered, and they came with a description and, where possible, screenshots, videos, or a debug dump from the app. The app has a Status and logs page for exactly this: it shows what every tool thinks is going on right now, and it can export the log so a report arrives with the app's side of the story attached.
 
-![The app's Status and logs page from a demo replay: capture counts, the Radar section with the map, the last position from the game, minimap tracking with its scale in units per minimap width, cube counts, and sections for Nyerk, Combat, Duty, Pets, Market and the Tile puzzle helper](status-logs.webp)
+![The app's Status and logs page from a demo replay: capture counts, the Radar section with the map, the last position from the game, minimap tracking with its scale in units per minimap width, cube counts, and sections for Nyerk, Combat, Duty, Pets, Market, and the Tile puzzle helper](status-logs.webp)
 
 That screenshot is from a demo replay, not a real session, but notice the Radar line that says "minimap tracking" and the scale it's using in units per minimap width. Hold on to that, it matters for report 8. Uploaded logs also get the Windows user name and computer name masked on the PC before they leave it, which [Part 4](/blog/2026/ai-agent-platform-part-4) covers.
 
@@ -41,7 +41,7 @@ The reporters' actual screens became test fixtures in the repo, so every fix had
 
 ## Report 7: the minimap was reading a browser
 
-The first one sounds silly once you know the answer. Minimap marks, the screen pointer and the distance to a cube all went wrong for someone while a browser window was covering part of the game. The reason: the app was copying pixels off the screen where the minimap *should* be, and when a browser was sitting on top of it, it was very faithfully reading the browser. It tried its best to find a camera cone in a web page and, unsurprisingly, came up with nonsense. On top of that, a minimap that had been moved or resized in the game's settings broke readings too, since the app assumed the default spot.
+The first one sounds silly once you know the answer. Minimap marks, the screen pointer, and the distance to a cube all went wrong for someone while a browser window was covering part of the game. The reason: the app was copying pixels off the screen where the minimap *should* be, and when a browser was sitting on top of it, it was very faithfully reading the browser. It tried its best to find a camera cone in a web page and, unsurprisingly, came up with nonsense. On top of that, a minimap that had been moved or resized in the game's settings broke readings too, since the app assumed the default spot.
 
 The fix had two parts:
 
@@ -74,9 +74,9 @@ So the detector changed from "find a box that looks like a map" to "find these t
 
 {{< carousel images="{minimap-icons-closeup.webp,minimap-after-1440p.webp}" captions="{minimap-icons-closeup.webp:What the icon search keys on. Map icon and swap arrows and bookmark star plus the marker disc,minimap-after-1440p.webp:The same 1440p screen that chased the skill bar. Found by its icons}" aspectRatio="16-9" interval="6000" >}}
 
-The scores are worth a look. On the 1080p report 9 screen, the icon search matched the map icon at 0.90, the swap arrows at 1.00 and the star at 0.91, and read the camera at 272° around the marker disc. On the 1440p screen it was arrows 1.00, star 0.62 against a bright sky, and map icon 0.55 because the game draws it highlighted there. The skill bar has none of those icons at all. Not every icon is a perfect match on every screen, which is exactly why the detector uses three of them instead of betting on one.
+The scores are worth a look. On the 1080p report 9 screen, the icon search matched the map icon at 0.90, the swap arrows at 1.00, and the star at 0.91. It read the camera at 272° around the marker disc. On the 1440p screen it was arrows 1.00, star 0.62 against a bright sky, and map icon 0.55 because the game draws it highlighted there. The skill bar has none of those icons at all. Not every icon is a perfect match on every screen, which is exactly why the detector uses three of them instead of betting on one.
 
-One honest footnote on those slides: the green boxes on the map icon, the arrows and the marker disc are real output from the app's icon search and marker finder. The bookmark star box isn't, quite. The icon search only reports *how well* the star matched, not where its box is, so the star's box on the slide was placed from the detector's own layout constants for where the star sits relative to the arrows. Same place the detector looks, drawn from its numbers rather than its output.
+One honest footnote on those slides: the green boxes on the map icon, the arrows, and the marker disc are real output from the app's icon search and marker finder. The bookmark star box isn't, quite. The icon search only reports *how well* the star matched, not where its box is, so the star's box on the slide was placed from the detector's own layout constants for where the star sits relative to the arrows. Same place the detector looks, drawn from its numbers rather than its output.
 
 A few more rules came along with the icon search, all aimed at not getting fooled again:
 
@@ -123,7 +123,7 @@ You can't stop the game from drawing nameplates, so the fix is about noticing wh
 
 There was a related fix for characters the bot's copy of the font didn't have yet. Those get named once on an admin page, the names on the legion roster act as votes for what each one probably is, and the bots pick up the result.
 
-What happens on the Discord end, the live posts under each character's name and picture, the doorbell for join notices, the maintenance notices and the admin page for the reader's health, is all in [Part 9](/blog/2026/ai-agent-platform-part-9). The chat reader also got a lot faster around the same time, 14 times faster with output that stayed identical on every test image. That's a story about proving a speedup doesn't change anything, so it's in [Part 6](/blog/2026/ai-agent-platform-part-6).
+What happens on the Discord end, the live posts under each character's name and picture, the doorbell for join notices, the maintenance notices, and the admin page for the reader's health, is all in [Part 9](/blog/2026/ai-agent-platform-part-9). The chat reader also got a lot faster around the same time, 14 times faster with output that stayed identical on every test image. That's a story about proving a speedup doesn't change anything, so it's in [Part 6](/blog/2026/ai-agent-platform-part-6).
 
 ## What I took away from these
 

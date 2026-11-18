@@ -1,5 +1,5 @@
 {{- /* Site override of Blowfish's article pagination: two equal cards
-     with a chevron, a label, a two-line title and the date, so long
+     with a chevron, a label, a two-line title, and the date, so long
      titles wrap cleanly and the arrows line up. */ -}}
 {{ if .Params.showPagination | default (.Site.Params.article.showPagination | default true) }}
   {{ if or .NextInSection .PrevInSection }}

@@ -13,7 +13,7 @@ showHero: false
 thumbnailCard:
   kicker: "Self-Hosting Palworld · Part 4"
   title: ["Making It Reusable"]
-  subtitle: "Ansible, a throwaway test VM and real deploy bugs"
+  subtitle: "Ansible, a throwaway test VM, and real deploy bugs"
 ---
 
 [Part 3](/blog/2026/self-hosted-palworld-part-3) covered containerizing the whole stack and shipping a public status page. Everything looked done. Genuinely, I thought I was finished. Then a small feature request, a slightly better in-game restart notice, cracked open the fact that the actual restart button hadn't worked since the container migration, at all, for who knows how long, and fixing that turned up two more bugs hiding behind Discord's own UI. This part covers that whole mess, plus the very different project that came after it once I'd had enough: turning the whole build into something a stranger could actually stand up themselves, and teaching myself Ansible properly along the way instead of just YOLO-ing it against the live server.

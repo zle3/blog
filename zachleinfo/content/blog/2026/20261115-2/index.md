@@ -6,7 +6,7 @@ categories: ["blog"]
 series: ["building a game community platform with ai agents"]
 series_order: 2
 summary: "Agent definitions as Markdown files, twelve rules every agent works under, a single merge-queue agent that is the only way into main, a 15- to 20-minute local check on every pull request, and the lessons that came from a team of AI agents racing each other to merge."
-description: "Part 2 of a series on building a self-hosted Aion 2 community platform with AI coding agents: how 29 Claude Code agents are defined, governed and kept from stepping on each other, from the merge queue to a post-mortem of agent requests that could never run."
+description: "Part 2 of a series on building a self-hosted Aion 2 community platform with AI coding agents: how 29 Claude Code agents are defined, governed, and kept from stepping on each other, from the merge queue to a post-mortem of agent requests that could never run."
 keywords: "claude code, ai agents, merge queue, change management, git worktrees, code review, check.sh, gitleaks"
 url: "/blog/2026/ai-agent-platform-part-2"
 ---
@@ -21,7 +21,7 @@ Before the how, here's the what, because the shape of the numbers says a lot abo
 
 The app and server repo started first and climbed steadily from October 19th. pyaaa didn't really get going until about a week later, then reached 463 merged pull requests in roughly three weeks, which is how both repos ended up past 460 at almost the same time.
 
-The third chart is where the work actually landed, and it's my favorite of the three. 95% of pyaaa's pull requests changed tests. A third of the app repo's pull requests changed ops, deploy or host gate code, which is a lot of infrastructure work for what started as a cube radar. And docs got touched by 46% of the app repo's pull requests and 60% of pyaaa's. A lot of the numbers in this series exist only because the agents were made to write down what they did and how they verified it, every time. The rest of this post is the machinery that makes that happen.
+The third chart is where the work actually landed, and it's my favorite of the three. 95% of pyaaa's pull requests changed tests. A third of the app repo's pull requests changed ops, deploy, or host gate code, which is a lot of infrastructure work for what started as a cube radar. And docs got touched by 46% of the app repo's pull requests and 60% of pyaaa's. A lot of the numbers in this series exist only because the agents were made to write down what they did and how they verified it, every time. The rest of this post is the machinery that makes that happen.
 
 ## An agent is a Markdown file
 
@@ -49,21 +49,21 @@ The other thing I learned fast is that the body should read like a procedure, no
      --match-head-commit <sha>
 ```
 
-And right next to what each agent does sits what it must never do. The merge queue never releases the app, never posts announcements and never touches Discord. Nothing edits the host gate's files except a reviewed PR that bumps its version number. When an agent learns something the hard way, the lesson gets appended to its definition with a date, so the next run doesn't have to learn it again. If you've ever kept a runbook with a "known issues" section at the bottom, it's that, except the runbook is also the employee.
+And right next to what each agent does sits what it must never do. The merge queue never releases the app, never posts announcements, and never touches Discord. Nothing edits the host gate's files except a reviewed PR that bumps its version number. When an agent learns something the hard way, the lesson gets appended to its definition with a date, so the next run doesn't have to learn it again. If you've ever kept a runbook with a "known issues" section at the bottom, it's that, except the runbook is also the employee.
 
-Each app feature gets its own agent (Radar, Market, Tiles, Duty, Pets, Combat and so on). Others own the server and website, the Discord bot's dashboard and games, security and deploys, and one more runs the merge queue. On top of the definitions there's a shared memory, a folder of short notes every agent can read, covering things like the review policy, the model tiers and how many builds can run at once. That's where the rules live that apply to everyone.
+Each app feature gets its own agent (Radar, Market, Tiles, Duty, Pets, Combat, and so on). Others own the server and website, the Discord bot's dashboard and games, security, and deploys. One more runs the merge queue. On top of the definitions there's a shared memory, a folder of short notes every agent can read, covering things like the review policy, the model tiers, and how many builds can run at once. That's where the rules live that apply to everyone.
 
 ## The rules
 
 Twelve of them, as of this writing, written into the agent definitions and shared memory, and backed up by the permission system and the hosts themselves where words alone weren't enough:
 
-![Twelve governance rules in a grid, grouped as merging (one path to main, merge on exit code 0, independent review, history never rewritten), deploying (only the deployer deploys, images by digest), production (reads without data, the gate changes by PR), secrets (never printed, never committed), ownership (the owner decides), cost (start cheap, escalate) and capacity (capped parallelism)](governance-rules.webp)
+![Twelve governance rules in a grid, grouped as merging (one path to main, merge on exit code 0, independent review, history never rewritten), deploying (only the deployer deploys, images by digest), production (reads without data, the gate changes by PR), secrets (never printed, never committed), ownership (the owner decides), cost (start cheap, escalate), and capacity (capped parallelism)](governance-rules.webp)
 
 A few of these deserve more than a box on a slide.
 
-**The owner decides.** App releases, database migrations, credential rotation and anything posted publicly need my OK. Agents also can't edit their own settings or their own definitions, which sounds obvious until you realize that "I'll just loosen my own permissions to finish this task" is exactly the kind of thing a very helpful agent with no judgment about scope would happily do.
+**The owner decides.** App releases, database migrations, credential rotation, and anything posted publicly need my OK. Agents also can't edit their own settings or their own definitions, which sounds obvious until you realize that "I'll just loosen my own permissions to finish this task" is exactly the kind of thing a very helpful agent with no judgment about scope would happily do.
 
-**Secrets are never printed and never committed.** They live in a git-excluded `private/` folder and get read at the moment they're used. The check scripts scan for tokens, Discord IDs and webhook URLs, and in pyaaa, gitleaks scans the whole history on every check.
+**Secrets are never printed and never committed.** They live in a git-excluded `private/` folder and get read at the moment they're used. The check scripts scan for tokens, Discord IDs, and webhook URLs, and in pyaaa, gitleaks scans the whole history on every check.
 
 **Start cheap, escalate.** Every agent starts on the cheapest model at low effort. Agents that touch production start one tier up. The top tier, at medium effort, is the ceiling. Most work doesn't need the biggest model, and a lot of the work that seems to need it actually needs a better task description.
 
@@ -83,7 +83,7 @@ The first half is the part this post is about:
 4. The merge queue runs the full check and needs exit code 0.
 5. It merges with `--match-head-commit`, which refuses if the branch moved after the check.
 
-The second half (clean builds, GHCR, digest-pinned deploys and the standby host) is [Part 3](/blog/2026/ai-agent-platform-part-3).
+The second half (clean builds, GHCR, digest-pinned deploys, and the standby host) is [Part 3](/blog/2026/ai-agent-platform-part-3).
 
 ### Review is a rule, and it earns its keep
 
@@ -93,7 +93,7 @@ A good example is a pyaaa fix for channel locking. pyaaa can lock a channel and 
 
 The fix: "stuck" now comes only from Discord's answer to pyaaa's *own* edit, and only gets set after that edit succeeds. Overwrites for deleted roles get pruned, and a per-channel lock covers both enforcing and pruning so they can't race each other. The second round of review came back with no blocking findings, and all six issues from the first round were fixed.
 
-Here's what that loop looks like on a host gate change that was reviewed, sent back, fixed, re-reviewed and merged in under twenty minutes from the first review:
+Here's what that loop looks like on a host gate change that was reviewed, sent back, fixed, re-reviewed, and merged in under twenty minutes from the first review:
 
 ![Pull request 442, host gate 14: a security review at 15:00 UTC requests changes over a log-masking leak in a shared awk filter, a re-review at 15:05 confirms the fix after testing several input forms, and the merge queue merges at 15:19 UTC, after which the owner installs the new gate on the hosts](merged-pr-442.webp)
 
@@ -114,9 +114,9 @@ The fix was boring, which is how I like my fixes:
 
 And this is what that check actually looks like when it runs, in pyaaa's case:
 
-![Terminal output of pyaaa's check.sh run on a clean copy of main: 4,539 tests passed, pyflakes clean, the public-safety scan found no Discord IDs, tokens or webhooks, and gitleaks scanned 996 commits with no leaks found](check-output.webp)
+![Terminal output of pyaaa's check.sh run on a clean copy of main: 4,539 tests passed, pyflakes clean, the public-safety scan found no Discord IDs, tokens, or webhooks, and gitleaks scanned 996 commits with no leaks found](check-output.webp)
 
-On the app side, the same idea with different tools: rustfmt, clippy with warnings treated as errors, the workspace tests, a Windows build, the host gate's tests and the ops runner's rules.
+On the app side, the same idea with different tools: rustfmt, clippy with warnings treated as errors, the workspace tests, a Windows build, the host gate's tests, and the ops runner's rules.
 
 ### Why the check is local and not in GitHub Actions
 

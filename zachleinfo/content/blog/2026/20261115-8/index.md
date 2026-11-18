@@ -6,12 +6,12 @@ categories: ["blog"]
 series: ["building a game community platform with ai agents"]
 series_order: 8
 summary: "The platform from a member's side: signing in without giving up your name, a first-run guide that checks your setup for you, a plain-language page about what gets shared, the overlays over the game, and a members website where the leaderboard doesn't know who you are."
-description: "Part 8 of a series on an AI-agent-built Aion 2 community platform: the member experience across the Nyerkulator desktop app, its in-game overlays and the members website, with a focus on privacy by default."
+description: "Part 8 of a series on an AI-agent-built Aion 2 community platform: the member experience across the Nyerkulator desktop app, its in-game overlays, and the members website, with a focus on privacy by default."
 keywords: "nyerkulator, aion 2, desktop app, egui, members website, privacy by design, discord sign-in, anonymous leaderboard, dps meter, ux"
 url: "/blog/2026/ai-agent-platform-part-8"
 ---
 
-Seven parts in, and I've talked a lot about merge queues, passkeys, packet decoders and golden tests. What I haven't really done is show what a member of the legion actually sees when they use this thing. Which is a little backwards, because none of the plumbing matters if the person on the other end can't figure out how to install it, doesn't trust what it sends, or opens the website and has no idea what they're looking at.
+Seven parts in, and I've talked a lot about merge queues, passkeys, packet decoders, and golden tests. What I haven't really done is show what a member of the legion actually sees when they use this thing. Which is a little backwards, because none of the plumbing matters if the person on the other end can't figure out how to install it, doesn't trust what it sends, or opens the website and has no idea what they're looking at.
 
 So this part is the tour. Signing in, installing the app, the overlays drawn over the game, and the members website, in roughly the order a new member runs into them. If you're new here, [Part 1](/blog/2026/ai-agent-platform-part-1) covers what the platform is and how it gets built.
 
@@ -21,8 +21,8 @@ A theme you'll notice: a lot of the user-facing design is about what the platfor
 
 Everything in this post is real output, but none of it is a live member's data, and I want to be upfront about how it was made:
 
-- **Website pages** were captured against throwaway databases full of made-up members (Aria, Kael, Mira and friends), on a desktop-sized and a phone-sized browser.
-- **Most app pages** come from the app replaying a recorded game session, either my own recording or a synthetic demo session, with the app's built-in screenshot mode. A replay never contacts the server, which is why some quest, pet and mob names show up as placeholders: those names normally come from the server's catalog.
+- **Website pages** were captured against throwaway databases full of made-up members (Aria, Kael, Mira, and friends), on a desktop-sized and a phone-sized browser.
+- **Most app pages** come from the app replaying a recorded game session, either my own recording or a synthetic demo session, with the app's built-in screenshot mode. A replay never contacts the server, which is why some quest, pet, and mob names show up as placeholders: those names normally come from the server's catalog.
 - **The DPS meter pages** come from a headless render of a made-up sample fight against a "Practice Golem," so no real party names show up anywhere.
 - **Anything labeled composite** is the real app window drawn over a still or a recording of the game, and the captions say so.
 
@@ -32,7 +32,7 @@ Everything starts with Discord sign-in, because membership in the legion's Disco
 
 ![The Nyerkulator 3000 sign-in page, a single card that says it is for members of the legion, with a Sign in with Discord button and a note that Nyerkulator only sees your Discord ID, then checks your role in the server, and that your name is never shown because everyone appears under an anonymous alias](site-sign-in.webp)
 
-That little paragraph under the button is the whole privacy model in three lines. The site gets your Discord user ID and checks that you have the right role in the server. That's it. The website's privacy page spells out the rest: your Discord name and avatar are never stored or used, and your messages, servers and email are never requested in the first place. Once you're in, you're shown everywhere under an anonymous alias. In the demo data that's "Quiet Heron," which, honestly, is a better gamer tag than most people pick for themselves.
+That little paragraph under the button is the whole privacy model in three lines. The site gets your Discord user ID and checks that you have the right role in the server. That's it. The website's privacy page spells out the rest: your Discord name and avatar are never stored or used, and your messages, servers, and email are never requested in the first place. Once you're in, you're shown everywhere under an anonymous alias. In the demo data that's "Quiet Heron," which, honestly, is a better gamer tag than most people pick for themselves.
 
 The site works on phones too, which matters more than you'd think for a gaming community, because a lot of "did my cube count?" checking happens from a phone while the PC is busy running the game.
 
@@ -46,7 +46,7 @@ After signing in, a new member lands on a Getting started page with four steps t
 
 {{< carousel images="{site-welcome.webp,site-home.webp,site-app-signed-in.webp}" captions="{site-welcome.webp:Getting started with four steps that tick themselves off from download to sharing cube finds,site-home.webp:The signed-in home page with your anonymous alias and shortcuts to the leaderboard and My page and the download,site-app-signed-in.webp:Signing in from the app opens a browser tab that hands control back to the desktop app}" aspectRatio="16-9" interval="6000" >}}
 
-The steps are pretty practical. The download page has the app, its archive password and the short list of things to install first: Windows 10 or 11, Npcap (the packet capture driver the app relies on), and 7-Zip or NanaZip to open the archive. Download links on that page are one-time links, and I'm skipping the screenshot of it here because it shows a password, even a dummy one. Then you start the app, and it shows you two things before anything else: what it shares, and a setup guide. Signing in from the app's Home page opens your browser, you sign in with Discord, and the tab tells you that you can close it and go back to the app. After that, the app checks your access by itself every day.
+The steps are pretty practical. The download page has the app, its archive password, and the short list of things to install first: Windows 10 or 11, Npcap (the packet capture driver the app relies on), and 7-Zip or NanaZip to open the archive. Download links on that page are one-time links, and I'm skipping the screenshot of it here because it shows a password, even a dummy one. Then you start the app, and it shows you two things before anything else: what it shares, and a setup guide. Signing in from the app's Home page opens your browser, you sign in with Discord, and the tab tells you that you can close it and go back to the app. After that, the app checks your access by itself every day.
 
 The setup guide is the page I'd point to if someone asked what "good onboarding" means for a tool like this. Instead of a wall of instructions, it checks each step for you and shows a tick when it's done.
 
@@ -67,7 +67,7 @@ Some highlights, straight from that page:
 
 - **Cube finds and live sightings** are shared anonymously and are on by default, because more shared finds help everyone find cubes faster. One click turns it off, and the page says plainly that Radar works fully without it. There's even a "Preview my upload" button so you can see exactly what would be sent.
 - **Live sightings are short-lived.** Cubes you can see right now are kept in the server's memory for 15 minutes and never stored. Resource nodes are kept for up to 10 minutes.
-- **Spawn points for routing** carry no names, characters or entity IDs. The server keeps only a one-way code of your install ID, used to count how many apps saw a point, and only shows a point to others once two different apps have seen it.
+- **Spawn points for routing** carry no names, characters, or entity IDs. The server keeps only a one-way code of your install ID, used to count how many apps saw a point, and only shows a point to others once two different apps have seen it.
 - **Trace progress** is tied to a code made on your PC from your character's name and game server, never the name itself. Only you can see it, on your own page on the website, and you can delete it there.
 - **Boss timers for the Nyerk bot** send the boss, whether it's alive, and the time. Your position is never sent.
 
@@ -104,9 +104,9 @@ Back on the website, every member gets a My page. It's built around the idea tha
 The tabs, roughly:
 
 - **Overview.** Your cube numbers, and the leaderboard switch. You're on the leaderboard unless you turn it off, but the leaderboard never shows your name either way. Turned off, you just stay off.
-- **Empyrean Traces and Progress.** Per-character progress: traces on the game maps, plus achievements, skins and the pet collection.
-- **Fights.** Your boss fights and DPS. By default, signed-in members can see your characters' names and classes on the fights you were in, in the rankings and in gear history, and there's a single button to hide your fights and characters.
-- **Apps.** This one's my favorite for how much it explains. Signing in from the app links it to your account automatically, and older app versions can link with a short code that lasts 10 minutes. You can unlink any app. There's a settings backup the app can keep on your account, which deliberately leaves out your install ID, sign-in, tokens and window positions, keeps the newest copy until you delete it and keeps up to nine earlier ones for 30 days. And there's a list of signed-in browsers: each stays signed in for 7 days after you last used it, 30 days at most, and leaving the Discord server or losing the access role normally ends all of them within minutes.
+- **Empyrean Traces and Progress.** Per-character progress: traces on the game maps, plus achievements, skins, and the pet collection.
+- **Fights.** Your boss fights and DPS. By default, signed-in members can see your characters' names and classes on the fights you were in, in the rankings, and in gear history, and there's a single button to hide your fights and characters.
+- **Apps.** This one's my favorite for how much it explains. Signing in from the app links it to your account automatically, and older app versions can link with a short code that lasts 10 minutes. You can unlink any app. There's a settings backup the app can keep on your account, which deliberately leaves out your install ID, sign-in, tokens, and window positions, keeps the newest copy until you delete it, and keeps up to nine earlier ones for 30 days. And there's a list of signed-in browsers: each stays signed in for 7 days after you last used it, 30 days at most, and leaving the Discord server or losing the access role normally ends all of them within minutes.
 
 ## The members website: what everyone shares
 
@@ -126,7 +126,7 @@ Finally, three pages that don't get much traffic but say a lot about how the pla
 
 {{< carousel images="{site-status.webp,site-privacy.webp,site-testing-guide.webp}" captions="{site-status.webp:A public status page with uptime over 24 hours and 90 days from inside and through Cloudflare,site-privacy.webp:The privacy page lists exactly what is kept and for how long and how to delete it,site-testing-guide.webp:The testing guide covers beta builds and good bug reports and recording and dev mode}" aspectRatio="16-9" interval="6000" >}}
 
-- **The status page** shows whether the server is up, with uptime over the last 24 hours, 7, 30 and 90 days, measured both from inside and through Cloudflare. If something's down, members can see it for themselves instead of asking in Discord.
+- **The status page** shows whether the server is up, with uptime over the last 24 hours and the last 7, 30, and 90 days, measured both from inside and through Cloudflare. If something's down, members can see it for themselves instead of asking in Discord.
 - **The privacy page** lists exactly what the site keeps, for how long, and how to delete it. It's the same information as the app's sharing page, from the website's side.
 - **The testing guide** is for beta testers. It explains how to switch to the Beta release channel, how betas are named, and what a good bug report looks like: the log code, a screen recording, what you did and when, and your setup. User reports like that are what drove the minimap fixes in [Part 5](/blog/2026/ai-agent-platform-part-5).
 
@@ -134,9 +134,9 @@ Finally, three pages that don't get much traffic but say a lot about how the pla
 
 A few things stood out once I stepped back and looked at the platform as a member instead of as the person approving the merges:
 
-- **Privacy is a feature you can see.** The anonymous alias, the "Leave the leaderboard" button, the "Preview my upload" button and the line saying Radar works fine without sharing are all small. Together, they're the difference between "trust me" and "here's exactly what happens, check it yourself."
+- **Privacy is a feature you can see.** The anonymous alias, the "Leave the leaderboard" button, the "Preview my upload" button, and the line saying Radar works fine without sharing are all small. Together, they're the difference between "trust me" and "here's exactly what happens, check it yourself."
 - **Defaults carry most of the weight.** Sharing is on by default because the whole community benefits, but every default comes with a visible switch and a plain explanation of what it does. Nothing that changes your experience, like pulling the game to the front, is on unless you turn it on.
 - **Onboarding is a checklist, not a manual.** A setup guide that checks Npcap and the game connection for you saves more support questions than any FAQ.
 - **The website explains itself.** Almost every page has a sentence or two under its title saying what it shows and where the data came from. That's not decoration, it's how a member knows the map is built from other members' apps and the leaderboard can't see their name.
 
-The Discord side of the platform, where the server runs itself, gets its own posts next: [Part 9](/blog/2026/ai-agent-platform-part-9) covers server management and the legion tools, and [Part 10](/blog/2026/ai-agent-platform-part-10) covers raids, boss timers and the party finder.
+The Discord side of the platform, where the server runs itself, gets its own posts next: [Part 9](/blog/2026/ai-agent-platform-part-9) covers server management and the legion tools, and [Part 10](/blog/2026/ai-agent-platform-part-10) covers raids, boss timers, and the party finder.

@@ -13,7 +13,7 @@ showHero: false
 thumbnailCard:
   kicker: "Self-Hosting Palworld · Part 1"
   title: ["Foundation and", "Digging In"]
-  subtitle: "Proxmox, LinuxGSM and the config traps"
+  subtitle: "Proxmox, LinuxGSM, and the config traps"
 ---
 
 ## So the Discord wanted a Palworld server

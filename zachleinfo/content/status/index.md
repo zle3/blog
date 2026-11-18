@@ -2,7 +2,7 @@
 title: "Status"
 date: 2026-11-16T00:00:00-08:00
 summary: "Live status of zachle.info, checked from your browser."
-description: "Live status of zachle.info: website, resume PDF, search, RSS feed and view counters, checked from your browser, plus deploy info."
+description: "Live status of zachle.info: website, resume PDF, search, RSS feed, and view counters, checked from your browser, plus deploy info."
 showDate: false
 showDateUpdated: false
 showReadingTime: false

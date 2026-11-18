@@ -6,7 +6,7 @@ categories: ["blog"]
 series: ["building a game community platform with ai agents"]
 series_order: 3
 summary: "How a team of AI agents gets to check on and deploy live services without ever getting a shell: a forced-command SSH gate, passkey approvals through a server I deliberately don't trust, digest-pinned deploys, a replicated standby host, and signed updates for everyone running the app."
-description: "Part 3 of a series on running a self-hosted Aion 2 community platform built by AI agents: the host gate, passkey-approved host changes, digest pinning, network isolation, the Litestream standby and signed desktop updates."
+description: "Part 3 of a series on running a self-hosted Aion 2 community platform built by AI agents: the host gate, passkey-approved host changes, digest pinning, network isolation, the Litestream standby, and signed desktop updates."
 keywords: "ai agents, ssh forced command, authorized_keys restrict, webauthn, passkey, litestream, sqlite replication, cloudflare tunnel, ghcr digest, ed25519, homelab security"
 url: "/blog/2026/ai-agent-platform-part-3"
 ---
@@ -26,7 +26,7 @@ So the rules got turned into machinery. There are now two completely separate pa
 1. **Reads and routine deploys** go through a restricted SSH key that can only ever run one program.
 2. **Anything that actually changes a host** gets queued, and nothing happens until I approve it with a passkey.
 
-![Access control diagram. Left: the agents' SSH key is restricted to one root-owned gate program with a short allowlist of named commands like health, log counts, error locations, row counts and primary-only deploys, while shells, sftp, port forwarding, reading secrets and free-form scripts are refused. Right: host changes are queued by an agent, picked up by an unprivileged runner, summarized by a root helper on the host, approved by the owner with a passkey, verified and applied by the helper, and recorded in a hash-chained audit log](access-control.webp)
+![Access control diagram. Left: the agents' SSH key is restricted to one root-owned gate program with a short allowlist of named commands like health, log counts, error locations, row counts, and primary-only deploys, while shells, sftp, port forwarding, reading secrets, and free-form scripts are refused. Right: host changes are queued by an agent, picked up by an unprivileged runner, summarized by a root helper on the host, approved by the owner with a passkey, verified and applied by the helper, and recorded in a hash-chained audit log](access-control.webp)
 
 ## Path one: the host gate
 
@@ -37,7 +37,7 @@ restrict,command="/usr/local/sbin/nk-agent-gate"
   ssh-ed25519 AAAA… nk-host-behind-gate
 ```
 
-If you haven't used these two options before, they're the whole trick. `restrict` turns off everything optional for that key: no port forwarding, no agent forwarding, no PTY, no X11. `command=` is a forced command, meaning that no matter what the client asks to run, sshd runs *that* program instead and hands it whatever the client typed as a plain string in `SSH_ORIGINAL_COMMAND`. The agent can type `bash`, `cat /etc/shadow` or a whole poem, and what actually executes is the gate, which reads the string, decides whether it's one of the things it knows, and refuses everything else.
+If you haven't used these two options before, they're the whole trick. `restrict` turns off everything optional for that key: no port forwarding, no agent forwarding, no PTY, no X11. `command=` is a forced command, meaning that no matter what the client asks to run, sshd runs *that* program instead and hands it whatever the client typed as a plain string in `SSH_ORIGINAL_COMMAND`. The agent can type `bash`, `cat /etc/shadow`, or a whole poem, and what actually executes is the gate, which reads the string, decides whether it's one of the things it knows, and refuses everything else.
 
 My own key is separate and doesn't go through any of this. The gate is only for the agents.
 
@@ -53,9 +53,9 @@ What the gate allows is a short list of **named** operations, not commands with 
 - a deploy of one named service, on the primary host only,
 - a handful of named reads for pyaaa, plus one job-plan input.
 
-Everything else gets refused: shells, sftp, scp, port forwarding, PTYs, reading `.env` files, tokens or member IDs, free-form scripts, and any deploy aimed at the standby.
+Everything else gets refused: shells, sftp, scp, port forwarding, PTYs, reading `.env` files, tokens, or member IDs, free-form scripts, and any deploy aimed at the standby.
 
-The part I like most is the masking. Even the reads the agents *are* allowed to do get scrubbed on the host before anything leaves it. Tokens, IP addresses, emails and IDs are masked out right there, so an agent debugging a crash gets "an error happened at this line in this file, 14 times in the last 10 minutes" and not a log line with someone's Discord ID in it. Production reads without production data, basically.
+The part I like most is the masking. Even the reads the agents *are* allowed to do get scrubbed on the host before anything leaves it. Tokens, IP addresses, emails, and IDs are masked out right there, so an agent debugging a crash gets "an error happened at this line in this file, 14 times in the last 10 minutes" and not a log line with someone's Discord ID in it. Production reads without production data, basically.
 
 That one input I mentioned, the job plan, is the only place the gate takes anything resembling free text, so it gets the most suspicion. It's rebuilt field by field instead of being passed through as-is, run through strict checks, and then pyaaa holds it until I click to let it run. If you've ever had to sanitize user input, it's the same idea, just with the "user" being an AI that is very good at producing plausible-looking strings.
 
@@ -70,7 +70,7 @@ The obvious way to build that is a nice web page on the server with an "Approve"
 Here's how a request actually flows:
 
 1. **An agent queues a named operation.** Typed parameters only, no free text. Each agent is capped at 3 open requests and 10 a day, with a separate cap of 8 a day per host, and requests expire after 24 hours.
-2. **An unprivileged runner on the host picks it up.** It polls the server's queue outbound, so the host still exposes nothing. The runner has no privileges, decides nothing and holds no webhook. It's a courier.
+2. **An unprivileged runner on the host picks it up.** It polls the server's queue outbound, so the host still exposes nothing. The runner has no privileges, decides nothing, and holds no webhook. It's a courier.
 3. **A root helper on the host writes its own summary.** It checks the request against its own catalog of allowed operations, then writes a summary of exactly what *it* will do, signs it, and sends it to my Discord, followed by a short code.
 4. **I approve on my phone.** I sign in to the staff console, paste the code from Discord so I know I'm looking at the same request the host described, and approve with a passkey (WebAuthn). The passkey signs the host's summary, not anything the server made up.
 5. **The helper verifies and applies.** The root helper checks the passkey signature itself and acts only on its own stored summary. A deploy that isn't confirmed within its window gets undone automatically.
@@ -82,7 +82,7 @@ The checks on that page aren't written by the server either. They come from the 
 
 I like this a lot, mostly because I know myself. At some point I'll be half-asleep, an agent will want something, and I'll be tempted to just tap Approve. Hiding the button when a check fails takes that decision out of my hands. The flagged-diff guard goes one step further: the console makes me type a check value from the end of the diff before it'll let me approve, which is a polite way of making sure I actually scrolled to the bottom.
 
-The end result is that a compromised runner, server or console can queue requests and show me things, but none of them can make the root helper run anything my passkey didn't sign.
+The end result is that a compromised runner, server, or console can queue requests and show me things, but none of them can make the root helper run anything my passkey didn't sign.
 
 ### The requests that could never run
 
@@ -98,7 +98,7 @@ A tag like `latest` is a pointer, and pointers move. If a deploy just pulls `lat
 
 The containers themselves are locked down about as far as they'll go:
 
-- **No published ports.** The server's only way in is a Cloudflare tunnel, sitting on an internal network with no gateway. Every stack gets its own tunnel, token and network.
+- **No published ports.** The server's only way in is a Cloudflare tunnel, sitting on an internal network with no gateway. Every stack gets its own tunnel, token, and network.
 - **Non-root, read-only, distroless.** Containers run as a non-root user on a read-only distroless image with all Linux capabilities dropped. There's no shell in the image to drop into even if someone got code execution.
 - **Pinned dependencies.** Even cloudflared is pinned to a specific version (2026.10.3) instead of floating.
 - **A gated admin API.** The server's admin endpoints (`/api/v1/admin*`) sit behind a Cloudflare WAF rule that blocks any request missing a secret header. So even if an admin token leaked somewhere, it wouldn't open the API from the open internet on its own.
@@ -109,7 +109,7 @@ None of this is exotic. It's the same defense-in-depth checklist you'd want on a
 
 For a while, all four services ran on one box with no tested way to fail over. That's fine right up until it isn't, and with real people using the app every day it stopped feeling fine.
 
-The fix started with a live migration to a new host, done as scripted `prepare`, `cut` and `finish` steps, with a SHA-256 check of each database. The actual cuts each took **under 75 seconds**, image pulls included. Then a second Proxmox host became a standby:
+The fix started with a live migration to a new host, done as scripted `prepare`, `cut`, and `finish` steps, with a SHA-256 check of each database. The actual cuts each took **under 75 seconds**, image pulls included. Then a second Proxmox host became a standby:
 
 - **Litestream sidecars** stream every SQLite database's changes to a receiver on the standby, keeping it about **one second behind**. The receiver accepts SFTP with a pinned key only.
 - **Everything that isn't a database** gets copied every 10 minutes.
@@ -128,7 +128,7 @@ Everything above protects my hosts. But the bigger responsibility is the dozens 
 
 So the rule for updates is that **nothing between me and the user gets to decide what's installed**. Not the server, not Cloudflare, not DNS, not the network.
 
-Each release has a manifest with the version, the SHA-256, the size and an expiry date 180 days out, and that manifest is signed with an Ed25519 key that never leaves my PC. When the app sees an update, it checks the signature, the expiry, the version, the size and the hash. Only then does it ask the user. If they say yes, it swaps the exe, and if the new one doesn't start, it rolls back to the old one.
+Each release has a manifest with the version, the SHA-256, the size, and an expiry date 180 days out, and that manifest is signed with an Ed25519 key that never leaves my PC. When the app sees an update, it checks the signature, the expiry, the version, the size, and the hash. Only then does it ask the user. If they say yes, it swaps the exe, and if the new one doesn't start, it rolls back to the old one.
 
 ![Nyerkulator in-app update prompt saying the new version is signed by the developer and was checked, with release notes and buttons to Install and restart, Save the new exe, or Not now. The version number and notes are the app's test sample](update-prompt.webp)
 
@@ -144,12 +144,12 @@ Everything so far is about how changes get *onto* a host. The other half of runn
 
 The admin pages live inside the members site, visible only to owners, and they're split into tabs:
 
-- **Overview** is the dashboard I open first: server version and uptime, how many apps are active now and today, which app versions are out there and sharing finds, how many members signed in, how much data the database holds and how fast the disk is filling. It also keeps a row for old Cube Radar builds, which the server now refuses, so I can see whether anybody is still stuck on one. If free disk drops under 15%, or the database, app logs or combat records start growing at over three times their recent daily average, an alert goes to the server's log at most once a day.
-- **Usage** is where the adoption numbers in this series come from: 54 monthly active installs, 27 monthly signed-in members and 27 linked accounts. Those totals are real. The 90-day daily curve in the screenshots is generated demo data.
+- **Overview** is the dashboard I open first: server version and uptime, how many apps are active now and today, which app versions are out there and sharing finds, how many members signed in, how much data the database holds, and how fast the disk is filling. It also keeps a row for old Cube Radar builds, which the server now refuses, so I can see whether anybody is still stuck on one. If free disk drops under 15%, or the database, app logs, or combat records start growing at over three times their recent daily average, an alert goes to the server's log at most once a day.
+- **Usage** is where the adoption numbers in this series come from: 54 monthly active installs, 27 monthly signed-in members, and 27 linked accounts. Those totals are real. The 90-day daily curve in the screenshots is generated demo data.
 - **Access** decides who may sign in at all (by Discord role, an allow list, or any member of the server), which app features need which level, and who may edit the legion roster. Sign-ins last 7 days after their last use and 30 days at most, changed rules reach signed-in members within about five minutes, and there's a big red **Sign everyone out** button for when that isn't fast enough.
 - **Signed-in apps** lists every app sign-in with its features and link state, with a revoke button on each.
 - **Logs and recordings** is where a bug report starts. A member gives me a code from the app's Status and logs window, and I can find the log they uploaded, search app logs, or pull a developer recording of a session. Logs arrive already scrubbed on the member's PC, and they're kept for 30 days.
-- **Traffic** shows requests per route, error rates and the live server log.
+- **Traffic** shows requests per route, error rates, and the live server log.
 - **Moderation and cleanup** covers the rest: merging misread item names and removing bad entries in the market data, reviewing the DPS meter banner images members upload (and pausing an account if needed), and the legion chat relay's own page with reader health, characters the reader doesn't know yet, and join applications. There's also a version of the leaderboard *with* names, which exists purely for owners troubleshooting. Members never see it.
 
 {{< carousel images="{a-overview.webp,a-usage.webp,a-logs.webp,a-status.webp}" captions="{a-overview.webp:Admin overview with server and players and app versions and how apps update (demo data),a-usage.webp:Admin usage with the real totals over a generated 90-day daily curve,a-logs.webp:Logs and recordings where uploaded logs and developer recordings are found,a-status.webp:The public status page with uptime measured from inside and through Cloudflare}" aspectRatio="16-9" interval="7000" >}}
@@ -158,9 +158,9 @@ The last slide is the one page here that isn't private. The public status page s
 
 ### The staff console
 
-The staff console is separate from the members site and sits behind Cloudflare Access. Its home page shows each app's state, alerts and totals at a glance, each app has a detail page with its own log, and the console log records every action along with which Access and Discord accounts are linked. Linking a Cloudflare Access account to a Discord account is its own small page, and so is enrolling the passkey that approves owner operations. Completed requests keep their outcome, the host's report and the full log, so "what happened to that deploy last Tuesday" has an answer.
+The staff console is separate from the members site and sits behind Cloudflare Access. Its home page shows each app's state, alerts, and totals at a glance, each app has a detail page with its own log, and the console log records every action along with which Access and Discord accounts are linked. Linking a Cloudflare Access account to a Discord account is its own small page, and so is enrolling the passkey that approves owner operations. Completed requests keep their outcome, the host's report, and the full log, so "what happened to that deploy last Tuesday" has an answer.
 
-None of this is glamorous. It's the same set of screens any ops team ends up building: what's running, who's using it, who's allowed in, what broke and where the logs are. The difference is that the agents built it to my spec, and I'm the one who uses it every day.
+None of this is glamorous. It's the same set of screens any ops team ends up building: what's running, who's using it, who's allowed in, what broke, and where the logs are. The difference is that the agents built it to my spec, and I'm the one who uses it every day.
 
 ## What I'd tell anyone else doing this
 

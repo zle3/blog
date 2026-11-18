@@ -4,7 +4,7 @@ date: 2026-07-03T02:49:36+00:00
 lastmod: 2026-11-15T00:00:00-08:00
 tags: []
 summary: "What I'm focused on right now."
-description: "What Zachary Le is focused on right now: job search, a self-hosted AI-built community platform, a degree, certifications and the home lab."
+description: "What Zachary Le is focused on right now: job search, a self-hosted AI-built community platform, a degree, certifications, and the home lab."
 keywords: 
 url: "/now"
 showHero: false
@@ -27,6 +27,6 @@ What is /now? See [nownownow.com/about](https://nownownow.com/about).
 
 ## Learning
 
-- More AI agent tooling: Claude Code, MCP servers and multi-agent workflows.
+- More AI agent tooling: Claude Code, MCP servers, and multi-agent workflows.
 - Terraform and infrastructure as code beyond the basics.
-- Deeper cloud work across AWS, Google Cloud and Azure.
+- Deeper cloud work across AWS, Google Cloud, and Azure.

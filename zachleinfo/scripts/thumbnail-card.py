@@ -7,7 +7,7 @@ at any time from the repo alone:
     thumbnailCard:
       kicker: "Self-Hosting Palworld · Part 1"
       title: ["Foundation and", "Digging In"]   # one string or a list of lines
-      subtitle: "Proxmox, LinuxGSM and the config traps"
+      subtitle: "Proxmox, LinuxGSM, and the config traps"
 
 Usage (from the zachleinfo/ folder):
     python3 scripts/thumbnail-card.py              # render cards that are missing
@@ -17,8 +17,8 @@ Usage (from the zachleinfo/ folder):
 Needs ffmpeg and PyYAML. Fonts are committed in scripts/fonts (DejaVu,
 free license in LICENSE-DejaVu.txt), so output is the same on any machine.
 Cards are 1500x1000 (3:2, the theme's card thumbnail ratio) with the text
-centred, so nothing is cut off in cards, related posts or link previews.
-Keep text evergreen: no job titles, numbers or dates that will change.
+centred, so nothing is cut off in cards, related posts, or link previews.
+Keep text evergreen: no job titles, numbers, or dates that will change.
 """
 import argparse
 import pathlib

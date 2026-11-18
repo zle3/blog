@@ -10,7 +10,7 @@ showHero: false
 thumbnailCard:
   kicker: "Portfolio"
   title: ["GCP + Terraform", "+ Cloudflare"]
-  subtitle: "Cloud Run, Cloud SQL and a CI/CD pipeline"
+  subtitle: "Cloud Run, Cloud SQL, and a CI/CD pipeline"
 ---
 
 ## The gap

@@ -123,7 +123,7 @@ front matter so it can always be rebuilt from the repo:
 thumbnailCard:
   kicker: "Self-Hosting Palworld · Part 1"
   title: ["Foundation and", "Digging In"]   # one string or a list of lines (max ~24 chars each)
-  subtitle: "Proxmox, LinuxGSM and the config traps"
+  subtitle: "Proxmox, LinuxGSM, and the config traps"
 showHero: false   # the card repeats the title, so don't show it as a banner
 ```
 
@@ -136,7 +136,7 @@ python3 scripts/thumbnail-card.py content/about/index.md # one page
 
 Needs `ffmpeg` and PyYAML. Fonts are committed in `scripts/fonts/` (DejaVu,
 see its license file), so cards look the same on any machine. Keep card
-text evergreen: no job titles, counts or dates that will go stale.
+text evergreen: no job titles, counts, or dates that will go stale.
 
 Builds warn about thumbnail problems (visible in Cloudflare build logs):
 

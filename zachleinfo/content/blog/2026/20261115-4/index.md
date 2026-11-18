@@ -19,7 +19,7 @@ That rule is easy to write down and annoying to live with. Every tool in the app
 
 I'm keeping the protocol details out of this on purpose. Nobody needs a byte-by-byte tour, and honestly it isn't the interesting part. The interesting part is what happens after you can read *something*: the moment where the data you're reading is wrong in a way that looks right, or right in a way that contradicts what everybody assumed about the game. This post is a handful of those.
 
-Same disclaimer as the rest of the series: the code here was written by Claude Code agents under rules I set, and I directed, tested and approved it. The repos are private and still in active development.
+Same disclaimer as the rest of the series: the code here was written by Claude Code agents under rules I set, and I directed, tested, and approved it. The repos are private and still in active development.
 
 ## Recordings are the whole trick
 
@@ -27,12 +27,12 @@ Before any of the war stories, the one decision that made all of them solvable: 
 
 With dev mode on, the app can save a capture of a play session. Later, the same Windows build can be pointed at that file instead of a live network adapter, and it runs every tool exactly as if the game were open, at any speed, as many times as you like. A replay never contacts the server, and every tool is open without signing in, which makes it perfect for two things:
 
-- **Screenshots.** Every app screenshot in this series is a real render, not a mockup. The Windows build gets pointed at a recording with `--pcap` and `--speed 0`, and the app's own screenshot aid captures each page. Some replays are of my real recorded sessions; others use a small synthetic demo session, which is what you want when a screenshot shouldn't show anyone real. The Combat meter is the exception: it's drawn by the app's CPU renderer inside a test, using a made-up sample fight against a "Practice Golem" with invented party names. Replays also explain why some screenshots look a little odd: quest, pet and mob names come from the server's catalog, which a replay doesn't fetch, so they show up as "Duty quest" or "Pet 1118."
+- **Screenshots.** Every app screenshot in this series is a real render, not a mockup. The Windows build gets pointed at a recording with `--pcap` and `--speed 0`, and the app's own screenshot aid captures each page. Some replays are of my real recorded sessions; others use a small synthetic demo session, which is what you want when a screenshot shouldn't show anyone real. The Combat meter is the exception: it's drawn by the app's CPU renderer inside a test, using a made-up sample fight against a "Practice Golem" with invented party names. Replays also explain why some screenshots look a little odd: quest, pet, and mob names come from the server's catalog, which a replay doesn't fetch, so they show up as "Duty quest" or "Pet 1118."
 - **Proof.** A bug report becomes a recording, the recording becomes a test, and a fix isn't done until the replay prints the right answer. For refactors, a whole pile of real recordings get replayed through the old build and the new build, and the outputs have to match. That's the backbone of [Part 6](/blog/2026/ai-agent-platform-part-6), where it gets run against 141 recordings and 4.7 million packets.
 
 When you can't ask the game anything, a recording is the closest thing you get to a second opinion. You can stare at the same five seconds of traffic as many times as it takes.
 
-The same idea shows up inside the app, too. The Cube notebook keeps every spot Radar knows about, confirmed ones where a cube was actually seen and candidates that are only possible spawn points, with export, import and merge so members can pool what they've found. And the Status and logs page shows exactly what the capture is doing (packets seen, the map, the local player, what each tool thinks is going on), with a button to upload a log when something looks wrong. When a member reports a bug, the code they give me comes from that page.
+The same idea shows up inside the app, too. The Cube notebook keeps every spot Radar knows about, confirmed ones where a cube was actually seen and candidates that are only possible spawn points, with export, import, and merge so members can pool what they've found. And the Status and logs page shows exactly what the capture is doing (packets seen, the map, the local player, what each tool thinks is going on), with a button to upload a log when something looks wrong. When a member reports a bug, the code they give me comes from that page.
 
 {{< carousel images="{c-radar-cube-target.webp,c-cube-notebook.webp,c-status-logs.webp}" captions="{c-radar-cube-target.webp:Radar from a replay with a live cube 50 m to the left and 5 m above,c-cube-notebook.webp:The Cube notebook with confirmed and candidate spots and export and import,c-status-logs.webp:Status and logs with the capture and each tool's state (demo replay)}" aspectRatio="4-3" interval="7000" >}}
 
@@ -99,7 +99,7 @@ The tile puzzle helper reads the safe-square pattern from the traffic and marks 
 
 ## Counting damage from the outside
 
-The DPS meter works from the same passive traffic as everything else, and adds up what it sees for your party: total damage, damage per second and each person's share, with "Seen" and combat power columns if you want them, coloured by class. Open a fight and you get the details behind the bar: contribution, crit, front, back and perfect rates, buff uptime, and a per-skill table. The settings page shows a live preview with made-up names, so you can reorder the columns and pick class colours without waiting for a fight.
+The DPS meter works from the same passive traffic as everything else, and adds up what it sees for your party: total damage, damage per second, and each person's share, with "Seen" and combat power columns if you want them, coloured by class. Open a fight and you get the details behind the bar: contribution, crit, front, back, and perfect rates, buff uptime, and a per-skill table. The settings page shows a live preview with made-up names, so you can reorder the columns and pick class colours without waiting for a fight.
 
 {{< carousel images="{k-meter.webp,k-fight.webp,k-settings.webp}" captions="{k-meter.webp:The DPS meter in its default style using the app's made-up sample fight,k-fight.webp:Fight detail with contribution and hit rates and buff uptime and a per-skill table,k-settings.webp:Meter settings with a live preview and column order and class colours}" aspectRatio="16-9" interval="7000" >}}
 
@@ -135,4 +135,4 @@ If there's one habit this part of the project hammered in, it's the same one fro
 
 And the habit that fixed every one of them was the same, too: get a recording, replay it, measure, and only change the model where the evidence says so. Checks at the boundary for anything you didn't produce yourself. Numbers, not opinions, before routing gets built on top of something.
 
-Next up, [Part 5](/blog/2026/ai-agent-platform-part-5): the minimap, user reports 7, 8 and 9, and teaching Radar what a minimap actually looks like.
+Next up, [Part 5](/blog/2026/ai-agent-platform-part-5): the minimap, user reports 7, 8, and 9, and teaching Radar what a minimap actually looks like.

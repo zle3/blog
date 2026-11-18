@@ -6,7 +6,7 @@ categories: ["blog"]
 series: ["building a game community platform with ai agents"]
 series_order: 6
 summary: "Making Nyerkulator's chat reading 14 times faster, cutting idle UI wakes from 256,162 to 7, and decoding each packet once instead of nine times, with golden tests and identical replay output as the rule that every speedup had to pass first."
-description: "Part 6 of a series on building an Aion 2 community platform with AI agents: performance refactors guarded by golden tests and bit-for-bit replay comparisons, covering chat OCR, minimap search, idle efficiency and packet decoding."
+description: "Part 6 of a series on building an Aion 2 community platform with AI agents: performance refactors guarded by golden tests and bit-for-bit replay comparisons, covering chat OCR, minimap search, idle efficiency, and packet decoding."
 keywords: "performance, golden tests, regression testing, rust, ocr, refactoring, ai agents, claude code"
 url: "/blog/2026/ai-agent-platform-part-6"
 ---
@@ -101,7 +101,7 @@ With every single tool switched off, just the app open in the background while y
 
 That last one is easier to picture with the settings page in front of you. Everything in the app lives on one searchable page, with a tab per tool and a section for everything from the minimap to the screen pointer to colors. Plenty of those settings are sliders. Drag one across, and the old app wrote the whole settings file about sixty times on the way.
 
-![The app's Settings page: a search box, tabs for App, Nyerk, Radar, Combat, Duty quests, Pets, Market and Tiles, and the Radar tab's collapsible sections including Minimap and Screen pointer, each showing "1 changed" with a Reset button](settings.webp)
+![The app's Settings page: a search box, tabs for App, Nyerk, Radar, Combat, Duty quests, Pets, Market, and Tiles, and the Radar tab's collapsible sections including Minimap and Screen pointer, each showing "1 changed" with a Reset button](settings.webp)
 
 None of that is a dramatic bug. It's just waste, the kind that adds up when an app runs for hours on someone's gaming PC. The fixes:
 
@@ -126,7 +126,7 @@ One thing that's *not* in that table yet: CPU percentage on my reference PC. The
 
 ## Every packet decoded nine times
 
-Last one. The app has a bunch of tools, and many of them care about the same game traffic. Radar, Duty quests, Pets, the DPS meter and the boss timers all read the game's traffic. The way it had grown, each tool that looked at a packet decoded it for itself. Averaged out, every game packet was being decoded about **9.3 times**, once per tool that wanted a look.
+Last one. The app has a bunch of tools, and many of them care about the same game traffic. Radar, Duty quests, Pets, the DPS meter, and the boss timers all read the game's traffic. The way it had grown, each tool that looked at a packet decoded it for itself. Averaged out, every game packet was being decoded about **9.3 times**, once per tool that wanted a look.
 
 The fix is the obvious one, the kind that's only obvious once someone measures it: decode each packet once, in one shared place, and hand the result only to the tools that subscribe to that kind of packet. Nothing else gets bothered.
 
