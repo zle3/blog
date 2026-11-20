@@ -6,6 +6,8 @@ Hello, my name is Zach, and welcome to my blog! I'm interested in systems admini
 
 Lately, a lot of that has meant running a team of AI coding agents: I write the rules, review the changes, and approve every deploy while the agents build under that change control. The full story is in my [AI agent platform series](/blog/2026/ai-agent-platform-part-1).
 
+I also run [kotone.dev](https://kotone.dev), a web design and marketing business where I build and rebuild websites for startups and small businesses.
+
 When I'm not studying or researching, you can find me hosting (and sometimes playing!) multiplayer games and other services on my servers.
 
 Find out what I'm doing right [now]({{< ref "now" >}}), or read more [about me]({{< ref "about" >}}).
