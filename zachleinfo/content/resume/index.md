@@ -1,10 +1,8 @@
 ---
 title: "Resume"
 date: 2026-07-03T02:58:00+00:00
-tags: []
 summary: "Resume of Zachary Le, network and systems support engineer in Sacramento, CA."
 description: "Resume of Zachary Le: network and systems support, Microsoft 365 and Active Directory administration, PowerShell automation, and a Proxmox home lab."
-keywords: 
 url: "/resume"
 showTableOfContents: false
 showHero: false

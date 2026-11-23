@@ -6,6 +6,7 @@ summary: "A self-hosted Palworld game server for a ~200-member Discord community
 description: "Full showcase of a self-hosted Palworld dedicated server platform: infrastructure, a Discord bot, offsite backups, containerization, a public status page, and the dependency/knowledge-graph tooling used to audit it."
 keywords: "palworld, lgsm, proxmox, docker, discord bot, homelab, dependency mapping, knowledge graph"
 url: "/portfolio/2026/palworld-server-showcase"
+showHero: false
 thumbnailCard:
   kicker: "Portfolio"
   title: ["Self-Hosted", "Palworld Server"]

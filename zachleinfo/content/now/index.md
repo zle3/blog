@@ -2,10 +2,8 @@
 title: "Now"
 date: 2026-07-03T02:49:36+00:00
 lastmod: 2026-11-20T00:00:00-08:00
-tags: []
 summary: "What I'm focused on right now."
 description: "What Zachary Le is focused on right now: a CSI Consulting Group contract, the kotone.dev web design business, a self-hosted AI-built community platform, a degree, certifications, and the home lab."
-keywords: 
 url: "/now"
 showHero: false
 showRelatedContent: false

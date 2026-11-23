@@ -2,10 +2,8 @@
 title: "About"
 date: 2024-10-18T02:51:00+00:00
 lastmod: 2026-11-15T00:00:00-08:00
-tags: []
 summary: "About Zachary Le, a network and systems support engineer in Sacramento, CA."
 description: "About Zachary Le: network and systems support engineer in Sacramento, CA, with experience in Microsoft 365, Active Directory, PowerShell automation, Proxmox, and AI-directed software operations."
-keywords: 
 url: "/about"
 showHero: false
 showRelatedContent: false
