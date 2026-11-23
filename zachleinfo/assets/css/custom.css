@@ -506,3 +506,70 @@ body {
 @media (prefers-contrast: more) {
   .related-card { border-color: rgb(var(--color-neutral-500)); }
 }
+
+/* ---------- Lightbox: click any article image or slide to enlarge (static/js/lightbox.js) ---------- */
+.lightbox-trigger { cursor: zoom-in; }
+.lightbox-trigger:focus-visible { outline: 3px solid rgb(var(--color-primary-400)); outline-offset: 3px; }
+html.lightbox-open { overflow: hidden; }
+.lightbox {
+  position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0; background: rgb(22, 14, 20); color: #fff;
+  display: none; flex-direction: column;
+}
+.lightbox[open] { display: flex; }
+.lightbox::backdrop { background: rgb(22, 14, 20); }
+.lightbox-btn[hidden] { display: none; }
+.lightbox-bar {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem;
+  font-size: 0.9rem; flex: none;
+}
+.lightbox-count { margin-right: auto; opacity: 0.8; font-variant-numeric: tabular-nums; }
+.lightbox-btn {
+  appearance: none; border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08);
+  color: #fff; border-radius: 999px; padding: 0.35rem 0.85rem; font: inherit; line-height: 1.2;
+  cursor: pointer; text-decoration: none !important;
+}
+.lightbox-btn:hover, .lightbox-btn:focus-visible { background: rgba(255, 255, 255, 0.18); }
+.lightbox-close { padding: 0.35rem 0.7rem; }
+.lightbox-stage {
+  flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  padding: 0 4.5rem;
+}
+.lightbox-stage img {
+  max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
+  cursor: zoom-in; border-radius: 6px; margin: 0 !important;
+}
+.lightbox.no-actual .lightbox-stage img { cursor: default; }
+.lightbox.is-actual .lightbox-stage { overflow: auto; display: block; padding: 0; cursor: grab; }
+.lightbox.is-actual .lightbox-stage img { max-width: none; max-height: none; cursor: zoom-out; border-radius: 0; }
+.lightbox-caption { flex: none; margin: 0; padding: 0.6rem 1rem 0.9rem; text-align: center; font-size: 0.9rem; opacity: 0.85; }
+.lightbox-nav {
+  display: none; position: absolute; top: 50%; transform: translateY(-50%);
+  width: 3rem; height: 3rem; border-radius: 999px; border: 0; font-size: 2rem; line-height: 1;
+  background: rgba(255, 255, 255, 0.12); color: #fff; cursor: pointer;
+}
+.lightbox-nav:hover, .lightbox-nav:focus-visible { background: rgba(255, 255, 255, 0.24); }
+.lightbox.is-group .lightbox-nav { display: block; }
+.lightbox-prev { left: 0.75rem; }
+.lightbox-next { right: 0.75rem; }
+.lightbox.is-actual .lightbox-nav { display: none; }
+@media (max-width: 640px) {
+  .lightbox-stage { padding: 0 0.5rem; }
+  .lightbox-nav { top: auto; bottom: 3.5rem; transform: none; }
+}
+/* Enlarge hint: a small badge on every zoomable image (touch users get no cursor hint). */
+.article-content figure:has(> img.lightbox-trigger),
+.single_hero_background.lightbox-trigger { position: relative; }
+.article-content figure:has(> img.lightbox-trigger)::after,
+.single_hero_background.lightbox-trigger::after {
+  content: "⤢ Enlarge"; position: absolute; right: 0.6rem; top: 0.6rem; pointer-events: none;
+  font-size: 0.72rem; line-height: 1; padding: 0.35rem 0.55rem; border-radius: 999px;
+  background: rgba(30, 18, 26, 0.78); color: #fff; opacity: 0.85;
+  transition: opacity 150ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  .article-content figure:has(> img.lightbox-trigger)::after,
+  .single_hero_background.lightbox-trigger::after { opacity: 0; }
+  .article-content figure:has(> img.lightbox-trigger):hover::after,
+  .single_hero_background.lightbox-trigger:hover::after { opacity: 0.9; }
+}
