@@ -1,8 +1,9 @@
 # Controlled vocabulary for zachle.info content.
 # scripts/check-content.py reads this file and fails on anything not listed.
 # Reuse an existing value whenever one fits. If nothing fits, add the new
-# value HERE in the same commit as the content that uses it, and say so in
-# your report to the owner. See docs/vocabulary.md for how to choose.
+# value HERE in the same commit as the content that uses it, and notify the
+# owner under "Needs your attention" at the top of your report (no approval
+# needed first). See docs/vocabulary.md for how to choose.
 
 # Blog posts carry exactly one category. Portfolio entries and top-level
 # pages carry none (portfolio entries use the "portfolio" tag instead).

@@ -2,10 +2,6 @@
 
 [link to blog](https://zachle.info)
 
-## Recent
-
-[demo1 - gcp, terraform](https://demo1.zachle.info/) ---> [link to post](https://www.zachle.info/portfolio/2026/gcp-terraform-demo/)
-
 ## Description
 
 blog describing my project and technical experience

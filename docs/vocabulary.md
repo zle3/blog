@@ -15,7 +15,7 @@ Do not add categories.
 - 3 to 7 per page. Pick the main technologies and topics a reader would browse by, not every tool mentioned.
 - **Reuse before you add.** Read the whole list first. Use `homelab`, not `home-lab` or `self-hosting`; `ai`, not `llm` or `agents`; `networking` for VLANs, routing, and switches; `hardware` for specific gear.
 - Add a new tag only when the page is substantially about something no existing tag covers and later pages are likely to share it. A tag used by one page is a dead-end link.
-- To add one: put it in the right group in `data/vocabulary.yaml`, in the same commit as the page, and list it in your report to the owner.
+- To add one: put it in the right group in `data/vocabulary.yaml`, in the same commit as the page. No approval is needed first, but you must notify the owner: list it under **Needs your attention** at the top of your report (the checker warns `new-vocabulary` as a reminder).
 - Never rename or remove an existing tag: its `/tags/<name>/` page is a published URL.
 
 ## Series
@@ -31,7 +31,7 @@ series:
 ```
 
 - **Adding a part**: copy the series name exactly, and use the next `series_order`. Check the latest part first; another agent may have added one.
-- **Starting a series**: only when you have at least two parts planned and the owner wants a series. Add an entry with a lowercase descriptive name, a Title Case `title_prefix`, a short `url_slug`, and a short `kicker` (it shares a title-card line with "· Part N"). Report it.
+- **Starting a series**: only when you have at least two parts planned. No approval is needed first. Add an entry with a lowercase descriptive name, a Title Case `title_prefix`, a short `url_slug`, and a short `kicker` (it shares a title-card line with "· Part N"). Notify the owner under **Needs your attention** at the top of your report.
 - Never rename a series: the name is part of the `/series/<name>/` URL.
 
 ## Public repositories

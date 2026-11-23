@@ -5,9 +5,12 @@ Usage (from the zachleinfo/ folder):
     python3 scripts/check-content.py            # check everything
     python3 scripts/check-content.py --strict   # warnings also fail
     python3 scripts/check-content.py --no-git   # skip checks that compare with git
+    python3 scripts/check-content.py --deploy   # Cloudflare mode: only major errors fail
 
 Exit code 0 when there are no errors, 1 otherwise. Warnings never fail the
-run unless --strict is given. Needs PyYAML only. Allowed tags, categories,
+run unless --strict is given. With --deploy (used by build.sh on Cloudflare),
+only errors from major rules fail; minor-rule errors (MINOR_RULES) are
+printed but let the deploy through. Needs PyYAML only. Allowed tags, categories,
 series, and public repos live in data/vocabulary.yaml.
 
 Every finding is printed as:  <file>: ERROR|WARN [rule] message
@@ -56,6 +59,11 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})$"
 SLUG = r"[a-z0-9]+(?:-[a-z0-9]+)*"
 FILE_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*\.[a-z0-9]+$")
 RASTER = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff"}
+
+# Errors from these rules are cosmetic: they fail verify.sh locally but do
+# not block a Cloudflare deploy (--deploy). Every other rule is major and
+# blocks the deploy: broken pages, bad URLs, vocabulary, privacy, and so on.
+MINOR_RULES = {"style", "image", "thumbnail", "lastmod"}
 
 findings = []
 
@@ -364,7 +372,7 @@ def check_assets(page):
         used.add(ref)
         if ref not in files:
             near = [f for f in files if f.lower() == ref.lower()]
-            err(p, "image", f"{ref} is referenced but not in the bundle" + (f" (did you mean {near[0]}? names are case-sensitive)" if near else ""))
+            err(p, "broken-image", f"{ref} is referenced but not in the bundle" + (f" (did you mean {near[0]}? names are case-sensitive)" if near else ""))
     for name in sorted(files):
         f = page.dir / name
         if name not in used and not re.search(re.escape(name), body):
@@ -464,6 +472,16 @@ def check_git(pages, urls):
         print("note: git history not available; skipped published-url and lastmod checks", file=sys.stderr)
         return
     top = pathlib.Path(top.strip())
+    old_vocab_text = git("show", f"{base}:zachleinfo/data/vocabulary.yaml")
+    if old_vocab_text:
+        try:
+            old_vocab = yaml.safe_load(old_vocab_text) or {}
+            new_vocab = yaml.safe_load(VOCAB.read_text(encoding="utf-8")) or {}
+            for kind in ("tags", "series", "categories", "public_repos"):
+                for name in sorted(set(new_vocab.get(kind) or []) - set(old_vocab.get(kind) or [])):
+                    warn(VOCAB, "new-vocabulary", f"new {kind} entry '{name}' (not on {base}): tell the owner in your report under 'Needs your attention'")
+        except yaml.YAMLError:
+            pass
     current = {pg.path: pg for pg in pages}
     for name in listing.splitlines():
         if not name.endswith(".md"):
@@ -489,6 +507,7 @@ def check_git(pages, urls):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--strict", action="store_true", help="treat warnings as errors")
+    ap.add_argument("--deploy", action="store_true", help="Cloudflare mode: fail only on errors from major rules")
     ap.add_argument("--no-git", action="store_true", help="skip checks that compare against git history")
     args = ap.parse_args()
 
@@ -529,9 +548,13 @@ def main():
 
     errors = sum(1 for f in findings if f[0] == "ERROR")
     warnings = len(findings) - errors
+    major = sum(1 for f in findings if f[0] == "ERROR" and f[2] not in MINOR_RULES)
     for level, rel, rule, msg in sorted(findings, key=lambda f: (f[1], f[0])):
-        print(f"{rel}: {level} [{rule}] {msg}")
-    print(f"check-content: {len(pages) + 1} pages, {errors} error(s), {warnings} warning(s)")
+        tag = " (major, blocks deploy)" if level == "ERROR" and rule not in MINOR_RULES else ""
+        print(f"{rel}: {level}{tag} [{rule}] {msg}")
+    print(f"check-content: {len(pages) + 1} pages, {errors} error(s) ({major} major), {warnings} warning(s)")
+    if args.deploy:
+        return 1 if major else 0
     return 1 if errors or (args.strict and warnings) else 0
 
 

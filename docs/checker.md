@@ -31,7 +31,9 @@ Errors fail the run. Warnings are for you to read and either fix or report.
 | `taxonomy` | Tags are listed in `data/vocabulary.yaml`, no duplicates, `portfolio` first on portfolio entries and absent from blog posts; blog `categories` is exactly `["blog"]`; top-level pages carry no taxonomies. Warns outside 3 to 7 tags. | Reuse an existing tag, or add one deliberately ([vocabulary.md](vocabulary.md)). |
 | `series` | Series name is registered; `series_order` is a whole number; title, description, URL, and card kicker follow the series patterns; parts number 1..n with no gaps; each part is dated after the previous one. Warns under 2,400 words. | Follow the "New series part" checklist. |
 | `thumbnail` | Exactly one `feature.webp`, a 1500x1000 WebP. `thumbnailCard` has `kicker`, `title`, and `subtitle`, title lines of 24 characters or fewer, and `showHero: false`. `thumbnailReview` is a date with a note; warns when it is due. | See [images.md](images.md). |
-| `image` | Every referenced image, carousel slide, video, and poster exists in the bundle with the exact same letter case; alt text present; every carousel slide has a caption; no hotlinked media. For new bundles: WebP only, lowercase kebab-case file names, images under 1 MB and video under 8 MB. Warns about files nothing references. | Convert, rename, add alt text, or delete the unused file. |
+| `broken-image` | Every referenced image, carousel slide, video, and poster exists in the bundle with the exact same letter case. | Add the file or fix the reference. |
+| `new-vocabulary` | Warning: a tag, series, category, or public repo in `data/vocabulary.yaml` is not on `origin/main` yet. | Tell the owner in your report under "Needs your attention". |
+| `image` | Alt text present; every carousel slide has a caption; no hotlinked media. For new bundles: WebP only, lowercase kebab-case file names, images under 1 MB and video under 8 MB. Warns about files nothing references. | Convert, rename, add alt text, or delete the unused file. |
 | `style` | No em or en dashes; no `#` H1 headings in the body. | Rephrase; start headings at `##`. |
 | `link` | Links to this site are root-relative and point at an existing page `url`. | `/blog/2026/pc-reinstall-kit`, not `https://zachle.info/...`. |
 | `privacy` | No 17 to 20 digit numbers (Discord and account IDs); no email addresses other than the public contact address or `example.com`; no links to `github.com/zle3/<repo>` unless the repo is under `public_repos`. | Remove it or use a made-up placeholder. Private repos are not linked. |
@@ -52,7 +54,12 @@ The checker is a floor, not a review. It cannot tell whether a number is verifie
 
 ## Cloudflare builds
 
-`build.sh` runs the checker in report-only mode when the build image has Python with PyYAML: findings appear in the Cloudflare build log but never block a deploy. The strict gate is `verify.sh`, run locally before the owner's review.
+`build.sh` runs `check-content.py --no-git --deploy` on every Cloudflare build (installing PyYAML if the image lacks it). In this mode errors are split in two:
+
+- **Minor** (rules `style`, `image`, `thumbnail`, `lastmod`): printed in the build log, the deploy goes ahead.
+- **Major** (every other rule: `front-matter`, `layout`, `draft`, `placeholder`, `date`, `url`, `taxonomy`, `series`, `broken-image`, `privacy`, `link`): the build fails and Cloudflare keeps serving the last good deploy. The checker marks these `ERROR (major, blocks deploy)`.
+
+The split lives in `MINOR_RULES` in `scripts/check-content.py`. Locally, `verify.sh` still fails on every error, minor or major: minor is a deploy safety valve, not permission to leave the problem.
 
 ## Changing the rules
 

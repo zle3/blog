@@ -34,7 +34,7 @@ Everything in "New blog post", with these differences:
 5. Publishing several parts at once: one folder each (`20261201`, `20261201-2`, ...), with `date` times one minute apart in part order.
 6. If earlier parts or a portfolio entry list the series' parts by link, ask the owner whether to add the new part there. That is an edit to another page.
 
-**Starting a new series** needs the owner's agreement and at least two planned parts. Register it in `data/vocabulary.yaml` ([vocabulary.md](vocabulary.md)) in the same commit, and say so in your report.
+**Starting a new series** needs at least two planned parts (no prior approval). Register it in `data/vocabulary.yaml` ([vocabulary.md](vocabulary.md)) in the same commit, and notify the owner under **Needs your attention** at the top of your report.
 
 ## New portfolio entry
 

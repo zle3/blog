@@ -82,6 +82,7 @@ This runs `python3 scripts/check-content.py` (front matter, vocabulary, folder n
 
 - Fix every `ERROR`. Do not weaken the checker, add exemptions, or edit the vocabulary just to get past it. A new tag or series is a deliberate, reported decision ([docs/vocabulary.md](docs/vocabulary.md)).
 - Read every `WARN` and either fix it or mention it in your report.
+- On Cloudflare the same checker runs in deploy mode: major errors (broken pages, URLs, vocabulary, privacy) fail the deploy, minor ones (style, images, thumbnails) only log. That is a safety net, not a reason to push with minor errors ([docs/checker.md](docs/checker.md#cloudflare-builds)).
 - The checker cannot judge honesty, voice, or Oxford commas. Re-read your text against the hard rules yourself.
 - If the checker reports problems in files you did not touch, leave them alone and mention them in your report: another agent may be working in the same folder.
 
@@ -120,4 +121,6 @@ Other rules:
 
 ## Your report to the owner
 
-End every contribution with a short report: pages added or changed (with local preview URLs), any tag or series you added to the vocabulary, any number you could not verify and left out, every image that is composite or demo data, checker warnings you did not fix, and whether you committed. If the review was skipped, say so and why.
+Start the report with a **Needs your attention** section whenever you added a tag, category, or series to `data/vocabulary.yaml`, or anything else the owner must decide (the checker's `new-vocabulary` warning reminds you). New tags and series do not need approval first, but the owner must always be told; never bury them in the body of the report.
+
+Then a short report: pages added or changed (with local preview URLs), any tag or series you added to the vocabulary, any number you could not verify and left out, every image that is composite or demo data, checker warnings you did not fix, and whether you committed. If the review was skipped, say so and why.

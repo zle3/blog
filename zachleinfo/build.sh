@@ -19,13 +19,18 @@ tar -xzf "$bin_dir/$tarball" -C "$bin_dir" hugo
 
 "$bin_dir/hugo" version
 
-# Content conventions check (see ../AGENTS.md). Report only: it prints to the
-# build log and never fails or blocks a deploy. Skipped when the build image
-# has no python3 with PyYAML. The strict gate is scripts/verify.sh, run locally.
+# Content conventions check (see ../AGENTS.md and ../docs/checker.md).
+# Major errors (broken pages, bad URLs, unknown tags or series, privacy leaks)
+# fail this build, so Cloudflare keeps serving the last good deploy. Minor
+# errors (style, images, thumbnails, lastmod) and warnings only print to the
+# build log. The full strict gate is scripts/verify.sh, run locally.
+if ! python3 -c 'import yaml' 2>/dev/null; then
+  python3 -m pip install --quiet --user pyyaml 2>/dev/null || true
+fi
 if python3 -c 'import yaml' 2>/dev/null; then
-  python3 scripts/check-content.py --no-git || echo "check-content reported problems (not blocking this build)"
+  python3 scripts/check-content.py --no-git --deploy
 else
-  echo "check-content skipped: python3 with PyYAML not available in this build image"
+  echo "WARNING: check-content skipped: python3 with PyYAML not available in this build image"
 fi
 
 "$bin_dir/hugo" "$@"
