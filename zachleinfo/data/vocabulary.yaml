@@ -74,6 +74,10 @@ series:
     title_prefix: "Building a Game Community Platform with AI Agents"
     url_slug: "ai-agent-platform"
     kicker: "AI Agent Platform"
+  "homelab journal":
+    title_prefix: "Homelab Journal"
+    url_slug: "homelab-journal"
+    kicker: "Homelab Journal"
 
 # The owner's public repositories under github.com/zle3. Only these may be
 # linked. Anything else is private: describe it as "still in development"
