@@ -1,0 +1,87 @@
+# Controlled vocabulary for zachle.info content.
+# scripts/check-content.py reads this file and fails on anything not listed.
+# Reuse an existing value whenever one fits. If nothing fits, add the new
+# value HERE in the same commit as the content that uses it, and say so in
+# your report to the owner. See docs/vocabulary.md for how to choose.
+
+# Blog posts carry exactly one category. Portfolio entries and top-level
+# pages carry none (portfolio entries use the "portfolio" tag instead).
+categories:
+  - blog
+
+# Tags: lowercase kebab-case, a technology, product, or topic.
+# No synonyms of an existing tag (homelab, not home-lab or self-hosting).
+tags:
+  # section marker (portfolio entries only, always first)
+  - portfolio
+  # site and writing
+  - meta
+  # AI
+  - ai
+  - claude-code
+  # infrastructure and operations
+  - homelab
+  - self-hosted
+  - hardware
+  - dell
+  - server-rack
+  - budget
+  - proxmox
+  - linux
+  - lgsm
+  - windows
+  - networking
+  - security
+  - privacy
+  - devops
+  - change-management
+  - git
+  - docker
+  - ansible
+  - terraform
+  - cloudflare
+  - gcp
+  - cloud-run
+  # languages and data
+  - python
+  - rust
+  - powershell
+  - sqlite
+  # software topics
+  - discord
+  - tools
+  - testing
+  - performance
+  - ux
+  - cryptography
+  - computer-vision
+  - ocr
+  # games
+  - palworld
+  - aion-2
+
+# Series. The key is the exact string used in front matter: series: ["<key>"].
+#   title_prefix  every part's title is "<title_prefix>, Part N: <Subtitle>"
+#   url_slug      every part's url is "/blog/<year>/<url_slug>-part-N"
+#   kicker        thumbnailCard kicker is "<kicker> · Part N" (when a card is used)
+series:
+  "small community self-hosted game server":
+    title_prefix: "Self-Hosting Palworld"
+    url_slug: "self-hosted-palworld"
+    kicker: "Self-Hosting Palworld"
+  "building a game community platform with ai agents":
+    title_prefix: "Building a Game Community Platform with AI Agents"
+    url_slug: "ai-agent-platform"
+    kicker: "AI Agent Platform"
+
+# The owner's public repositories under github.com/zle3. Only these may be
+# linked. Anything else is private: describe it as "still in development"
+# and do not link it.
+public_repos:
+  - demo1
+  - palworld-ops-toolkit
+  - pc-reinstall-kit
+
+# The only email address that may appear in content.
+allowed_emails:
+  - hello@zachle.info
