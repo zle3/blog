@@ -36,77 +36,55 @@ Local overrides that must be re-checked on theme upgrades:
 
 this blog automatically updates via CI/CD when a commit is pushed to the github repo
 
-## How to add posts
+## Adding content
 
-how to add post:
+Everything a contributor (human or AI agent) needs is in [AGENTS.md](AGENTS.md),
+with reference pages in [docs/](docs/): style guide, front matter, images,
+vocabulary, per-task checklists, and the checker rules. In short:
 
-1. make dir: `zachleinfo/content/blog\<year>/<yyyymmdd>/`
-2. add `index.md` inside, front matter like:
-
-```
----
-title: "Post Title"
-date: 2026-07-03T12:00:00+08:00
-tags: ["Blog"]
-summary: "short summary"
-description: "short desc"
-keywords: "keyword"
-url: "/blog/2026/slug-name"
----
+```sh
+cd zachleinfo
+bash scripts/new-content.sh blog                 # or: series-part | portfolio <slug>
+# write the page, add feature.webp and images next to index.md
+bash scripts/verify.sh                           # content checker + full Hugo build
+hugo server --bind 127.0.0.1 --port 1313         # review locally before any push
 ```
 
-3. body: markdown below ---, headers with ##.
-4. images: drop next to index.md in same folder, ref by filename (Hugo page bundle, Blowfish auto-processes via resources/_gen).
-5. commit + push. CI/CD (Cloudflare Pages) auto-builds/deploys.
-
-portfolio posts have the same pattern, just under `content/portfolio/<year>/<yyyymm>/`.
+Pushing to `main` deploys, so nothing is pushed before the local build has
+been reviewed.
 
 ## File Tree
 
 ```
 blog/
-├── .gitignore
-├── .gitattributes
+├── AGENTS.md                        # contributor rules (single source of truth)
+├── CLAUDE.md                        # points Claude Code at AGENTS.md
 ├── README.md
+├── docs/                            # contributor reference (not published)
+├── status-worker/                   # Cloudflare Worker behind /status
 └── zachleinfo/                      # Hugo site root
+    ├── build.sh                     # Cloudflare Pages build command (pins Hugo)
     ├── hugo.toml                    # top-level site config (baseURL, title, theme)
-    ├── config/
-    │   └── _default/
-    │       ├── hugo.toml            # main Hugo settings
-    │       ├── languages.en.toml    # language/locale config
-    │       ├── markup.toml          # goldmark (markdown) rendering config
-    │       ├── menus.en.toml        # nav menu structure
-    │       ├── module.toml          # Hugo/theme version requirements
-    │       └── params.toml          # theme + site params (Firebase, article/list flags, etc.)
+    ├── config/_default/             # hugo, languages, markup, menus, module, params
+    ├── archetypes/                  # front matter templates: blog, series-part, portfolio, default
+    ├── data/vocabulary.yaml         # allowed tags, categories, series, and public repos
     ├── content/
     │   ├── _index.md                # homepage content
     │   ├── about/ now/ resume/      # page bundles: index.md + feature.webp (resume/ also holds the PDF)
     │   ├── privacy/ status/
-    │   ├── blog/                    # posts go here
-    │   │   └── 2024/
-    │   │       ├── 20240629/
-    │   │       └── 20241101/
-    │   └── portfolio/
-    │       ├── 2024/
-    │       │   └── 202410/
-    │       └── 2026/
-    │           └── 202607/
-    ├── assets/
-    │   ├── css/
-    │   │   └── schemes/             # custom color scheme overrides
-    │   └── img/                     # source images (processed by Hugo Pipes)
-    ├── static/
-    │   ├── _headers                 # Cloudflare Pages response headers (CSP, HSTS, etc.)
-    │   ├── favicon.ico, site.webmanifest, etc.
-    ├── resources/                    # Hugo's generated/cached asset pipeline output
-    ├── public/                       # build output (gitignored, rebuilt by Cloudflare on deploy)
-    ├── .gitmodules                   # declares themes/blowfish as a submodule
-    └── themes/
-        └── blowfish/                 # vendored Hugo theme (Tailwind CSS-based)
-            └── scripts/
-                ├── package.json
-                ├── package-lock.json
-                └── seed-firebase-views.js   # manual GA→Firestore view-count backfill script
+    │   ├── blog/<YYYY>/<YYYYMMDD>[-N]/          # one bundle per post
+    │   └── portfolio/<YYYY>/<YYYYMM>-<slug>/    # one bundle per entry
+    ├── layouts/                     # site overrides of Blowfish partials and shortcodes
+    ├── assets/                      # custom CSS, color scheme, JS overrides, site images
+    ├── scripts/
+    │   ├── new-content.sh           # scaffold a page bundle
+    │   ├── check-content.py         # content conventions checker
+    │   ├── verify.sh                # checker + full build; run before review
+    │   ├── thumbnail-card.py        # render text title cards
+    │   └── resume-images.py         # render resume page previews
+    ├── static/                      # _headers (CSP, HSTS), favicons, small JS
+    ├── public/ resources/           # build output and cache (gitignored)
+    └── themes/blowfish/             # vendored Hugo theme
 ```
 
 ## Thumbnails
