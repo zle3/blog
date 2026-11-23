@@ -4,6 +4,8 @@ autoSwitchAppearance = true
 enableSearch = true
 enableCodeCopy = true
 disableImageOptimization = false
+# The theme's medium-zoom is off: static/js/lightbox.js handles click-to-enlarge.
+disableImageZoom = true
 disableTextInHeader = false
 mainSections = ["blog", "portfolio"]
 

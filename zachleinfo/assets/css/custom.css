@@ -507,7 +507,7 @@ body {
   .related-card { border-color: rgb(var(--color-neutral-500)); }
 }
 
-/* ---------- Lightbox: click any article image or slide to enlarge (static/js/lightbox.js) ---------- */
+/* ---------- Lightbox: click any article image or slide to enlarge; click or scroll to close (static/js/lightbox.js) ---------- */
 .lightbox-trigger { cursor: zoom-in; }
 .lightbox-trigger:focus-visible { outline: 3px solid rgb(var(--color-primary-400)); outline-offset: 3px; }
 html.lightbox-open { overflow: hidden; }
@@ -518,7 +518,6 @@ html.lightbox-open { overflow: hidden; }
 }
 .lightbox[open] { display: flex; }
 .lightbox::backdrop { background: rgb(22, 14, 20); }
-.lightbox-btn[hidden] { display: none; }
 .lightbox-bar {
   display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem;
   font-size: 0.9rem; flex: none;
@@ -532,16 +531,14 @@ html.lightbox-open { overflow: hidden; }
 .lightbox-btn:hover, .lightbox-btn:focus-visible { background: rgba(255, 255, 255, 0.18); }
 .lightbox-close { padding: 0.35rem 0.7rem; }
 .lightbox-stage {
+  cursor: zoom-out;
   flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;
   padding: 0 4.5rem;
 }
 .lightbox-stage img {
   max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
-  cursor: zoom-in; border-radius: 6px; margin: 0 !important;
+  cursor: zoom-out; border-radius: 6px; margin: 0 !important;
 }
-.lightbox.no-actual .lightbox-stage img { cursor: default; }
-.lightbox.is-actual .lightbox-stage { overflow: auto; display: block; padding: 0; cursor: grab; }
-.lightbox.is-actual .lightbox-stage img { max-width: none; max-height: none; cursor: zoom-out; border-radius: 0; }
 .lightbox-caption { flex: none; margin: 0; padding: 0.6rem 1rem 0.9rem; text-align: center; font-size: 0.9rem; opacity: 0.85; }
 .lightbox-nav {
   display: none; position: absolute; top: 50%; transform: translateY(-50%);
@@ -552,7 +549,6 @@ html.lightbox-open { overflow: hidden; }
 .lightbox.is-group .lightbox-nav { display: block; }
 .lightbox-prev { left: 0.75rem; }
 .lightbox-next { right: 0.75rem; }
-.lightbox.is-actual .lightbox-nav { display: none; }
 @media (max-width: 640px) {
   .lightbox-stage { padding: 0 0.5rem; }
   .lightbox-nav { top: auto; bottom: 3.5rem; transform: none; }

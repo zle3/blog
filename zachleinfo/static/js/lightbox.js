@@ -1,8 +1,8 @@
 // Click-to-enlarge for every image in an article body and every carousel
-// slide. Opens the original full-resolution file in a full-screen dialog:
-// fit to the screen first, click (or press Z) for actual size and drag or
-// scroll to pan (only offered when the file is bigger than the screen). Arrow keys and buttons step through a carousel's slides.
-// Esc, the close button, or a click on the backdrop closes it.
+// slide. Click an image and it opens full-screen (the original file, fitted
+// to the screen); click again anywhere, or scroll, and it closes. Esc and
+// the close button work too. In a carousel, the arrow keys, side buttons,
+// and sideways swipes step through its slides while enlarged.
 // An external file (not inline) so it runs under the site's CSP.
 (() => {
   const SELECTOR = ".article-content img, [data-twe-carousel-item] img";
@@ -29,8 +29,6 @@
   dialog.innerHTML = `
     <div class="lightbox-bar">
       <span class="lightbox-count" aria-live="polite"></span>
-      <button type="button" class="lightbox-btn" data-act="size" aria-pressed="false">Actual size</button>
-      <a class="lightbox-btn" data-act="open" target="_blank" rel="noopener">Open original</a>
       <button type="button" class="lightbox-btn lightbox-close" data-act="close" aria-label="Close">✕</button>
     </div>
     <div class="lightbox-stage"><img alt=""></div>
@@ -39,42 +37,18 @@
     <button type="button" class="lightbox-nav lightbox-next" data-act="next" aria-label="Next image">›</button>`;
   document.body.appendChild(dialog);
 
-  const stage = dialog.querySelector(".lightbox-stage");
-  const big = stage.querySelector("img");
+  const big = dialog.querySelector(".lightbox-stage img");
   const count = dialog.querySelector(".lightbox-count");
   const caption = dialog.querySelector(".lightbox-caption");
-  const sizeBtn = dialog.querySelector('[data-act="size"]');
-  const openLink = dialog.querySelector('[data-act="open"]');
   let group = [];
   let index = 0;
   let trigger = null;
 
-  const setActual = (on, point) => {
-    dialog.classList.toggle("is-actual", on);
-    sizeBtn.setAttribute("aria-pressed", String(on));
-    sizeBtn.textContent = on ? "Fit to screen" : "Actual size";
-    if (on && point) {
-      // Keep the clicked spot under the pointer after zooming in.
-      requestAnimationFrame(() => {
-        stage.scrollLeft = point.x * big.naturalWidth - stage.clientWidth / 2;
-        stage.scrollTop = point.y * big.naturalHeight - stage.clientHeight / 2;
-      });
-    }
-  };
-
   const show = (i) => {
     index = (i + group.length) % group.length;
     const img = group[index];
-    setActual(false);
-    sizeBtn.hidden = true;
-    big.onload = () => {
-      // Actual size only helps when the file is bigger than the screen space.
-      sizeBtn.hidden = big.naturalWidth <= stage.clientWidth && big.naturalHeight <= stage.clientHeight;
-      dialog.classList.toggle("no-actual", sizeBtn.hidden);
-    };
     big.src = fullSrc(img);
     big.alt = img.alt || "";
-    openLink.href = big.src;
     caption.textContent = captionOf(img);
     caption.hidden = !caption.textContent;
     const many = group.length > 1;
@@ -96,42 +70,41 @@
     trigger?.focus({ preventScroll: true });
   });
 
+  // Any click closes it, except on the carousel's previous/next buttons.
   dialog.addEventListener("click", (e) => {
     const act = e.target.closest("[data-act]")?.dataset.act;
-    if (act === "close") dialog.close();
-    else if (act === "prev") show(index - 1);
+    if (act === "prev") show(index - 1);
     else if (act === "next") show(index + 1);
-    else if (act === "size") setActual(!dialog.classList.contains("is-actual"));
-    else if (e.target === big && !sizeBtn.hidden) {
-      const r = big.getBoundingClientRect();
-      const actual = dialog.classList.contains("is-actual");
-      setActual(!actual, actual ? null : { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height });
-    } else if (e.target === stage || e.target === dialog) dialog.close();
+    else dialog.close();
   });
+
+  // Scrolling closes it too: a mouse wheel or trackpad scroll, or a vertical
+  // swipe on a touch screen. A sideways swipe steps through a carousel.
+  dialog.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    if (Math.abs(e.deltaY) > 4) dialog.close();
+  }, { passive: false });
+  let touch = null;
+  dialog.addEventListener("touchstart", (e) => {
+    touch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { passive: true });
+  dialog.addEventListener("touchmove", (e) => {
+    if (!touch) return;
+    const dx = e.touches[0].clientX - touch.x;
+    const dy = e.touches[0].clientY - touch.y;
+    if (Math.abs(dy) > 40 && Math.abs(dy) > Math.abs(dx)) {
+      touch = null;
+      dialog.close();
+    } else if (Math.abs(dx) > 50 && group.length > 1) {
+      touch = null;
+      show(index + (dx < 0 ? 1 : -1));
+    }
+  }, { passive: true });
+  dialog.addEventListener("touchend", () => { touch = null; }, { passive: true });
 
   dialog.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft" && group.length > 1) show(index - 1);
     else if (e.key === "ArrowRight" && group.length > 1) show(index + 1);
-    else if ((e.key === "z" || e.key === "Z") && !sizeBtn.hidden) setActual(!dialog.classList.contains("is-actual"));
-  });
-
-  // Drag to pan in actual-size mode.
-  let drag = null;
-  stage.addEventListener("pointerdown", (e) => {
-    if (!dialog.classList.contains("is-actual") || e.pointerType === "touch") return;
-    drag = { x: e.clientX, y: e.clientY, left: stage.scrollLeft, top: stage.scrollTop, moved: false };
-  });
-  window.addEventListener("pointermove", (e) => {
-    if (!drag) return;
-    const dx = e.clientX - drag.x;
-    const dy = e.clientY - drag.y;
-    if (Math.abs(dx) + Math.abs(dy) > 4) drag.moved = true;
-    stage.scrollLeft = drag.left - dx;
-    stage.scrollTop = drag.top - dy;
-  });
-  window.addEventListener("pointerup", () => {
-    if (drag?.moved) stage.addEventListener("click", (e) => e.stopPropagation(), { capture: true, once: true });
-    drag = null;
   });
 
   // Carousel slides overlap (stacked floats), so a click can land on the
