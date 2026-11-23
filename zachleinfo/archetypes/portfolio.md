@@ -7,6 +7,13 @@ description: "TODO one neutral sentence for search engines and link previews."
 keywords: "TODO, comma separated, lowercase, search phrases"
 url: "/portfolio/{{ now.Format "2006" }}/TODO-kebab-slug"
 showHero: false
+thumbnailCard:
+  kicker: "Portfolio"
+  title: ["TODO Project Name"]
+  subtitle: "TODO short evergreen line"
+  # Or an image card instead of subtitle (docs/images.md):
+  # image: TODO-architecture.webp
+  # fit: contain
 ---
 
 ## What this is

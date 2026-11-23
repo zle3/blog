@@ -9,6 +9,13 @@ summary: "Agent definitions as Markdown files, twelve rules every agent works un
 description: "Part 2 of a series on building a self-hosted Aion 2 community platform with AI coding agents: how 29 Claude Code agents are defined, governed, and kept from stepping on each other, from the merge queue to a post-mortem of agent requests that could never run."
 keywords: "claude code, ai agents, merge queue, change management, git worktrees, code review, check.sh, gitleaks"
 url: "/blog/2026/ai-agent-platform-part-2"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 2"
+  title: ["Running 29 AI Agents", "Like a Dev Team"]
+  image: merged-prs-daily.webp
+  focus: center
+  fit: contain
 ---
 
 [Part 1](/blog/2026/ai-agent-platform-part-1) covered what the platform is and the headline number: 945 merged pull requests across two repos in 29 days. This part is about how that number happens without the whole thing turning into a pile of half-merged branches, and honestly, it's the part of this project that felt most like my actual job. Writing code was never the bottleneck. Keeping 29 very fast, very literal coworkers from stepping on each other was.

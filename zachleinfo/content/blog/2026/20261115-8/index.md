@@ -9,6 +9,11 @@ summary: "The platform from a member's side: signing in without giving up your n
 description: "Part 8 of a series on an AI-agent-built Aion 2 community platform: the member experience across the Nyerkulator desktop app, its in-game overlays, and the members website, with a focus on privacy by default."
 keywords: "nyerkulator, aion 2, desktop app, egui, members website, privacy by design, discord sign-in, anonymous leaderboard, dps meter, ux"
 url: "/blog/2026/ai-agent-platform-part-8"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 8"
+  title: "What It's Like to Use"
+  image: site-my-page.webp
 ---
 
 Seven parts in, and I've talked a lot about merge queues, passkeys, packet decoders, and golden tests. What I haven't really done is show what a member of the legion actually sees when they use this thing. Which is a little backwards, because none of the plumbing matters if the person on the other end can't figure out how to install it, doesn't trust what it sends, or opens the website and has no idea what they're looking at.

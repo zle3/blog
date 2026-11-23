@@ -9,6 +9,11 @@ summary: "The scheduling side of the platform: boss timers read straight from th
 description: "Part 10 of a series on building a self-hosted Aion 2 community platform with AI coding agents: boss timers, raids, scheduling polls, the party finder, and the Nyerk site, and how a separate bot became part of pyaaa."
 keywords: "discord bot, boss timers, raid scheduling, party finder, time zones, discord.py, aion 2, claude code"
 url: "/blog/2026/ai-agent-platform-part-10"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 10"
+  title: ["Raids, Boss Timers, and", "the Party Finder"]
+  image: site-overview.webp
 ---
 
 ## Every MMO community has the same three questions

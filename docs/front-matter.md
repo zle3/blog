@@ -81,8 +81,8 @@ thumbnailCard:
 | `keywords` | blog, portfolio | One lowercase comma-separated string. Omit the key on top-level pages. |
 | `url` | all | The permanent address. Blog: `/blog/<year>/<kebab-slug>`; series parts: `/blog/<year>/<url_slug>-part-N`; portfolio: `/portfolio/<year>/<kebab-slug>`. Lowercase, no trailing slash, year equal to the date's year. Never change it once pushed. |
 | `aliases` | all | List of old paths that should keep working, if a page ever has to move. |
-| `showHero` | all | `false` hides the thumbnail as a banner at the top of the page. Required when the thumbnail is a title card. For a real image, leave the key out to show the banner, or set `false` if the same image already appears in the body. |
-| `thumbnailCard` | all | Text for a generated title card: `kicker`, `title` (a string or a list of lines, 24 characters per line at most), `subtitle`. See [images.md](images.md). |
+| `showHero` | all | Always `false`: every thumbnail is a generated card that repeats the title. For a real image, leave the key out to show the banner, or set `false` if the same image already appears in the body. |
+| `thumbnailCard` | all | **Required.** Drives the generated thumbnail: `kicker`, `title` (a string or a list of lines, 24 characters per line at most), and either `subtitle` (text card) or `image` plus optional `focus` and `fit` (image card). See [images.md](images.md) and [brand.md](brand.md). |
 | `thumbnailReview`, `thumbnailReviewNote` | all | `YYYY-MM-DD` plus a note, for a thumbnail that can go out of date (a diagram, a screenshot with numbers). Builds warn once the date passes. |
 | `showRelatedContent`, `showTableOfContents` | all | Optional booleans; only top-level pages set them today. Leave them out of posts. |
 | `showDate`, `showDateUpdated`, `showReadingTime`, `showWordCount`, `showViews`, `showLikes`, `showAuthor`, `sharingLinks`, `firebasePath` | top-level pages only | Existing page settings. `firebasePath` keeps the view and like counters of pages that were moved into bundles; never change or remove it. |

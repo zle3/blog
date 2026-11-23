@@ -9,6 +9,11 @@ summary: "pyaaa, the Discord bot that runs the community server, also runs a pla
 description: "Part 7 of a series on building a self-hosted Aion 2 community platform with AI coding agents: a provably fair play-money economy in a discord.py bot, with commit-reveal seeds, HMAC-SHA256, an append-only ledger, hourly reconciliation, seasons, and a staff dashboard."
 keywords: "provably fair, commit-reveal, hmac-sha256, rejection sampling, discord.py, sqlite, ledger, reconciliation, ai agents, claude code"
 url: "/blog/2026/ai-agent-platform-part-7"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 7"
+  title: ["A Provably Fair", "Play-Money Economy"]
+  image: commands-overview.webp
 ---
 
 ## The bot that runs the server also runs a casino

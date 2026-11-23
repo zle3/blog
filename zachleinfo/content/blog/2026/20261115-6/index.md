@@ -9,6 +9,13 @@ summary: "Making Nyerkulator's chat reading 14 times faster, cutting idle UI wak
 description: "Part 6 of a series on building an Aion 2 community platform with AI agents: performance refactors guarded by golden tests and bit-for-bit replay comparisons, covering chat OCR, minimap search, idle efficiency, and packet decoding."
 keywords: "performance, golden tests, regression testing, rust, ocr, refactoring, ai agents, claude code"
 url: "/blog/2026/ai-agent-platform-part-6"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 6"
+  title: ["Faster Without Changing", "a Single Output"]
+  image: before-after.webp
+  focus: center
+  fit: contain
 ---
 
 ## Fast is easy, same is the hard part

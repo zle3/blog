@@ -18,3 +18,4 @@ zachleinfo/.codegraph/
 
 # Wrangler local state
 status-worker/.wrangler/
+zachleinfo/scripts/__pycache__/

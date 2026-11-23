@@ -10,6 +10,13 @@ description: "Part N of a series on TODO: what this part covers."
 keywords: "TODO, comma separated, lowercase, search phrases"
 url: "/blog/{{ now.Format "2006" }}/TODO-series-slug-part-N"
 showHero: false
+thumbnailCard:
+  kicker: "TODO series kicker from data/vocabulary.yaml · Part N"
+  title: ["TODO Part Subtitle"]
+  subtitle: "TODO short evergreen line"
+  # Or an image card instead of subtitle (docs/images.md):
+  # image: TODO-diagram-or-screenshot.webp
+  # fit: contain
 ---
 
 TODO Write the part here (about 3,000 words). Start with a ## heading, not a # heading. Rules: AGENTS.md and docs/style-guide.md at the repo root.

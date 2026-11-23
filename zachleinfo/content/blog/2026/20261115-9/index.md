@@ -9,6 +9,11 @@ summary: "The other half of pyaaa: the bot that actually runs the community's Di
 description: "Part 9 of a series on building a self-hosted Aion 2 community platform with AI agents: pyaaa as a Discord server manager, change jobs and approvals, drift alerts and locked channels, community features, and the legion roster and chat relay."
 keywords: "discord bot, discord.py, server management, change control, permissions audit, backups, legion roster, chat relay, ai agents"
 url: "/blog/2026/ai-agent-platform-part-9"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 9"
+  title: ["A Discord Bot That Asks", "Before It Changes Things"]
+  image: portal-home.webp
 ---
 
 [Part 7](/blog/2026/ai-agent-platform-part-7) was the fun half of pyaaa: coin flips, blackjack tables, a pretend stock market, and a lot of math to prove none of it was rigged. This part is the other half, the half nobody screenshots for Twitter. pyaaa is also the bot that runs the community's Discord server. Roles, permissions, verification, tickets, giveaways, logs, the legion roster, and the relay that copies our in-game legion chat into Discord all go through it.

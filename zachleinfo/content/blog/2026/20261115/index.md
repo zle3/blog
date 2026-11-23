@@ -9,6 +9,13 @@ summary: "How a one-feature Hidden Cube radar for an Aion 2 Discord turned into 
 description: "Part 1 of a series on building and running a self-hosted Aion 2 community platform with a team of AI coding agents: what it is, what members actually do with it, how it reads the game passively, how the work is split between me and the agents, and the first big restructure."
 keywords: "claude code, ai agents, rust, egui, axum, sqlite, discord.py, aion 2, self-hosted, homelab"
 url: "/blog/2026/ai-agent-platform-part-1"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 1"
+  title: ["From Cube Radar", "to Nyerkulator"]
+  image: architecture.webp
+  focus: center
+  fit: contain
 ---
 
 ## It started as a radar for one thing

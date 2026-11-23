@@ -4,46 +4,44 @@ All media for a page lives in that page's folder, next to `index.md`, and is ref
 
 ## The thumbnail: `feature.webp`
 
-Every page needs exactly one `feature.webp` in its folder. The theme uses it for list cards, related posts, previous/next cards, link previews, and (unless `showHero: false`) a banner at the top of the page.
+Every page has exactly one `feature.webp` in its folder. The theme uses it for list cards, related posts, previous/next cards, and link previews. **It is always generated** by `scripts/thumbnail-card.py` from `thumbnailCard` in front matter, so every thumbnail on the site matches the brand ([brand.md](brand.md)). Never make or edit it by hand. The checker fails a page without `thumbnailCard`, and every page with one sets `showHero: false`.
 
-- **Format**: WebP, exactly **1500x1000** (3:2). The checker enforces this.
-- Cards crop to 3:2 from the centre, so keep the subject centred with some margin.
-- Two ways to make one:
-
-### Option A: a real image
-
-A screenshot, diagram, or photo that represents the page, resized and cropped to 1500x1000:
-
-```sh
-ffmpeg -i source.png -vf "scale=1500:1000:force_original_aspect_ratio=increase,crop=1500:1000" -c:v libwebp -quality 85 feature.webp
-```
-
-- It must follow the same rules as any other image (no private names, labelled if composite).
-- If it can go out of date (an architecture diagram, a screenshot with counts), add `thumbnailReview: YYYY-MM-DD` and a `thumbnailReviewNote` saying what to check.
-- If the same image appears in the body, set `showHero: false` so it is not shown twice.
-
-### Option B: a text title card
-
-For pages without a suitable image. The text lives in front matter and the image is generated from it, so it can always be rebuilt:
+**Text card**, for pages without a good image:
 
 ```yaml
-showHero: false   # required with a card: the card repeats the title
+showHero: false
 thumbnailCard:
   kicker: "Self-Hosting Palworld · Part 1"
   title: ["Foundation and", "Digging In"]   # one string or a list of lines, 24 characters per line at most
   subtitle: "Proxmox, LinuxGSM, and the config traps"
 ```
 
+**Image card**, a screenshot or diagram from the page in the branded frame:
+
+```yaml
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 2"
+  title: ["Running 29 AI Agents", "Like a Dev Team"]
+  image: merged-prs-daily.webp   # a file in this folder; it counts as used
+  focus: center                  # top (default), center, or bottom
+  fit: contain                   # contain for diagrams and slides; cover (default) for screenshots
+```
+
 ```sh
 cd zachleinfo
 python3 scripts/thumbnail-card.py content/blog/2026/20261201/index.md   # one page
 python3 scripts/thumbnail-card.py            # any card that is missing
+python3 scripts/thumbnail-card.py --all      # every card (after a brand change)
 ```
 
-Needs `ffmpeg` and PyYAML. Re-run it for the page whenever you change the card text.
+Needs Pillow and PyYAML. Re-run it for the page whenever you change the card text or its image.
 
 - **Kicker**: series parts use `<kicker from vocabulary.yaml> · Part N`; portfolio entries use `Portfolio`; standalone posts use the topic (`Homelab`) or `Blog`.
+- **Title**: the post's own subtitle or name, shortened to fit (24 characters per line, two lines at most on image cards).
+- **Image**: must already follow the brand: a branded diagram or a plain screenshot. Never an unbranded light-theme slide.
 - **Keep card text evergreen**: no job titles, counts, or dates that will go stale.
+- If the image can go out of date (an architecture diagram, a screenshot with counts), add `thumbnailReview: YYYY-MM-DD` and a `thumbnailReviewNote` saying what to check.
 - Oxford commas apply on cards too.
 
 ## Images in the body
@@ -63,6 +61,10 @@ Needs `ffmpeg` and PyYAML. Re-run it for the page whenever you change the card t
   ```
 
 - Remove files you end up not using; the checker warns about unreferenced files.
+
+## Diagrams, charts, and readability
+
+Anything you draw (diagram, chart, slide, label, burned-in caption) follows [brand.md](brand.md): plum canvas, brand text colours, brand series and meaning colours, and text large enough to read at 1080p. Every body image and carousel slide opens full-screen on click, so publish diagrams at 2560 px wide. Plain screenshots are never recoloured.
 
 ## What a screenshot may show
 

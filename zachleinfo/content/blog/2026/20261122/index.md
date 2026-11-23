@@ -8,6 +8,10 @@ description: "A free, open source Windows reinstall kit: back up apps, drivers, 
 keywords: "windows reinstall, backup before reinstall, winget, powershell, wpf, usb, migrate pc, claude code"
 url: "/blog/2026/pc-reinstall-kit"
 showHero: false
+thumbnailCard:
+  kicker: "Blog"
+  title: "PC Reinstall Kit"
+  image: backup-progress.webp
 ---
 
 ## The "what did you have installed?" problem

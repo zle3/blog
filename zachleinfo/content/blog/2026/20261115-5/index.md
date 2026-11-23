@@ -9,6 +9,13 @@ summary: "Three user reports, one stubborn minimap: how Radar went from mistakin
 description: "Part 5 of a series on building an Aion 2 community platform with AI coding agents: fixing minimap detection, position tracking, and chat OCR from real user reports, with before and after detector output."
 keywords: "minimap detection, screen reading, ocr, template matching, windows graphics capture, user reports, rust, ai agents, aion 2"
 url: "/blog/2026/ai-agent-platform-part-5"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 5"
+  title: ["Fixing Minimap Tracking", "from User Reports"]
+  image: minimap-before-after.webp
+  focus: center
+  fit: contain
 ---
 
 [Part 1](/blog/2026/ai-agent-platform-part-1) covered what the platform is and how the work splits between me and the agents. This part is about the least glamorous and most humbling part of the whole project: user reports. Specifically, a run of them that all came back to the same small rectangle in the corner of the screen, the minimap, and one about the chat box that I still think is kind of funny.
@@ -64,7 +71,7 @@ Look at the numbers on those slides. On the 1080p screen, the lookalikes measure
 
 The inset in the corner of the 1440p slide is the app's own debug dump from version 1.2.x, showing the skill bar boxes it was happily following. That dump is a big part of why this got fixed properly: it showed exactly what the old detector believed, instead of me having to guess.
 
-A word on how those slides were made, since "before and after" images are easy to fake. The red boxes are real detector output. A small scratch program called the app's own minimap code, first the box search in the top-right 60% by 60% corner where it normally looks, then the coarse search over the whole screen, each run repeated with earlier finds blocked out so you can see everything it would have accepted. The edge percentages come from the same measure the app uses: the share of pixels inside the middle three quarters of the box with a brightness step above 10. Nothing on the "before" slides is drawn in by hand except the labels and the grey outline showing which corner the old search covered. The game's chat and the character name and legion tag are blurred, and I've also blurred the quest tracker text and currency for this post.
+A word on how those slides were made, since "before and after" images are easy to fake. The rose boxes are real detector output (the app draws them red; the slides were recoloured to match this site). A small scratch program called the app's own minimap code, first the box search in the top-right 60% by 60% corner where it normally looks, then the coarse search over the whole screen, each run repeated with earlier finds blocked out so you can see everything it would have accepted. The edge percentages come from the same measure the app uses: the share of pixels inside the middle three quarters of the box with a brightness step above 10. Nothing on the "before" slides is drawn in by hand except the labels and the grey outline showing which corner the old search covered. The game's chat and the character name and legion tag are blurred, and I've also blurred the quest tracker text and currency for this post.
 
 ### Finding it by its icons instead
 

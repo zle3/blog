@@ -9,6 +9,13 @@ summary: "How a team of AI agents gets to check on and deploy live services with
 description: "Part 3 of a series on running a self-hosted Aion 2 community platform built by AI agents: the host gate, passkey-approved host changes, digest pinning, network isolation, the Litestream standby, and signed desktop updates."
 keywords: "ai agents, ssh forced command, authorized_keys restrict, webauthn, passkey, litestream, sqlite replication, cloudflare tunnel, ghcr digest, ed25519, homelab security"
 url: "/blog/2026/ai-agent-platform-part-3"
+showHero: false
+thumbnailCard:
+  kicker: "AI Agent Platform · Part 3"
+  title: ["Production Access", "Without a Shell"]
+  image: access-control.webp
+  focus: center
+  fit: contain
 ---
 
 [Part 1](/blog/2026/ai-agent-platform-part-1) covered what the platform is and how the work splits between me and a team of 29 Claude Code agents. [Part 2](/blog/2026/ai-agent-platform-part-2) is about how those agents get code merged without tripping over each other. This part is about the scarier question: what happens *after* the merge, when the code has to land on a real host that real people depend on.

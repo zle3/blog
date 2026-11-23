@@ -9,6 +9,11 @@ summary: "Mapping every hardcoded dependency, splitting a 900-line file into a D
 description: "Part 3 of a series on self-hosting a Palworld dedicated server: a dependency map, containerizing the stack, a public status page, an uptime tracker, and TLS hardening."
 keywords: "palworld, docker, cloudflare tunnel, origin ca, nginx, discord.py, homelab, self-hosted"
 url: "/blog/2026/self-hosted-palworld-part-3"
+showHero: false
+thumbnailCard:
+  kicker: "Self-Hosting Palworld · Part 3"
+  title: "Going Public"
+  image: website-status.png
 ---
 
 [Part 1](/blog/2026/self-hosted-palworld-part-1) covered the initial build, [part 2](/blog/2026/self-hosted-palworld-part-2) covered the bot and offsite backups. By this point the server had been chugging along reliably for a while, which honestly made me nervous, since nothing stays quiet forever. This part is about what happened once it stopped being a private project I fiddled with alone and started needing an actual public face: a dependency map that caught a real bug, a full containerization, a status page, an uptime tracker, and finally closing that last plaintext hop I'd been ignoring.

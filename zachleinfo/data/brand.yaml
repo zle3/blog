@@ -1,0 +1,35 @@
+# zachle.info brand palette: the single source of truth for every
+# generated image (thumbnails, diagrams, charts, annotated composites).
+# Derived from the site's colour scheme (assets/css/schemes/zli-ppr-custom.css)
+# and the title cards. Read by scripts/brandkit.py; see docs/brand.md.
+#
+# Tools in other projects that draw images for this site should copy these
+# hex values (or read this file) rather than picking their own colours.
+
+canvas: "#352330"        # image background (plum); every image sits on this
+surface: "#43303e"       # boxes, panels, and cards drawn on the canvas
+surface_strong: "#523b4b" # raised or highlighted boxes
+line: "#6a5162"          # borders, gridlines, dividers, connectors
+code_bg: "#22161f"       # terminal and code panels (darker than the canvas)
+text: "#ffffff"          # titles and primary text
+text_body: "#ece4ea"     # normal text
+text_muted: "#cdcddb"    # kickers, subtitles, captions, axis labels (neutral-300)
+primary: "#9b6b84"       # brand mauve (primary-500): accent bar, footer mark
+primary_light: "#d3a9c0" # mauve for marks, lines, and fills on the canvas
+
+# Data series and annotation colours, in the order to use them.
+series:
+  - "#d3a9c0"   # 1 mauve (primary)
+  - "#fb7185"   # 2 rose (secondary-400)
+  - "#a0a0bb"   # 3 lavender (neutral-400)
+  - "#fecdd3"   # 4 blush (secondary-200)
+
+# Meaning-carrying colours. Use these, not green/red, for before/after,
+# good/bad, pass/fail, and for boxes drawn on top of screenshots.
+good: "#d3a9c0"          # after, pass, found, recommended (mauve)
+bad: "#fb7185"           # before, fail, missed, warning (rose)
+neutral: "#a0a0bb"       # unchanged, other
+
+fonts:
+  bold: "scripts/fonts/DejaVuSans-Bold.ttf"
+  regular: "scripts/fonts/DejaVuSans.ttf"

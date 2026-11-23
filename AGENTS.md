@@ -35,6 +35,7 @@ These apply to every page, caption, thumbnail, and commit message. If your sourc
 
 - **Oxford commas everywhere**: prose, front matter, captions, title cards, and commit messages ("apps, settings, and browser data").
 - **No em dashes or en dashes.** Use commas, colons, parentheses, or a new sentence.
+- **One brand for every image.** Thumbnails are always generated from `thumbnailCard` front matter by `scripts/thumbnail-card.py`. Diagrams, charts, labels, and burned-in captions use the palette in `zachleinfo/data/brand.yaml`: plum canvas, no light backgrounds, no blue, green, or orange, and rose and mauve for bad and good. Text in images must be readable at 1080p. Plain screenshots are never recoloured. See [docs/brand.md](docs/brand.md).
 - **Controlled vocabulary.** Tags, categories, and series names come from `zachleinfo/data/vocabulary.yaml` ([docs/vocabulary.md](docs/vocabulary.md)).
 - **Published URLs never change.** If a page must move, keep the old path under `aliases`.
 - **Stay in your lane.** Do not edit other pages, the theme (`themes/blowfish/`), layouts, CSS, config, or `static/_headers` as part of a content contribution. If you think one needs changing, tell the owner.
@@ -67,6 +68,7 @@ Reference docs, all in [docs/](docs/):
 - [style-guide.md](docs/style-guide.md): voice for blog and portfolio, wording rules, what to label
 - [front-matter.md](docs/front-matter.md): every key, per page type, with examples
 - [images.md](docs/images.md): thumbnails, title cards, screenshots, carousels, video
+- [brand.md](docs/brand.md): the palette, generated thumbnails, diagram style, recolour tools, readability
 - [vocabulary.md](docs/vocabulary.md): tags, categories, series, and how to add one
 - [checklists.md](docs/checklists.md): step-by-step per contribution type
 - [checker.md](docs/checker.md): what `check-content.py` enforces and how to fix each finding

@@ -8,6 +8,13 @@ description: "TODO one neutral sentence for search engines and link previews."
 keywords: "TODO, comma separated, lowercase, search phrases"
 url: "/blog/{{ now.Format "2006" }}/TODO-kebab-slug"
 showHero: false
+thumbnailCard:
+  kicker: "TODO topic, for example Homelab, or Blog"
+  title: ["TODO Short Title"]
+  subtitle: "TODO short evergreen line"
+  # Or an image card instead of subtitle (docs/images.md):
+  # image: TODO-diagram-or-screenshot.webp
+  # fit: contain
 ---
 
 TODO Write the post here. Start with a ## heading, not a # heading. Rules: AGENTS.md and docs/style-guide.md at the repo root.

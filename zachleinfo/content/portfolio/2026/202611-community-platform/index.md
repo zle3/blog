@@ -8,6 +8,13 @@ keywords: "claude code, ai agents, ai operations, rust, egui, axum, sqlite, disc
 url: "/portfolio/2026/ai-community-platform"
 thumbnailReview: 2027-02-16
 thumbnailReviewNote: "Thumbnail is the platform architecture diagram (two Proxmox hosts, Cloudflare Tunnels, GHCR). Replace it if the infrastructure changes."
+showHero: false
+thumbnailCard:
+  kicker: "Portfolio"
+  title: ["AI-Driven Gaming", "Community Platform"]
+  image: architecture.webp
+  focus: center
+  fit: contain
 ---
 
 ## What this is

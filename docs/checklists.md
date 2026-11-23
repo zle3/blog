@@ -12,7 +12,7 @@ Before any of them: read [../AGENTS.md](../AGENTS.md) (hard rules) and [style-gu
 4. Fill in the front matter ([front-matter.md](front-matter.md)): Title Case title, 3 to 7 tags from `data/vocabulary.yaml`, summary, description, keywords, and a permanent `url` of the form `/blog/<year>/<kebab-slug>`.
 5. Write the body in the blog voice. Start with a `##` heading. Say who wrote the code. Private repos are "still in development" and not linked.
 6. Add images as WebP next to `index.md`, with alt text; label composites and demo data ([images.md](images.md)).
-7. Add the thumbnail `feature.webp` (1500x1000): a real image, or `thumbnailCard` front matter plus `python3 scripts/thumbnail-card.py <path to index.md>`.
+7. Add `thumbnailCard` front matter (a text card, or an image card pointing at a branded diagram or screenshot in the folder) and run `python3 scripts/thumbnail-card.py <path to index.md>`. Any diagram or chart you add follows [brand.md](brand.md).
 8. Re-read the whole post once against the hard rules: verified numbers, no private names or IDs, high-level security detail only, Oxford commas, no dashes.
 9. Verify, preview, report (below).
 
@@ -43,7 +43,7 @@ Everything in "New blog post", with these differences:
 3. Front matter: first tag `portfolio`, then 2 to 6 more; no `categories` or `series`; `url: "/portfolio/<year>/<kebab-slug>"`.
 4. Write it in the portfolio voice: plainer and more structured than the blog, with sections such as "What this is", "By the numbers", "Architecture", "Challenges, briefly", "Tech stack", and "Where it stands".
 5. Link the blog post or series that tells the story (root-relative links). Link source code only for repositories under `public_repos` in `data/vocabulary.yaml`.
-6. Thumbnail: an architecture diagram or screenshot (add `thumbnailReview` if it can go stale), or a title card with kicker `Portfolio`.
+6. Thumbnail: an image card (kicker `Portfolio`) around a branded architecture diagram or screenshot (add `thumbnailReview` if it can go stale), or a text card with kicker `Portfolio`. Generate it with `scripts/thumbnail-card.py`.
 7. Check every number against the blog posts and `/about`. They must agree.
 8. Verify, preview, report.
 
