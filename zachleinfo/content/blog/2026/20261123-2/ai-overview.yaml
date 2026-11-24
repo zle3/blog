@@ -1,0 +1,40 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **The AI Overview panel on this site is pre-written.** It thinks, streams its answer, and offers follow-up questions, but every response was written ahead of time and is picked at random.
+
+    - The author didn't want to spend AI credits every time a reader clicked a button.
+    - Claude wrote three summaries and three or four follow-ups for each post, once, using only facts from that post.
+    - A checker rule makes sure every blog and portfolio post has one.
+
+    Yes, this is the overview of that post.
+  - |
+    The post explains the "AI Overview" box at the top of each post on this site. It looks live: a thinking state of 1.4 to 2.8 seconds, text streaming in a few words at a time, and "Dig deeper" questions. None of it calls a model. Nothing is sent anywhere and there is no bill.
+
+    The author's reason is simple: being cheap. The text was written by Claude once, ahead of time, and stored in an `ai-overview.yaml` file next to each post.
+  - |
+    In short: a fake AI summary button, with real AI-written text.
+
+    - The timing is fake: the thinking and streaming are for show.
+    - The text is real: Claude wrote every summary and answer once, so the credits were paid exactly once.
+    - The thumbs up and down buttons go nowhere.
+    - Each post has three summaries of different shapes so "Regenerate" looks like it did something.
+followups:
+  - question: Why not use a real AI model?
+    answers:
+      - |
+        Cost, mostly. The author says plainly they are cheap and did not want to spend AI credits every time a stranger clicked a button on a blog post. A static site also has nowhere safe to keep an API key, and this way nothing about the reader is sent anywhere.
+  - question: Who wrote the summaries?
+    answers:
+      - |
+        Claude did, once, ahead of time. For the existing posts, the job was split across three helper agents, each reading a batch of posts. They could only use facts from the post they were summarising: no rounded numbers, no names, and no em dashes. One line that added something the page didn't say was removed.
+  - question: What do the buttons do?
+    answers:
+      - |
+        Clicking a "Dig deeper" question adds it to the thread, it thinks again, and the pre-written answer streams in. Each question disappears once asked. "Regenerate" picks a different one of the post's three summaries. The thumbs up and down buttons say "Thanks for the feedback" and go nowhere.
+  - question: How does it stay up to date?
+    answers:
+      - |
+        The content checker has an `overview` rule. Every blog and portfolio post needs an `ai-overview.yaml` with the right shape, and the build warns about any post without one. It is a minor rule, so a missing file is flagged but doesn't block a deploy. The new-post checklists include writing one.
