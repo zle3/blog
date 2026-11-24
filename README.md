@@ -69,7 +69,7 @@ blog/
     │   ├── _index.md                # homepage content
     │   ├── about/ now/ resume/      # page bundles: index.md + feature.webp (resume/ also holds the PDF)
     │   ├── privacy/ status/
-    │   ├── blog/<YYYY>/<YYYYMMDD>[-N]/          # one bundle per post
+    │   ├── blog/<YYYY>/<YYYYMMDD>[-N]/          # one bundle per post (+ ai-overview.yaml)
     │   └── portfolio/<YYYY>/<YYYYMM>-<slug>/    # one bundle per entry
     ├── layouts/                     # site overrides of Blowfish partials and shortcodes
     ├── assets/                      # custom CSS, color scheme, JS overrides, site images
@@ -98,6 +98,10 @@ All of it is documented in [docs/brand.md](docs/brand.md) and
 
 Body images and carousel slides open full-screen on click
 (`static/js/lightbox.js`).
+
+Every blog and portfolio post has an "AI Overview" panel at the top. The
+responses are pre-written in the post's `ai-overview.yaml` and picked at
+random (`static/js/ai-overview.js`, [docs/ai-overview.md](docs/ai-overview.md)).
 
 Builds warn about thumbnail problems (visible in Cloudflare build logs):
 

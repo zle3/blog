@@ -61,7 +61,7 @@ zachleinfo/content/
   portfolio/<YYYY>/<YYYYMM>-<slug>/ one folder per entry: index.md, feature.webp, images
 ```
 
-Every page is a folder (a Hugo page bundle) holding `index.md`, a `feature.webp` thumbnail, and the media that page uses. The folder name is a date, not the URL; the URL comes from `url:` in front matter.
+Every page is a folder (a Hugo page bundle) holding `index.md`, a `feature.webp` thumbnail, an `ai-overview.yaml` (blog and portfolio posts), and the media that page uses. The folder name is a date, not the URL; the URL comes from `url:` in front matter.
 
 Reference docs, all in [docs/](docs/):
 
@@ -69,6 +69,7 @@ Reference docs, all in [docs/](docs/):
 - [front-matter.md](docs/front-matter.md): every key, per page type, with examples
 - [images.md](docs/images.md): thumbnails, title cards, screenshots, carousels, video
 - [brand.md](docs/brand.md): the palette, generated thumbnails, diagram style, recolour tools, readability
+- [ai-overview.md](docs/ai-overview.md): the pre-written "AI Overview" panel every post needs
 - [vocabulary.md](docs/vocabulary.md): tags, categories, series, and how to add one
 - [checklists.md](docs/checklists.md): step-by-step per contribution type
 - [checker.md](docs/checker.md): what `check-content.py` enforces and how to fix each finding

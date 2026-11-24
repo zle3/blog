@@ -63,7 +63,7 @@ RASTER = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff"}
 # Errors from these rules are cosmetic: they fail verify.sh locally but do
 # not block a Cloudflare deploy (--deploy). Every other rule is major and
 # blocks the deploy: broken pages, bad URLs, vocabulary, privacy, and so on.
-MINOR_RULES = {"style", "image", "thumbnail", "lastmod"}
+MINOR_RULES = {"style", "image", "thumbnail", "lastmod", "overview"}
 
 findings = []
 
@@ -364,12 +364,57 @@ def light_background(path):
     return sum(common) * 16 / 3 > 200
 
 
+def check_overview(page):
+    """ai-overview.yaml: pre-written AI Overview text (docs/ai-overview.md)."""
+    if page.kind == "page":
+        return
+    f = page.dir / "ai-overview.yaml"
+    if not f.exists():
+        err(page.path, "overview", "no ai-overview.yaml; every blog and portfolio post needs one (docs/ai-overview.md)")
+        return
+    try:
+        data = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    except yaml.YAMLError as e:
+        err(f, "overview", f"not valid YAML: {e}")
+        return
+    if not isinstance(data, dict):
+        err(f, "overview", "must be a mapping with overviews and followups")
+        return
+    for key in sorted(set(data) - {"overviews", "followups"}):
+        err(f, "overview", f"unknown key '{key}' (allowed: overviews, followups)")
+    texts = []
+    ovs = data.get("overviews")
+    if not isinstance(ovs, list) or not 2 <= len(ovs) <= 5 or not all(isinstance(o, str) and o.strip() for o in ovs):
+        err(f, "overview", "overviews must be a list of 2 to 5 non-empty strings (3 is the norm)")
+    else:
+        texts += ovs
+    fus = data.get("followups") or []
+    if not isinstance(fus, list) or not 1 <= len(fus) <= 5:
+        err(f, "overview", "followups must be a list of 1 to 5 items (3 or 4 is the norm)")
+        fus = []
+    for i, fu in enumerate(fus, 1):
+        q = fu.get("question") if isinstance(fu, dict) else None
+        a = fu.get("answers") if isinstance(fu, dict) else None
+        if not isinstance(q, str) or not q.strip():
+            err(f, "overview", f"followup {i} needs a question")
+        elif len(q) > 60:
+            warn(f, "overview", f"followup question '{q}' is {len(q)} chars; keep chips short (45 or fewer)")
+        if not isinstance(a, list) or not a or not all(isinstance(x, str) and x.strip() for x in a):
+            err(f, "overview", f"followup {i} needs answers: a list of one or more strings")
+        else:
+            texts += a
+    for t in texts:
+        if "\u2014" in t or "\u2013" in t:
+            err(f, "overview", "em or en dash in overview text; use a comma, colon, or parentheses")
+            break
+
+
 def check_assets(page):
     """Files in the bundle and references to them."""
     p, body = page.path, page.body
     files = {f.name for f in page.dir.iterdir() if f.is_file()} - {"index.md"}
     strict = page.kind == "page" or not page.legacy
-    used = {"feature.webp"}
+    used = {"feature.webp", "ai-overview.yaml"}
     card = page.fm.get("thumbnailCard")
     if isinstance(card, dict) and isinstance(card.get("image"), str):
         used.add(card["image"])
@@ -561,6 +606,7 @@ def main():
             check_front_matter(page, vocab)
             check_thumbnail(page)
             check_assets(page)
+            check_overview(page)
     urls = check_site(loaded, vocab)
     for page in loaded:
         check_text(page, vocab, urls)

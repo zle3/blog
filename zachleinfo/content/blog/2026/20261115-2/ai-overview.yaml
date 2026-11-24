@@ -1,0 +1,52 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 2** explains how 29 AI agents ship 945 pull requests without becoming a pile of half-merged branches. The answer is process more than code.
+
+    - Each agent is a Markdown file with a description, a model, an effort level, and a procedure-style job.
+    - Twelve rules cover merging, deploying, production, secrets, ownership, cost, and capacity.
+    - A single merge-queue agent is the only way into main, and every pull request needs a full local check with exit code 0.
+
+    The post also covers a post-mortem of 13 refused host requests and a beta versioning bug.
+  - |
+    The post argues that writing code was never the bottleneck. Keeping 29 fast, literal agents from stepping on each other was.
+
+    Early on, each agent rebased, ran a 15 to 20 minute check, and merged, so every merge pushed the others back in line. The fix was one merge-queue agent that takes pull requests oldest first or in small batches, assigns versions at merge time, and never rewrites history.
+
+    The rest describes lessons learned: a stale result file that nearly passed a pull request, shared build targets that lied, and stacked pull requests with stale bases.
+  - |
+    In short: a team of agents needs the same habits as a human dev team, written down.
+
+    - Review by a separate agent is a rule, and it caught a HIGH issue in a pyaaa channel lock fix.
+    - The check is local because GitHub Actions minutes ran out.
+    - A post-mortem counted 13 refused or failed host requests, and none was a safety refusal.
+    - Betas used to sort after their stable release, which stranded testers on the beta.
+
+    The repositories are private, so there are no links.
+followups:
+  - question: Why does only one agent merge?
+    answers:
+      - |
+        A full check takes 15 to 20 minutes. When several agents each rebased, checked, and merged, every merge moved main and made the others re-run the check, so they kept pushing each other to the back of the line.
+
+        A single merge-queue agent now takes pull requests oldest first or in batches of 3 to 5 small independent ones. It merges with `--match-head-commit`, which refuses if the branch moved after the check.
+  - question: What are the twelve rules?
+    answers:
+      - |
+        The post groups them as merging (one path to main, merge on exit code 0, independent review, history never rewritten), deploying (only the deployer deploys, images by digest), production (reads without data, the gate changes by PR), and secrets (never printed, never committed).
+
+        The rest are ownership (the owner decides), cost (start cheap, escalate), and capacity (capped parallelism, about four feature agents at once).
+  - question: What did the failed requests show?
+    answers:
+      - |
+        A post-mortem of refused or failed host requests counted 13, and none was a safety refusal stopping a bad change. Four were preconditions the agent could have checked, and eight were bugs that only appeared under real host conditions, like a root umask of 077 or a sandboxed user.
+
+        The fixes included a preflight script, readable refusal reasons, a test harness that reproduces the host's sandbox, and diff size limits checked before queuing.
+  - question: Why was the check moved off GitHub?
+    answers:
+      - |
+        At this volume, GitHub Actions minutes ran out, so CI moved to a local `check.sh` plus a script that builds and pushes the image.
+
+        The post says that worked out fine. The check runs on hardware the author controls, only the merge queue runs full checks, and it runs them strictly one at a time, so there is no fleet of runners to look after.

@@ -1,0 +1,21 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Current Infrastructure** is a photo entry from the "Journey to the Server Rack": a single picture of the author's server rack as it stood in October 2024.
+
+    It is a snapshot rather than a write-up, so the details are in the photo itself.
+  - |
+    In short: a look at the homelab server rack in October 2024, shown as one photo under the heading "Journey to the Server Rack".
+  - |
+    This portfolio entry records the state of the author's server rack in October 2024. The page is a single photo captioned "Current infrastructure".
+followups:
+  - question: What does the page show?
+    answers:
+      - |
+        One photo of the server rack, taken in October 2024, under the heading "Journey to the Server Rack". There is no written hardware list; the equipment is what you can see in the picture.
+  - question: Why is there so little text?
+    answers:
+      - |
+        The entry is a snapshot: it records what the rack looked like in October 2024 with one photo and a short caption, rather than describing each piece of equipment.

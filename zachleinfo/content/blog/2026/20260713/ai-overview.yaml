@@ -1,0 +1,40 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 2 of the Palworld build log** covers Discord alerting, a restart-vote bot, and offsite backups to an OpenMediaVault NAS, plus the long list of bugs behind each.
+
+    - LGSM's alerts and the bot are separate things, and this server build has no native in-game event webhooks.
+    - Restart votes use the REST API, a 5 minute window, AFK filtering, and an admin veto.
+    - Backups are copied to the NAS, byte-compared, and only then deleted locally.
+    - Bugs included a discord.py sync gotcha, a UTC offset, and a cron schedule collision.
+  - |
+    Once the community started asking for things, the server needed a way to restart without SSH access. The answer was a slash command that checks who is online, posts a button vote, and restarts only if enough players approve.
+
+    The post then follows the bugs that made it trustworthy. Slash commands that never appeared turned out to be synced to an empty guild slot, and a 4AM backup was firing at 9PM because the VM clock was in UTC. Its central lesson is that a successful API call is not the same as a correct one.
+  - |
+    In short: a bot, backups, and a schedule that finally agreed with itself.
+
+    - The bot opens no new firewall ports and restarts through ./pwserver restart.
+    - The NAS uses a dedicated account scoped to one share, over SMB with credentials in a root-owned file.
+    - Cron fires 5 minutes early so in-game warnings can precede each backup and restart.
+
+    Part 3 moves on to a status page and containerization.
+followups:
+  - question: How does the restart vote work?
+    answers:
+      - |
+        A slash command checks the player count through the REST API and posts a button vote. The threshold was dropped from 75% to 50%, except that two players online need both to agree. The bot samples player coordinates every 30 seconds across the 5 minute window and excludes anyone who never moved. The vote runs the full window, and an admin role can veto.
+  - question: Why did the slash commands not show up?
+    answers:
+      - |
+        In discord.py, @tree.command registers globally in the bot's command tree, but tree.sync(guild=X) only pushes what is in that guild's own slot, which starts empty. The sync succeeded at uploading an empty list. The fix was calling tree.copy_global_to(guild=X) before syncing. Querying Discord's API directly and getting an empty list exposed it.
+  - question: How are the backups kept safe?
+    answers:
+      - |
+        Each backup is copied to an OpenMediaVault NAS, byte-compared with the original, and only then deleted locally. The script refuses to delete if the comparison fails. The NAS account is limited to one share, and the SMB password sits in a root-owned file with chmod 600 instead of in /etc/fstab.
+  - question: What was the timezone bug?
+    answers:
+      - |
+        The job meant to run at 4AM was actually firing at 9PM, because the VM's clock was set to UTC while the author expected Pacific time. The fix was timedatectl set-timezone America/Los_Angeles, so cron entries could be written in local time. A later fix sorted out a mix-up between noon and midnight in cron's 24-hour hour field.

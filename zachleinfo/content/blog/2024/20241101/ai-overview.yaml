@@ -1,0 +1,42 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **The rack cost $3233.59** up to November 2024, a figure that leaves out electricity and cooling.
+
+    The post explains how a plan for one server in a 12U rack turned into a soundproofed 26U rack in the living room. It then walks through the purchases:
+
+    - A domain name first, to avoid handing out ip:port to friends.
+    - A Dell PowerEdge T430 for about $260, chosen for its 8 LFF drive bays and desktop format.
+    - CPU, power supply, and Noctua cooling upgrades.
+    - A $100 Dell 7010 Micro and cheap power cords.
+  - |
+    The post answers the question aspiring home labbers ask: how much did it all cost? The total is $3233.59, excluding power and cooling costs.
+
+    It then tells the story behind the spending. The T430 was meant to be tucked in a corner, then needed a CPU swap, dual power supplies, and quieter fans. Along the way came a bargain Dell 7010 Micro and a trickle down of old PCs, where an old Intel 8700k was reclaimed after a 7700x upgrade.
+  - |
+    In short: a 26U rack nobody planned, and what each piece cost.
+
+    - The server upgrade parts include $47 for CPUs, $46 for power supplies, and $183 for fans and coolers.
+    - Smaller items include a $27 front bezel and $19 in power cords.
+    - Tips include buying a Dell server with a valid iDRAC, which the post calls an absolute lifesaver.
+
+    The page stops at a "Planning" section.
+followups:
+  - question: Why a Dell PowerEdge T430?
+    answers:
+      - |
+        It came in a desktop format, which was supposedly quieter, and the author had no rack at the time. It was a 13th generation Dell at about $260, with 8 LFF HDD slots that could take drives found on sale on Slickdeals or r/Buildapcsales. The post adds it would now pick a 14th gen Dell x40.
+  - question: Why the Noctua fans?
+    answers:
+      - |
+        The post says they are supposedly the quietest on the market, at a heavy price premium. The author found other labbers using this exact fan combination and copied it. The fans and two CPU coolers came to $183, almost more than the original machine.
+  - question: What was the best deal?
+    answers:
+      - |
+        A 12th gen Intel Dell 7010 Micro for $100, found while searching Craigslist, Offerup, Facebook Marketplace, Reddit, and Ebay. The post doubts the seller knew its real value. Five 15a power cords at $4 each, shipping included, were another find, and the $9.50 cords were returned.
+  - question: What does the total leave out?
+    answers:
+      - |
+        The $3233.59 does not include electricity or the costs associated with cooling. The post flags this right after giving the number.

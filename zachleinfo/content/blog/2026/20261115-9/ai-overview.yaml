@@ -1,0 +1,43 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 9 covers the half of pyaaa that runs the community's Discord server, built so that it asks before it changes things.**
+
+    - **Every change is a job**, a readable list of changes with a backup taken before the first change and after the last.
+    - **Auto-approval is off**, and agent-planned jobs always wait for the owner.
+    - **Drift alerts** report changes made outside the bot, and locked channels are reverted immediately.
+    - **Community features** replace several other bots.
+    - **Legion tools** include a roster, a warm-up period, and a live chat relay.
+  - |
+    The post explains how a Discord server's roles and permissions were put under the same kind of control the series applied to its hosts.
+
+    A web portal, limited to allowlisted accounts, shows each planned change as a job with a preview. The agents can plan changes to the live server but cannot make them happen. Backups are kept for good and can be compared, and a restore is just another job.
+
+    The second half covers verification, tickets, giveaways, the legion roster, and the relay that copies in-game legion chat into Discord.
+  - |
+    In short: one bot, one portal, a written list of what runs on its own and what waits, and a log of everything.
+
+    - Locked roles, locked channels, strong permissions, and plans with errors always wait for approval.
+    - Discord keeps audit log entries for 45 days, so pyaaa archives them permanently.
+    - Legion warm-up grants access 13 to 15 days after a roster join date.
+
+    The author says the rule has to be built into the system, because rules in a prompt only go so far. The repo is private.
+followups:
+  - question: What always needs approval?
+    answers:
+      - |
+        Even with auto-approval on, some jobs always wait: every job an agent planned, anything touching a locked role, anything changing a locked channel, any role gaining a strong permission like Kick Members, Ban Members, Administrator, Manage Server, or Manage Roles, and any job whose plan has errors. Right now auto-approval is off, so every job waits on the Jobs page.
+  - question: How does it handle drift?
+    answers:
+      - |
+        Drift means changes made outside pyaaa, such as by people with the right roles or other bots. The Alerts page reports them. Locked channels go further: name, topic, category, and permission overwrites are stored as a baseline, and any change in Discord is reverted immediately and reported. A bug where another bot deleted a role left pyaaa reverting repeatedly. A review rated one first fix HIGH, and the final fix only trusts Discord's answer to pyaaa's own edit.
+  - question: What does legion warm-up do?
+    answers:
+      - |
+        It gives new legion members the Discord access role a random 13 to 15 days after their join date on the roster. Each person's delay is rolled once and kept. Removed members lose the role, retired members keep it, every grant and removal is posted as an alert, and members are never messaged. From the portal, access can be granted early or the wait extended.
+  - question: How does the chat relay work?
+    answers:
+      - |
+        The desktop app reads the game's legion chat off the screen, and the server posts it into a Discord channel live, under each character's name and picture. Names in the chat ping the linked Discord member unless they are on do-not-disturb. A doorbell channel gets join notices, and system notices report relay start and stop and game maintenance. An admin page shows each reader's health over the last week.

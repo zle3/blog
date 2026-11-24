@@ -1,0 +1,45 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 10 closes the series with the pieces that answer three questions: when does the boss spawn, when are we raiding, and who wants to run a dungeon.**
+
+    - **Boss timers** are read from the game and shown on a live Discord dashboard with one-tap "died" buttons.
+    - **Raids** live in forum posts, with times shown in each reader's own time zone.
+    - **Find a time** is a vote that shows counts only, with names kept private.
+    - **The party finder** pings members by class, gear score, and quiet hours.
+
+    Nyerk, the original bot, has been folded into pyaaa.
+  - |
+    The post argues that time is the sneakiest problem in the platform. The community, the game, and daylight saving all follow different clocks.
+
+    The rules it settled on: every member sees times in their own time zone, the game's fixed events keep their own clocks, and the weekly maintenance window is pinned to UTC.
+
+    The staff side gets equal attention. A "Forget this member" button handles privacy requests and even covers restored backups, and admins are limited to 30 changes an hour, with emergency switches to lock admin access or sign everyone out.
+  - |
+    In short: Nyerk began as a separate Discord bot and now lives inside pyaaa as its own module.
+
+    - Boss timers, the party finder, and a game news feed came from Nyerk.
+    - Raid posts show a roster by role, and the leader gets requests with Accept, Details, and Decline.
+    - Parties close after 60 minutes unless the leader extends them.
+    - The news summary is made on the server and nothing is sent to any AI service.
+
+    The post wraps up the ten-part series, and the repos are private.
+followups:
+  - question: How do the boss timers work?
+    answers:
+      - |
+        The desktop app's Nyerk tab reads world, Abyss, and field boss timers from the game itself, and an "Upload to Nyerk" switch shares them with the bot. In Discord, one dashboard message shows resets, upcoming events, and respawns. Under it are one-tap buttons per world boss, plus a "Custom time" button. Alerts ping opt-in roles a few minutes ahead. A timeout bug was fixed by moving a log write out of a database transaction.
+  - question: How does Find a time keep names private?
+    answers:
+      - |
+        A raid leader starts a vote where each slot shows in the reader's own time zone, and members pick times or tap "Use my usual times". The poll shows counts only. Organizers and staff see who answered what, but everyone else sees only how many can play. It highlights the best slot with role coverage, and the leader can schedule it in one click. Usual-times counts also stay hidden until at least three people have saved them.
+  - question: What does "Forget this member" do?
+    answers:
+      - |
+        Staff use a "Forget this member" button. It deletes their records, gear score, quiet hours, registrations, and past party seats, removes them from parties, and strips their names from boss timers, led parties, and logs. It can also remove managed roles in Discord. Nightly backups keep old data until they age out, so Nyerk keeps just their Discord ID and the date on a short "forgotten" list and forgets them again if a backup is restored.
+  - question: How does the party finder work?
+    answers:
+      - |
+        Members pick the classes they play, which gives them class and type roles. To start a party, they pick the content, size, and makeup, and registered members are pinged and can join in one click. Dungeon pings only reach members whose gear score meets the minimum, and quiet hours pause them. Parties close after 60 minutes unless extended, and there is a default limit of one interest ping per member every 15 minutes.

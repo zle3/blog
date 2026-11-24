@@ -13,8 +13,9 @@ Before any of them: read [../AGENTS.md](../AGENTS.md) (hard rules) and [style-gu
 5. Write the body in the blog voice. Start with a `##` heading. Say who wrote the code. Private repos are "still in development" and not linked.
 6. Add images as WebP next to `index.md`, with alt text; label composites and demo data ([images.md](images.md)).
 7. Add `thumbnailCard` front matter (a text card, or an image card pointing at a branded diagram or screenshot in the folder) and run `python3 scripts/thumbnail-card.py <path to index.md>`. Any diagram or chart you add follows [brand.md](brand.md).
-8. Re-read the whole post once against the hard rules: verified numbers, no private names or IDs, high-level security detail only, Oxford commas, no dashes.
-9. Verify, preview, report (below).
+8. Write `ai-overview.yaml` next to `index.md`: three summaries and 3 or 4 "Dig deeper" follow-ups, using only facts from the post ([ai-overview.md](ai-overview.md)).
+9. Re-read the whole post once against the hard rules: verified numbers, no private names or IDs, high-level security detail only, Oxford commas, no dashes.
+10. Verify, preview, report (below).
 
 Do not also edit the homepage, `/now`, or a portfolio entry unless that was part of what you were asked to do. The homepage lists recent posts automatically.
 
@@ -44,8 +45,9 @@ Everything in "New blog post", with these differences:
 4. Write it in the portfolio voice: plainer and more structured than the blog, with sections such as "What this is", "By the numbers", "Architecture", "Challenges, briefly", "Tech stack", and "Where it stands".
 5. Link the blog post or series that tells the story (root-relative links). Link source code only for repositories under `public_repos` in `data/vocabulary.yaml`.
 6. Thumbnail: an image card (kicker `Portfolio`) around a branded architecture diagram or screenshot (add `thumbnailReview` if it can go stale), or a text card with kicker `Portfolio`. Generate it with `scripts/thumbnail-card.py`.
-7. Check every number against the blog posts and `/about`. They must agree.
-8. Verify, preview, report.
+7. Write `ai-overview.yaml` next to `index.md` ([ai-overview.md](ai-overview.md)).
+8. Check every number against the blog posts and `/about`. They must agree.
+9. Verify, preview, report.
 
 ## Update /now
 

@@ -1,0 +1,45 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 6 of the series is about making Nyerkulator faster without changing a single output.** Every speedup had to produce identical results to the old build, checked with golden tests and replay comparisons, before its timings counted.
+
+    - **Chat OCR:** one item-link chat box went from 1,662 ms to 116 ms.
+    - **Minimap search:** a whole-window relocate at 1440p went from 965 ms to 231 ms.
+    - **Idle UI wakes:** 256,162 down to 7 over a 3.5-hour session.
+    - **Packet decoding:** from 9.3 decodes per packet to 1.0.
+
+    The post notes that the repos are private and in active development.
+  - |
+    The post describes four performance changes to a desktop app that runs next to a game for hours, all held to one rule: the output has to be identical to before.
+
+    The check was a golden comparison. The old build runs over recorded sessions and saved screens, the new build runs over the same pile, and any difference blocks the merge until someone can explain it. The author says this matters more when AI agents write code quickly, because "does it look right?" stops scaling.
+
+    The post also admits what fell short. A minimap pass missed its goal, and CPU percentage on a real PC is not yet measured.
+  - |
+    In short: speed was easy to get, and proving nothing changed was the hard part.
+
+    - Chat reading is about 14 times faster, and the old and new matchers agree on all 17,782 test pictures.
+    - With every tool off, UI wakes fell from 256,162 to 7 over 3.5 hours, and 7 network threads became 1.
+    - Decoding each packet once cut engine frame time by 60% on a 282,079-packet recording.
+    - Across 141 recordings, 140 matched exactly, and the one difference was explained.
+
+    The numbers come from the project's own performance notes and changelog.
+followups:
+  - question: How did it prove the output was identical?
+    answers:
+      - |
+        The app can replay a saved capture of a real game session and run its screen-reading code against saved screenshots. Before a refactor, the old build runs over a pile of recordings and saved screens, and its results are kept as the "golden" output. After the refactor, the new build runs over the same pile. If a single result differs, the change does not merge until someone can explain exactly why.
+  - question: What was the one recording that differed?
+    answers:
+      - |
+        The packet-decoding change was checked across 141 real recordings, about 4.7 million packets. 140 were identical. In the odd one, two mobs stood at the exact same spot and swapped order in a list. The old build did the same from one run to the next, because the order came from hash ordering, which is not stable between runs. So the new build had changed nothing.
+  - question: Did every speedup hit its goal?
+    answers:
+      - |
+        No. The first minimap pass aimed to cut the minimap test time in half and only reached 28%, and the notes record it as a miss. A second pass got it past 50%. A full minimap relocate at 231 ms is also still above the 150 ms median goal, though relocating from the last known place takes 22 ms. CPU percentage on the author's reference PC is still listed as to be measured, so the post gives no figure.
+  - question: How did idle behavior improve?
+    answers:
+      - |
+        With every tool switched off over a real 3.5-hour session, UI wakes fell from 256,162 to 7. Packets handed to tools dropped 81%. Network threads went from 7 to 1, and file writes per slider drag went from about 60 to 1. The fixes were gated sinks, UI wakes limited to one per 33 ms, one shared network scheduler, and debounced, atomic, skip-if-unchanged file writes.

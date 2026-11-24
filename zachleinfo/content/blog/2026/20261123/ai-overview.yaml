@@ -1,0 +1,42 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 1 of the Homelab Journal is the planning day for moving a flat home network to a segmented one.** Nothing has been cut over yet, and the post says this is design work done with Claude Code.
+
+    - **Why:** PCs, TVs, game servers, and hypervisor management pages all shared one network, and cameras and smart-home gear were coming.
+    - **Design:** seven VLANs plus a VPN range, with traffic denied between them by default.
+    - **Also planned:** a floor plan editor, wall-aware camera coverage, rack cooling, and a rack reorganization.
+  - |
+    The author describes starting with the instruction "ask me as many questions as you need". The questions shaped the plan. One evening of downtime was acceptable, only a few admin machines should reach management, and a quick check showed a public dynamic IP rather than CGNAT.
+
+    The only live change so far was moving two access points into a reserved block. One dropped off because its subnet mask and gateway did not match the new address, which set the rule for the cutover: change one thing, check it, and keep a way back.
+
+    A made-up house is used to show camera planning, so no real layout is published.
+  - |
+    In short: a flat network became a segmentation plan, plus a rack and cooling redesign.
+
+    - A default-deny firewall matrix lists each allowed path, and DNS is the one service every VLAN gets.
+    - The camera check casts a ray to each 1-foot grid point and ignores points behind walls.
+    - The first fan plan assumed half an amp per fan, but the datasheet said 2.2 A each, so the plan changed.
+    - A hall closet for the network gear is still undecided.
+
+    A second part will probably cover the cooling build.
+followups:
+  - question: What were the cooling plan's problems?
+    answers:
+      - |
+        The first plan assumed half an amp per fan, but the datasheet said 2.2 A each and 3.2 A at startup. Six fans would need about 20 A at 12 V, more than any small fan controller supplies. The plan that stuck uses six ARCTIC P12 Max fans, about 2 A in total, with an ESP32 four-channel PWM controller and three temperature probes, plus blanking panels on every empty slot.
+  - question: How does the camera coverage check work?
+    answers:
+      - |
+        The first check only measured distance and angle, so it counted a zone on the far side of a wall. The fixed version casts a ray from each camera to every 1-foot grid point outside the house. A point counts as covered only if it is in range, inside the lens angle, and not behind a wall. Plants are not modelled, so live feeds are the real test. The example uses a made-up house.
+  - question: What changes are planned for the rack?
+    answers:
+      - |
+        The plan puts network gear on top, servers in the middle, and power at the bottom, with no open gaps. The top gets a brush panel for cables, the Wi-Fi AP shelf is replaced by a UniFi Protect recorder, a second patch panel serves cameras, and empty slots get blanking panels. A 1500 VA pure sine wave UPS goes at the bottom. Moving network termination to a hall closet is still undecided.
+  - question: What happens next?
+    answers:
+      - |
+        First, save config backups from the router, switch, and both hosts. Then write staging and cutover runbooks. Phase 1 creates the VLANs and makes the Proxmox bridges VLAN-aware with no downtime. Phase 2 is a cutover evening. After that come the default-deny firewall, the DMZ, cameras, IoT, and monitoring, in that order. The cooling build is probably Part 2.

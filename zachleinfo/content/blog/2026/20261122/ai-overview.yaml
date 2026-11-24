@@ -1,0 +1,52 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **PC Reinstall Kit** is a free, open source pair of Windows programs that live on a USB stick: one backs up an old PC before a wipe, and the other walks the fresh install back to normal.
+
+    - **Backup** records installed programs (flagging ones that need a license key), drivers, devices, about 90 Windows settings, Wi-Fi networks, printers, browser bookmarks and extensions, app settings, and optionally your files.
+    - **Setup** finds the backup on its own and runs twelve steps, reinstalling apps automatically with winget and listing the rest on a page with download buttons.
+    - A final checklist covers what Windows can't safely change for you, each item with an "Open" button for the right settings page.
+
+    It was built with Claude Code, and the post closes with four Windows quirks that nearly broke it.
+  - |
+    The post describes a two-part USB toolkit for reinstalling Windows without the "what did I have installed?" guesswork.
+
+    You run `1-BACKUP-OLD-PC.bat` on the old machine, pick the USB stick (it is listed first on purpose), and the kit records apps, drivers, settings, network details, browser data, and files. After the reinstall, `2-SETUP-NEW-PC.bat` restores everything step by step, asking before each change and resuming after restarts.
+
+    The author built it with Claude Code and found that every serious bug was a **Windows quirk rather than a logic mistake**, which only showed up when testing on a real PC.
+  - |
+    In short: back up to a USB stick, reinstall Windows, restore from the same stick.
+
+    - The stick ends up holding the backup, a copy of the kit, and a "START HERE" file, so it doubles as the setup drive.
+    - Apps known to winget reinstall automatically; everything else gets an "Official site" or "Find download" button.
+    - Nothing is uploaded. That also means the stick holds Wi-Fi passwords, so the last step offers to delete the private parts.
+
+    It's free on GitHub at zle3/pc-reinstall-kit.
+followups:
+  - question: What were the four bugs?
+    answers:
+      - |
+        - **The backup that backed itself up:** run from Downloads, it copied its own backup folder into itself until the disk filled. Copies now skip the backup folder.
+        - **The "press Enter" freeze:** clicking inside an old-style console window starts text selection, which pauses the program. The kit turns that off.
+        - **The report that never finished:** in Windows PowerShell 5.1, lines read from a file carry hidden extra data, and saving the summary followed it into PowerShell's internals forever. Storing plain text fixed it.
+        - **`H` is not a function name:** `h` is a built-in alias for command history, and aliases beat functions. Variable names also ignore case, so `$b` overwrote `$B`.
+  - question: Is it safe to use?
+    answers:
+      - |
+        A few notes from the post:
+
+        - Windows SmartScreen will likely warn about it because the script isn't signed; "More info" then "Run anyway" gets past it.
+        - Everything stays on the USB stick and nothing is uploaded, but that includes Wi-Fi passwords, so keep the stick somewhere sensible. The final step offers to delete the private bits.
+        - Every step asks before it changes anything.
+  - question: What can't it bring back?
+    answers:
+      - |
+        **Saved passwords in Chrome and Edge.** They are locked to the old Windows install and can't be copied as files. The backup walks you through exporting them, or you can turn on browser sync before wiping.
+
+        Apps that winget doesn't know about also aren't installed automatically; they go on an `apps.html` page with a download button for each.
+  - question: How did the author build it?
+    answers:
+      - |
+        With Claude Code: the author decided what it should do, Claude wrote the code, and the author tested it on a real PC and reported problems. It went from a script to an app with a window in about a day. The lesson in the post is that none of the four bugs showed up from reading the code; all of them appeared within minutes of running it on a real machine.

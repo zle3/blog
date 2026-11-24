@@ -1,0 +1,48 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **A self-hosted Palworld server** running on Proxmox hardware in a living room, for a Discord community of roughly 200 members with around 20 online at peak.
+
+    - Automated backups that leave the machine, with the offsite copy verified before the local one is deleted.
+    - A Discord bot the community uses to vote on restarts.
+    - A public status page reached through an outbound-only Cloudflare tunnel.
+    - A dependency map and a knowledge graph used to audit the project.
+
+    The setup has since been rebuilt as a reusable Ansible playbook with encrypted secrets.
+  - |
+    The page presents the architecture as it stands today. Only the game's UDP port is exposed to the internet, forwarded into a segment built for that purpose. RCON, the REST API, and SSH stay internal or tunnel-only.
+
+    The status page serves a pre-rendered snapshot that the bot writes every 60 seconds, so a traffic spike only reaches static nginx content.
+
+    Two audits followed. The dependency map caught a firewall script still opening the old game port, and the knowledge graph confirmed how the infrastructure and bot sides connect.
+  - |
+    In short: a long-running game server with the operational pieces around it.
+
+    - Docker Compose runs the bot, nginx, and cloudflared, while the game server stays on its VM with LinuxGSM.
+    - The dependency map found five copies of one password across scripts and the Docker .env file.
+    - The knowledge graph had 180 nodes, 250 edges, and 25 communities.
+
+    A four-part blog series tells the full build story.
+followups:
+  - question: What is exposed to the internet?
+    answers:
+      - |
+        Only the game's UDP port, forwarded into a DMZ-equivalent VLAN built for that purpose. The status page is reached through a Cloudflare Tunnel that is initiated outbound from the VM, so no inbound port is opened for it. RCON, the REST API, and SSH stay internal or tunnel-only.
+  - question: What did the dependency map find?
+    answers:
+      - |
+        A real bug: setup/03-firewall.sh still opened the original default game port, not the port in use after a mid-project change. A rebuild from those scripts would have firewalled the wrong port.
+
+        It also found five copies of one password across the setup scripts and the Docker .env file, plus a service account username in roughly nine files.
+  - question: What did the knowledge graph show?
+    answers:
+      - |
+        From about 28,000 words of notes and source, it extracted 180 nodes, 250 edges, and 25 communities. 74% of edges came directly from the text and 26% were inferred, at an average confidence of 0.86.
+
+        The highest-connectivity nodes included the status page's rendering function and the restart-vote UI, and it flagged inferred links for verification.
+  - question: Can someone else deploy it?
+    answers:
+      - |
+        Yes. The whole stack was rebuilt as a reusable Ansible playbook with ansible-vault encrypted secrets, in a separate repo called palworld-ops-toolkit. It was tested on a disposable VM before touching anything real. A password rotation is now a one-line change, and the live server stays untouched as the reference.

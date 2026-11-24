@@ -1,0 +1,45 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 4 of the Palworld build log** starts with a restart button that had not worked since containerization, and ends with the whole stack rebuilt as an Ansible playbook.
+
+    - Four stacked bugs hid the broken restart, from a missing file copy to systemd killing the server.
+    - Two blocking calls in the async bot made Discord buttons fail.
+    - Ansible was learned on a throwaway VM running nginx first.
+    - The first real deploy against a disposable VM caught six bugs.
+  - |
+    A small feature request exposed that /restart-force did nothing at all. The causes were an uncopied file, Python output buffering in Docker, the container being unable to reach the host's tmux session, and a systemd unit killing the restarted server. Each looked like success or silence until the logs were checked.
+
+    The post then covers packaging the build so a stranger could run it: roles instead of nine numbered scripts, one plain vars file, and one ansible-vault encrypted secrets file.
+  - |
+    In short: do not trust a clean exit code.
+
+    - /restart-vote failed intermittently because blocking REST calls ran before Discord was acknowledged.
+    - Veto clicks failed because a polling task blocked the event loop. The fix was asyncio.to_thread.
+    - The deploy bugs only appeared on a real host, including a Jinja precedence error and a game port that never changed.
+
+    The live server was left untouched.
+followups:
+  - question: What were the four restart bugs?
+    answers:
+      - |
+        - **A deploy gap:** one of three changed files was never copied to the VM.
+        - **Buffering:** PYTHONUNBUFFERED=1 was never carried into Docker Compose.
+        - **Architecture:** pwserver ran inside the container, which cannot see the host's tmux session in /tmp. A host-side systemd path unit now runs the restart.
+        - **KillMode:** systemd killed the server started by that unit. KillMode=process fixed it.
+  - question: Why was the vote command flaky?
+    answers:
+      - |
+        /restart-vote made two blocking REST calls before acknowledging the Discord interaction, and Discord invalidates one that is not acknowledged within roughly three seconds. Network latency decided whether it worked. The fix was interaction.response.defer(), running the calls through asyncio.to_thread, and replying through followup.
+  - question: Why practice Ansible on a throwaway VM?
+    answers:
+      - |
+        The author had never used Ansible and did not want to learn it on the live server that 200 people play on. A disposable VM got a toy nginx playbook. It hit an EPEL task meant for a different distro family, then demonstrated idempotency (changed=0), a handler, and a template.
+  - question: What did the first real deploy catch?
+    answers:
+      - |
+        Six bugs. Among them were WSL world-writable files making Ansible ignore ansible.cfg, a missing sudo password flag, a missing acl package, a Jinja precedence bug that produced arch=False, and LGSM dependencies and a steamcmd prompt.
+
+        The one that mattered: the game port never changed, because LGSM's separate launch-parameter file had never been touched.

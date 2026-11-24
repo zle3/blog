@@ -1,0 +1,51 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Nyerkulator 3000** began as Cube Radar, a small Windows app released on October 15th that did one thing: say when an Aion 2 Hidden Cube spawned and where. In about a month it grew into a full community platform.
+
+    - **A desktop app** with tools for Radar, Duty quests, Pets, Market prices, a tile puzzle helper, boss timers, a DPS meter, and a legion chat relay.
+    - **A members-only website and server** with anonymous aliases and a leaderboard.
+    - **pyaaa**, a Discord bot that runs the community server.
+
+    Most of the code was written by a team of 29 Claude Code agents, while the author set direction, tested builds, and approved every merge, deploy, and host change.
+  - |
+    The post is the opening tour of a series about building a game community platform with AI agents.
+
+    It explains that the app reads the game passively: it watches network traffic through Npcap and reads the screen, and never touches game memory, injects anything, or sends a packet to the game. It then covers what members do in the app, on the website, and in Discord, and the first big restructure, which split one Rust crate into `core`, `radar`, and `app` without changing anything users could see.
+
+    It closes with the setup behind it all: 945 merged pull requests in 29 days, two Proxmox hosts, and a note that the repositories are private.
+  - |
+    In short: a one-feature cube radar turned into an app, a website, and a Discord bot, mostly written by 29 AI agents.
+
+    - Starting October 19th, the two main repos merged 945 pull requests in 29 days, with a peak of 118 on November 9th.
+    - Within about a month the usage dashboard showed 54 monthly active app installs and 27 members signing in each month.
+    - Every pull request must pass a full local check, which runs 4,539 tests in pyaaa.
+
+    The repositories are private and in active development, so the post has nothing to link.
+followups:
+  - question: What does the app read from the game?
+    answers:
+      - |
+        Only two things: the game's own network traffic on the player's PC, captured through Npcap, and the screen, for items like the minimap and the chat box.
+
+        The post says it never touches game memory, never injects anything, and never sends a packet to the game. This was a hard rule from day one, so features have to be worked out from what the game says by itself plus what is visible on screen.
+  - question: How is the work split with the agents?
+    answers:
+      - |
+        The code, tests, and most docs were written by 29 specialized Claude Code agents, each defined in its own Markdown file. Features such as Radar, Market, Tiles, Duty, Pets, and Combat each get an agent, and others cover the server, the bot, security, and deploys. One merge-queue agent is the only one allowed to merge.
+
+        The author handles direction, the rules, testing builds, and approvals. Every merge, deploy, and host change goes through the author, and host changes are approved with a passkey.
+  - question: What was the first big restructure?
+    answers:
+      - |
+        By October 18th everything lived in one Rust crate, and new tools could only reuse capture and screen reading by reaching into Radar's internals. Milestone M1 split it into `core`, `radar`, and `app` crates, with a rule that tools never reach into each other's code.
+
+        It changed nothing users could see, proven by the same tests passing, identical screenshots from the same replayed session, and a build behaving like the last 0.7.x release. Nyerkulator 1.0.0 followed, delivered as a signed in-app update.
+  - question: Is the code available?
+    answers:
+      - |
+        No. The post says both repositories are private and still in active development, so there is nothing to link. Numbers quoted in the series come from the project's own records, such as the changelog, performance notes, decision records, and merged pull request history.
+
+        The screenshots are real output but use made-up members and throwaway databases, and the cube video is a labelled composite of the author's own recording and the app's replayed output.

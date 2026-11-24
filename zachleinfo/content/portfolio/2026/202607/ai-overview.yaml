@@ -1,0 +1,43 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **A small GCP stack built with Terraform**, made to close the gap between a homelab-heavy background and cloud experience.
+
+    - A VPC with public and private subnets, Cloud NAT, and flow logging.
+    - The same demo app on Compute Engine and on Cloud Run, which turned out to be the better fit.
+    - Cloud SQL for PostgreSQL on a private IP, with the password in Secret Manager.
+    - A Cloud Build pipeline with a manual approval gate, and Cloudflare kept in front.
+
+    The live demo has been taken down, but the source is still available.
+  - |
+    Nearly all of the author's hands-on infrastructure experience sits on a rack in a living room, so this project moves the same habits into Google Cloud. Everything is provisioned through Terraform, with no console clicking, and firewall rules only allow internal traffic by default.
+
+    The demo app also exposes endpoints that prove the setup is real, such as checking Cloudflare headers, confirming it runs in a container, timing a database round trip, and listing recent builds. The post is clear that this is a personal project, not production experience.
+  - |
+    In short: demo1 is a Terraform-built GCP environment with a CI/CD pipeline and a Cloudflare front end.
+
+    Pushing to main runs a lint and import check, builds a Docker image tagged with the commit SHA, pushes it to Artifact Registry, and deploys to Cloud Run after a manual approval. Remaining work includes Ansible, a WAF and rate limiting, shipping logs to Grafana and Loki, and a runbook.
+followups:
+  - question: Why deploy the app twice?
+    answers:
+      - |
+        The job postings being chased name both Compute Engine and Cloud Run, so the author wanted exposure to each. Cloud Run proved the better strategy: no servers to patch, it scales to zero, and it fits something this small. The VM version made that comparison possible, and its service account was limited to read-only Artifact Registry access.
+  - question: How is the database kept private?
+    answers:
+      - |
+        Cloud SQL for PostgreSQL has no public IP and is reachable only over a private IP through a VPC connector. The app's database password lives in Secret Manager and is injected into Cloud Run at runtime, rather than sitting in an environment file or the image.
+  - question: How does the pipeline work?
+    answers:
+      - |
+        A Cloud Build trigger watches the GitHub repo. A push to main runs a lint and import check, builds the Docker image tagged with the commit SHA instead of latest, pushes it to Artifact Registry, and deploys to Cloud Run. A manual approval gate sits before the deploy actually ships.
+  - question: What is still left to do?
+    answers:
+      - |
+        The post lists four items:
+
+        - Ansible for configuration management on the Compute Engine side.
+        - Cloudflare's WAF managed ruleset and a rate-limiting rule, with Cloud Armor as a second layer to compare against.
+        - GCP logs shipped into the existing Grafana and Loki stack.
+        - A runbook with an architecture diagram, rollback steps, and at least one simulated failure.

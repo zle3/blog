@@ -1,0 +1,50 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 3** is about letting AI agents look at and deploy production without giving them a shell. The post says written rules alone failed to keep agents inside their limits, so the rules became machinery.
+
+    - **Path one:** a restricted SSH key that can only run one gate program, which answers a short list of named operations with sensitive data masked.
+    - **Path two:** anything that changes a host is queued and waits for a passkey approval.
+    - **Around it:** digest-pinned deploys, a replicated standby host, and signed app updates.
+  - |
+    The post describes two separate ways onto a host. Agents get a forced-command SSH key, so whatever they type, only the gate program runs, and it refuses everything outside its allowlist, such as shells, port forwarding, and reading secrets.
+
+    For real changes, the web server is deliberately untrusted. An unprivileged runner fetches the request, a root helper writes and signs its own summary, and the owner approves it with a passkey that signs that summary.
+
+    The post also covers a standby host that is about one second behind, and a measured crash test that lost 37 of 1,435 writes.
+  - |
+    In short: enforce limits with the system, give out named operations, and do not trust the middle.
+
+    - The gate is on its 19th version.
+    - Deploys are pinned by image digest, so only the approved image can run.
+    - The standby follows through Litestream but does not take over automatically. A script moves the hostnames.
+    - App updates are signed with an Ed25519 key, and manifests expire after 180 days.
+
+    The repos are private and in active development.
+followups:
+  - question: What can the agents' key actually do?
+    answers:
+      - |
+        It can only run the gate program, which allows named operations: container versions, health, log counts by level, masked error lines, error locations, database row counts, standby status, a deploy of one named service on the primary only, and a few pyaaa reads.
+
+        It refuses shells, sftp, scp, port forwarding, reading `.env` files or tokens, free-form scripts, and any deploy aimed at the standby.
+  - question: How does passkey approval work?
+    answers:
+      - |
+        An agent queues a named operation. An unprivileged runner on the host picks it up, and a root helper writes its own signed summary and sends it to Discord with a short code. The owner signs in to the staff console, pastes the code, and approves with a passkey that signs the host's summary.
+
+        The helper verifies the signature itself. If a host-written check fails, the page hides Approve and offers only Decline.
+  - question: Does the standby fail over by itself?
+    answers:
+      - |
+        No. The post is explicit that the standby does not take over automatically. If the primary dies, a script moves the hostnames to the standby's tunnels, and the owner runs it.
+
+        Litestream keeps the standby about one second behind, and a nightly restore test checks it. In a hard-kill trial, 37 of 1,435 acknowledged writes were lost, the newest from 0.74 seconds before the kill.
+  - question: How are app updates kept safe?
+    answers:
+      - |
+        Each release has a manifest with the version, SHA-256, size, and an expiry 180 days out, signed with an Ed25519 key that never leaves the author's PC. The app checks the signature, expiry, version, size, and hash before asking the user.
+
+        If the user agrees, it swaps the exe, and rolls back if the new one does not start. The expiry stops an old signed manifest from being replayed.

@@ -1,0 +1,42 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 1 of a build log** on self-hosting a Palworld server on Proxmox for a Discord community of about 200 members, with about 20 online at once.
+
+    - Planning covers sizing (8 vCPU, 16 to 20GB RAM, 60GB+ NVMe), a VM instead of a container, and LinuxGSM for hands-off management.
+    - Security was decided up front: only the game port is public.
+    - Five numbered setup scripts hit ordinary bugs, from a missing tmux to a sed delimiter.
+    - Config traps include a server name that LGSM's launch flag overrode.
+  - |
+    The post follows a server build that grew from a simple request into hosting for a large Discord community, on a home Proxmox box. Two goals mattered most: security, since the server sits on the open internet, and staying as hands-off as possible.
+
+    Most of the story is small mistakes and what they taught. A script run with sudo created a root-owned temp file, the settings patch broke on a URL full of slashes, and a port change only worked on the second try, once every layer was changed together.
+  - |
+    In short: planning, a base VM, LinuxGSM, and the config traps that came with them.
+
+    - The VM uses q35, SeaBIOS, fixed memory, and VirtIO devices, and skips disk encryption on purpose.
+    - Cron handles updates, backups, and an @reboot start.
+    - An admin guide was written so the author is not the single point of failure.
+
+    Next up is a Discord restart bot and offsite backups.
+followups:
+  - question: Why a VM instead of a container?
+    answers:
+      - |
+        The dedicated server binary wants kernel features that LXC does not play nicely with. Since the server is public-facing, real isolation also felt worth the overhead. The VM got fixed memory with ballooning off, so the game keeps its RAM under pressure.
+  - question: Why did the server name not change?
+    answers:
+      - |
+        LGSM's launch command passes -servername='LinuxGSM' to the game binary as a command-line flag, which beats the ini file. The fix was an override in common.cfg. The post notes _default.cfg is LGSM's master template and is overwritten on every update, so edits there do not last.
+  - question: How was the port changed?
+    answers:
+      - |
+        The first attempt changed LGSM's common.cfg and the ini's PublicPort, but no router port-forward existed yet. It was reported as not working, so all three layers were reverted to 8211.
+
+        The retry changed every layer together: common.cfg, the ini, the VM's UFW rule, and the router's NAT rule.
+  - question: How are updates and backups scheduled?
+    answers:
+      - |
+        LGSM suggests monitor every 5 minutes, update every 30, and a weekly update-lgsm. A nightly 5am update was considered to avoid mid-day patches, but the author went with the 30 minute default. A nightly backup, weekly update-lgsm, and an @reboot entry were added, since install-service was not available in this LGSM version.

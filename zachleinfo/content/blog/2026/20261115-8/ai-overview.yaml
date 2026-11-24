@@ -1,0 +1,42 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 8 shows the platform from a member's side, and much of the design is about what it does not keep.**
+
+    - **Sign-in** uses Discord, and the site sees only your Discord ID, then checks your role. Members appear under an anonymous alias.
+    - **A setup guide** checks each step for you, such as Npcap and whether the game is running.
+    - **A plain-language page** lists everything the app shares, with a switch for each.
+    - **Overlays** include Radar's screen pointer, a tile puzzle helper, and a DPS meter.
+    - **The members website** has a leaderboard where only your own row is named.
+  - |
+    The post is a tour in the order a new member meets things: signing in, installing the app, the in-game overlays, and the members website.
+
+    Privacy runs through all of it. Cube finds are shared anonymously and are on by default, with a "Preview my upload" button and a one-click off switch. Live sightings are kept in server memory for 15 minutes and never stored.
+
+    The author notes the screenshots use demo data, replays, or composites, and says the phone layout still has a rough edge.
+  - |
+    In short: "what does it do with my stuff" needs a short, honest answer, so the platform shows it.
+
+    - Defaults carry most of the weight, but each comes with a visible switch.
+    - Pulling the game to the front is off unless you turn it on.
+    - The My page lets members leave the leaderboard, hide their fights, unlink apps, and delete trace progress.
+    - Public pages cover server status, privacy, and a testing guide for beta testers.
+followups:
+  - question: What does the app share?
+    answers:
+      - |
+        Everything is listed on one page in plain sentences, with a switch under each item. Cube finds and live sightings are shared anonymously and on by default, and Radar works fully without them. Spawn points carry no names, characters, or entity IDs. Trace progress uses a code made on your PC and is visible only to you. Boss timers send the boss, whether it is alive, and the time, never your position.
+  - question: How is my identity protected?
+    answers:
+      - |
+        The site gets your Discord user ID and checks your role in the server. Your Discord name and avatar are never stored or used, and your messages, servers, and email are never requested. Members appear under an anonymous alias. On the leaderboard every row says Anonymous except your own. Uploaded bug-report logs also have the Windows user name and computer name masked before leaving the PC.
+  - question: What overlays does it draw over the game?
+    answers:
+      - |
+        Radar's screen pointer is a 3D arrow toward the nearest Hidden Cube, with distance and height written under it, and it turns into a ring within a few meters. A tile puzzle helper reads the safe-square pattern for the "Not This Tile?" event and marks it on the floor. A DPS meter shows damage, DPS, share, and combat power per party member, colored by class.
+  - question: What's on the members website?
+    answers:
+      - |
+        A My page with overview, Empyrean Traces, Progress, Fights, and Apps tabs. The shared pages include the anonymous leaderboard, a community cube map, boss-kill rankings, gear history, a market price viewer, and uploads for custom DPS meter banners. There is also a public status page, a privacy page, and a testing guide. Each page says what it shows and where the data came from.

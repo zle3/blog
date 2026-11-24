@@ -1,0 +1,50 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 4** is about building tools for a game the app is only allowed to watch. It reads network traffic and the screen, and never sends the game anything.
+
+    - **Recordings:** traffic is saved and replayed so every bug can become a test and every screenshot a real render.
+    - **Mob positions:** a parser read fields one byte early, so mobs appeared at impossible coordinates.
+    - **Respawns:** a study of 1,153 deaths found fixed timer steps and mobs returning in place.
+    - **Kill credit:** Duty counts everyone who hit a mob, but Pets mostly does not.
+  - |
+    The post tells a run of stories where an assumption about the game turned out wrong.
+
+    A flag on mob movement updates shifted the layout by one byte, which produced garbage positions like x of about 1e-38. The fix skipped the byte and added a check at the boundary that holds any jump faster than 40 m/s. Recordings also showed that Duty kills are credited to everyone who hit the mob, which led to a new Assisted event.
+
+    Smaller fixes covered a character id that changes after an event zone, a game with several windows, and Windows user names leaking into logs.
+  - |
+    In short: record the traffic, replay it, measure, and only change the model where the evidence says so.
+
+    - 26 of the author's kills in one day had impossible positions, and after the fix all 2,137 flagged movement updates lined up with their mob.
+    - 653 of 686 timed respawn pairs landed within 50 milliseconds of a step.
+    - Assists gave pet souls 3 times in 19, against 62 in 142 for own kills.
+
+    The code is private and in development.
+followups:
+  - question: How do recordings work?
+    answers:
+      - |
+        With dev mode on, the app saves a capture of a play session. Later the same Windows build can read that file instead of a live adapter and run every tool exactly as if the game were open, at any speed. A replay never contacts the server.
+
+        Bug reports become recordings, recordings become tests, and a fix is not done until the replay prints the right answer. The post also uses them for real-render screenshots.
+  - question: What were the respawn results?
+    answers:
+      - |
+        The study paired every death in 14 recorded sessions with the next mob of the same kind within 150 m, which gave 1,153 deaths. Respawns came in fixed steps of 5.2, 29.2, and 54.2 seconds, then every 25 seconds, and 653 of 686 timed pairs landed within 50 milliseconds of a step.
+
+        The median distance between death and return was 0.0 m, and 81% came back within a meter.
+  - question: Do assists count for Duty and Pets?
+    answers:
+      - |
+        For Duty, yes. The game credits a Duty kill to everyone who hit the mob, so the app added an Assisted event that counts. In one recording, 15 of 91 mission ticks came 48 milliseconds after another player's kill.
+
+        For Pets, mostly no. Souls came from own kills 62 times in 142, but from assists only 3 times in 19, so the post keeps the two systems separate.
+  - question: What small bugs did users report?
+    answers:
+      - |
+        Four examples from the post: position froze after an event zone because the character gets a new id on that server, Radar thought the game was not in front because the game switches between windows, opening Status and logs froze the app through a deadlock, and uploaded logs carried the Windows user name and PC name.
+
+        The names are now masked as `<home>` and `<pc>` on the user's PC before upload.

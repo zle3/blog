@@ -1,0 +1,49 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 5** follows three user reports about one stubborn minimap, plus a chat bug. The app has to read the minimap to know which way the camera faces, so wrong readings send the on-screen arrow the wrong way.
+
+    - **Report 7:** a browser covering the game made Radar read the browser. The app now checks what is on top and falls back to the game's own frames.
+    - **Report 9:** Radar took the HP bar for a minimap. It now finds the minimap by the icons on its frame.
+    - **Report 8:** the dot ran ahead and snapped back because of a badly learned scale.
+  - |
+    The post explains why edge density failed. On the report 9 screens, real minimaps measured between 26 and 33% edge pixels and lookalikes between 28 and 44%, so no cutoff could separate them.
+
+    The detector now searches for three icons, a map icon, swap arrows, and a bookmark star, across scales from 720p to 1440p, and trusts a box only once it behaves like a minimap. After a HUD move, finding it again dropped from almost two minutes to well under a second.
+
+    The post ends with a chat OCR bug that turned "hopefully" into "nopefully".
+  - |
+    In short: each fix was tested on the reporter's own screen, and each ended with "say I don't know instead of guessing".
+
+    - Report 8's tracking went from 64% of frames to 100%, and path error fell from 12 to 13 m to 1.2 to 1.8 m.
+    - The old tracker had learned 30,446 units per minimap width where the real value is about 20,300.
+    - Chat lines overlaid by nameplates are held, and skipped after about a minute rather than posted as a guess.
+
+    The repos are private.
+followups:
+  - question: Why did Radar mistake the HP bar?
+    answers:
+      - |
+        Report 9 came from a smaller minimap moved to the bottom left at 1920x1080. The search relied on edge density, but real minimaps landed between 26 and 33% and lookalikes between 28 and 44%, so the ranges overlapped. Radar locked onto the quest tracker, the HP bar, and later the skill bar.
+
+        The fix was to look for the icons that sit only on the minimap's frame.
+  - question: Why did the dot snap back?
+    answers:
+      - |
+        Report 8's motion tracker had learned the minimap scale badly, at 30,446 units per minimap width where the real value is about 20,300. That stretched movement by about half, so the dot ran ahead and snapped back 20 to 25 meters at each real position update.
+
+        The fix discarded learned scales, re-measures only over unbroken stretches of up to 30 seconds and only to values the game can produce, and carries on from the latest frame.
+  - question: What happened with "nopefully"?
+    answers:
+      - |
+        Legion chat is read from the screen by OCR. When a world nameplate such as "Water Spirit" was drawn over a chat line, the letters mixed together, which gave boxes or swapped letters.
+
+        The app now spots overlays, since a line with at least 12 pixels of nameplate-style strokes counts as overlaid, waits for the nameplate to move away, and skips and logs the message if it is still there after about a minute.
+  - question: How were the fixes tested?
+    answers:
+      - |
+        The reporters' actual screens became test fixtures in the repo, so each fix had to pass on the exact picture that broke it, and later changes must keep passing. The app's Status and logs page and a debug dump showed what the detector believed.
+
+        On report 8's two riding videos, about 80 seconds and 4,800 frames in total, the minimap is now followed on 100% of frames.

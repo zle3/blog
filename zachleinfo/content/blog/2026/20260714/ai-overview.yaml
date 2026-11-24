@@ -1,0 +1,40 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **Part 3 of the Palworld build log** covers what happened when the server needed a public face: a dependency map, containerization, a status page, an uptime tracker, and TLS on the last hop.
+
+    - The map caught a firewall script still opening the old game port.
+    - The status page serves a snapshot the bot renders every 60 seconds, reached through an outbound Cloudflare Tunnel.
+    - A 900 line file was split into eleven.
+    - Bot, nginx, and the tunnel became three containers, while the game server stayed put.
+  - |
+    The post describes turning a private project into something safe to link in a 200 person Discord. A static page, rendered by the bot with four fields and no player names or IPs, means visitor traffic never reaches the Palworld API.
+
+    Containerizing brought a catch: the bot's playtime leaderboard was saved next to the script and would have reset on every rebuild. It also brought a familiar chain of bugs, from missing apt repos to file ownership, and a timezone problem that the earlier fix never solved.
+  - |
+    In short: public-facing without becoming a liability.
+
+    - Charts use a fixed 0 to 100% scale for percentages, and memory moved to 0 to 48GB.
+    - The uptime tracker needs 30 days of history, so retention was raised from 7 days.
+    - A Cloudflare Origin CA certificate closes the plaintext hop between cloudflared and nginx.
+
+    Part 4 covers a restart button that had quietly broken.
+followups:
+  - question: How is the status page kept safe?
+    answers:
+      - |
+        The page never queries the game live. The bot renders a minimal static snapshot every 60 seconds, with four fields and no player names or IPs, and a separate nginx container serves it. Cloudflare Tunnel carries it out with no inbound port opened on the router, so a visitor flood only hits static content.
+  - question: Why was the schedule 7 hours off?
+    answers:
+      - |
+        The python:3.12-slim image does not ship the OS tzdata package, so setting TZ had no effect and the clock stayed UTC based. The schedule math then treated Pacific times as UTC, and the browser converted again. The fix was Python's zoneinfo with ZoneInfo("America/Los_Angeles") and the tzdata PyPI package.
+  - question: Why Origin CA instead of Certbot?
+    answers:
+      - |
+        nginx never faces a real browser, so a publicly trusted certificate adds nothing, and Certbot's 90 day renewals are maintenance this project was trying to avoid. Origin CA certificates can last 15 years. A later x509 error came from cloudflared checking the Docker service name, fixed with originServerName.
+  - question: What did containerizing break?
+    answers:
+      - |
+        The leaderboard and the ID of the bot's status message lived in JSON files beside the script, which would be wiped on each rebuild. They moved to a persistent volume. Other bugs were missing vendor apt repos, a stale folder on the VM, a truncated bot token, and volumes or credential files not readable by the container's user.

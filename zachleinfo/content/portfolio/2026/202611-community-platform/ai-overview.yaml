@@ -1,0 +1,51 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **The AI-Driven Gaming Community Platform** is a self-hosted Aion 2 platform called Nyerkulator 3000: a Windows desktop app, a members website, and a Discord bot, built in about a month by 29 Claude Code agents.
+
+    - **Desktop app:** Rust and egui, with Radar, Duty quests, Pets, Market prices, boss timers, a DPS meter, and a chat relay.
+    - **Website and server:** Rust, axum, and SQLite, with anonymous members.
+    - **pyaaa:** a Python Discord bot with 123 slash commands in 8 categories.
+
+    The author approved every merge, deploy, and host change.
+  - |
+    This portfolio entry presents the project as an AI operations and systems administration exercise.
+
+    It lists the operating model: one merge-queue agent, a full check on every pull request, a locked-down SSH gate with no shell for agents, passkey approval for host changes, and signed app updates. The infrastructure is two Proxmox hosts, Cloudflare Tunnels with no inbound ports, and digest-pinned deploys.
+
+    It also lists measured results from the series, such as chat reading 14 times faster with identical output, and links to all ten blog parts.
+  - |
+    In short: 945 merged pull requests in 29 days, built by agents under rules the author wrote.
+
+    - 482 pull requests were in the app and server repo and 463 in the Discord bot repo, with 118 on the busiest day.
+    - The platform had 54 monthly active app installs and 27 monthly signed-in members within about a month.
+    - The bot's pre-merge check runs 4,539 tests, and gitleaks found no leaks across 996 commits.
+
+    The repos are private and in active development, so the entry has no source link.
+followups:
+  - question: What are the headline numbers?
+    answers:
+      - |
+        The entry lists 945 merged pull requests in 29 days across the two main repos (482 app and server, 463 Discord bot), with 118 on the busiest day. It also lists 29 Claude Code agents, 54 monthly active app installs, 27 monthly signed-in members, and about 18 daily active users at peak.
+
+        The bot's pre-merge check passes 4,539 tests, with gitleaks finding no leaks across 996 commits.
+  - question: How is it hosted and secured?
+    answers:
+      - |
+        The primary Proxmox host runs everything, and a standby kept about a second behind with Litestream is restore-tested every night and switched over with a script. Every stack dials out to Cloudflare through its own tunnel, with no inbound ports, and a WAF rule gates the admin API.
+
+        Images are deployed by digest and run as non-root on read-only distroless images with all capabilities dropped.
+  - question: Which challenges does it highlight?
+    answers:
+      - |
+        Six, each with its own write-up in the series: minimap tracking from user reports, chat reading made 14 times faster (1,662 ms to 116 ms) with identical output, an app that stays quiet when idle, mobs at impossible coordinates, parallel agents racing to merge, and provably fair games.
+
+        For example, UI wake-ups over a 3.5-hour idle session fell from 256,162 to 7.
+  - question: Can I try it or see the code?
+    answers:
+      - |
+        The entry says the repos are private and still in active development, so there is no source link this time. It does link the full ten-part build log on the blog.
+
+        The entry also notes that the platform is still growing and that members show up anonymously by default on the website.

@@ -1,0 +1,25 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    This is the first post on a website built from scratch, replacing Google Sites. The plan is to self-host everything and use Cloudflare as a CDN for a static site, giving the portfolio a stable home.
+  - |
+    - Google Sites is out; the site is now built from scratch.
+    - A static site host with Cloudflare as the CDN will serve the portfolio.
+    - A development site, www.kotone.dev, will hold the unstable experiments.
+  - |
+    In short: a first post that sets the direction. Leave Google, self-host, and expect surprises, since this is the first time doing it. Detailed plans are promised for a later post.
+followups:
+  - question: What is the development site for?
+    answers:
+      - |
+        The post says www.kotone.dev will be the experimental site, with many more interesting but definitely unstable options to view, while the main site stays the stable home for the portfolio.
+  - question: What happens next?
+    answers:
+      - |
+        The post says the upcoming plans will be detailed in a future post. It expects more needs to come up along the way, since this is the first time self-hosting.
+  - question: Why leave Google Sites?
+    answers:
+      - |
+        The post only says it is ditching Google, so everything will need to be self-hosted, and that a lot has to be planned as a result. It gives no further reasons.

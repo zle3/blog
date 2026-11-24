@@ -19,3 +19,13 @@
     {{- warnf "THUMBNAIL MISSING: %s has no feature image. Add one, or add thumbnailCard front matter and run scripts/thumbnail-card.py." .RelPermalink -}}
   {{- end -}}
 {{- end -}}
+{{- /* AI overview data: blog and portfolio posts keep pre-written overviews
+     in ai-overview.yaml in their bundle; static/js/ai-overview.js turns them
+     into the "AI Overview" panel. See docs/ai-overview.md. */ -}}
+{{- if and .IsPage (in (slice "blog" "portfolio") .Section) -}}
+  {{- with .Resources.Get "ai-overview.yaml" }}
+<script type="application/json" id="ai-overview-data">{{ transform.Unmarshal . | jsonify | safeJS }}</script>
+  {{- else -}}
+    {{- warnf "AI OVERVIEW MISSING: %s has no ai-overview.yaml (see docs/ai-overview.md)" $.RelPermalink -}}
+  {{- end -}}
+{{- end -}}

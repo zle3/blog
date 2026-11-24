@@ -1,0 +1,45 @@
+# Pre-written "AI Overview" for this page. One overview is picked at random
+# each time; follow-ups appear as "Dig deeper" chips. Only facts from the
+# post. Format and rules: docs/ai-overview.md.
+overviews:
+  - |
+    **pyaaa, the Discord bot that runs the community server, also runs a play-money economy.** The post covers what members do with it and how it is kept honest.
+
+    - **pyacoins** are play money with about a dozen games, trading cards, sports betting, a pretend stock market, and quarterly seasons.
+    - **Provably fair** games use commit-reveal seeds, HMAC-SHA256, and rejection sampling, and `/fair verify` replays any round.
+    - **An append-only ledger** with database triggers and an hourly books check keeps balances honest.
+    - **A staff dashboard** runs all of it.
+
+    The repo is private and in active development.
+  - |
+    The post explains how a Discord bot's casino-style games were made checkable by the players themselves.
+
+    Each game day the bot publishes the hash of a secret seed, reveals the seed after the day ends, and derives every result from it. Anyone can then recompute any round, using `/fair verify` or a short standard-library Python script. Rejection sampling removes modulo bias.
+
+    The second half covers the books. Every coin change goes through an append-only ledger, and the hourly check found two real problems: a test that failed only for an hour a day, and lottery prizes that were never paid.
+  - |
+    In short: 123 slash commands in 8 categories, and pyacoins that cannot be bought, sold, or cashed out.
+
+    - Solo games, shared roulette and blackjack tables, cards, sports betting, and a pretend market all use one currency.
+    - Fairness is published up front, including odds and pull rates.
+    - Staff can dry-run changes first, such as the economy simulator and the season-end preview.
+    - The pre-merge check runs 4,539 tests.
+
+    The agents wrote the code, and the author decided what the economy should do and reviewed it.
+followups:
+  - question: How does provably fair work here?
+    answers:
+      - |
+        The bot picks one secret server seed per game day and publishes its SHA-256 hash right away. After the day ends, the seed is revealed so anyone can hash it and compare. Results come from HMAC-SHA256 over the client seed, the game, a round key, and a nonce, keyed by the day's seed, so every round can be recomputed. Rejection sampling avoids modulo bias. Blackjack days stay sealed until the last shoe finishes.
+  - question: Are pyacoins real money?
+    answers:
+      - |
+        No. The post is explicit that pyacoins are play money. They cannot be bought, sold, or cashed out, and they have no value outside the Discord server. They come from daily check-ins, events, and the games themselves. The bot says so on nearly every economy message, and the staff dashboard repeats it at the top of every economy page.
+  - question: What bugs did the books check find?
+    answers:
+      - |
+        Two. First, a test that only failed between 12:05 and 13:00 UTC, because a cutoff used SQLite's own `now` instead of the project's clock. Second, the weekly lottery only ever paid pot wins, so fixed prizes for matching 2, 3, or 4 numbers were never paid before pyaaa PR #117. Backpay was done with a dry run, then Apply, paying each shortfall exactly once.
+  - question: What did the fairness review catch?
+    answers:
+      - |
+        An independent review found no way for a seed to leak before its reveal, which was the main worry. It did find a real bug: if a roulette spin's stored result had been changed, `/fair verify` reported "nothing stored" instead of "does not match". Those mean very different things, and it was fixed before merge. Odds and payouts also had to stay exactly the same, checked with house-edge tests and Monte Carlo runs.
