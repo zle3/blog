@@ -1,0 +1,30 @@
+# The app launcher (9-dot "Apps" menu in the header): the single source of
+# truth for which of Zach's sites appear in it, in display order.
+#
+# Rendered by layouts/partials/app-launcher.html and published as
+# https://zachle.info/apps.json for other sites. travel.zachle.info keeps its
+# own static copy of this list, so update it there too when you add an app.
+#
+# To add an app: append one entry under `apps`. `icon` names an entry under
+# `icons`; add a new icon there if none fits (24x24 viewBox, stroke-only
+# paths, drawn with round caps and joins).
+
+apps:
+  - id: blog
+    name: Blog
+    url: https://zachle.info/
+    icon: book
+    description: Projects, write-ups, and a portfolio.
+  - id: travel
+    name: Travel
+    url: https://travel.zachle.info/
+    icon: map-pin
+    description: Little Travel Book, a map of saved places, events, and trip plans.
+
+icons:
+  book:
+    - "M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"
+    - "M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"
+  map-pin:
+    - "M20 10c0 5-5.5 10.2-7.4 11.8a1 1 0 0 1-1.2 0C9.5 20.2 4 15 4 10a8 8 0 0 1 16 0z"
+    - "M12 7a3 3 0 1 0 0 6a3 3 0 1 0 0-6z"

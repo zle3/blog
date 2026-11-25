@@ -27,6 +27,17 @@ Local overrides that must be re-checked on theme upgrades:
 - `zachleinfo/layouts/partials/article-meta/basic.html` (views/likes on single pages only)
 - `zachleinfo/layouts/partials/vendor.html` (Firebase loader as external file, for CSP)
 - `zachleinfo/assets/css/custom.css` (design refinements)
+- `zachleinfo/layouts/partials/header/basic.html` (adds the app launcher after the theme's header controls)
+
+## App launcher
+
+The 9-dot "Apps" button in the header switches between Zach's sites. The list
+is `zachleinfo/data/apps.yaml` (one entry per app, plus its icon paths); the
+markup is `zachleinfo/layouts/partials/app-launcher.html`, behaviour is
+`zachleinfo/static/js/app-launcher.js`, and styles are the `.app-launcher`
+block in `zachleinfo/assets/css/custom.css`. The home page build also publishes
+the list as `https://zachle.info/apps.json`. travel.zachle.info has the same
+launcher with its own static copy of the list, so add a new app in both places.
 
 ## Deployment
 
@@ -65,6 +76,7 @@ blog/
     ├── archetypes/                  # front matter templates: blog, series-part, portfolio, default
     ├── data/vocabulary.yaml         # allowed tags, categories, series, and public repos
     ├── data/brand.yaml              # brand palette for every generated image
+    ├── data/apps.yaml               # app launcher list (also published as /apps.json)
     ├── content/
     │   ├── _index.md                # homepage content
     │   ├── about/ now/ resume/      # page bundles: index.md + feature.webp (resume/ also holds the PDF)

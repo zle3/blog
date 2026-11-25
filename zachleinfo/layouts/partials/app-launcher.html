@@ -1,0 +1,54 @@
+{{- /* App launcher: the 9-dot "Apps" menu in the header for switching
+     between Zach's sites. The list lives in data/apps.yaml; behaviour is in
+     static/js/app-launcher.js and styles in assets/css/custom.css
+     (.app-launcher). The same markup, classes, and behaviour are used on
+     travel.zachle.info, so keep the two in step.
+
+     The panel is a native popover, so it opens, closes on Escape, and
+     light-dismisses even before the script loads; the script adds focus
+     handling, arrow keys, aria-expanded, and positioning.
+
+     The current app is "blog" unless params.appLauncherCurrent says otherwise. */ -}}
+{{- $data := hugo.Data.apps -}}
+{{- $current := site.Params.appLauncherCurrent | default "blog" -}}
+{{- if .IsHome -}}
+  {{- /* Publish the same list as /apps.json for other sites to read. */ -}}
+  {{- $apps := slice -}}
+  {{- range $data.apps -}}
+    {{- $apps = $apps | append (dict "id" .id "name" .name "url" .url "icon" .icon "description" .description) -}}
+  {{- end -}}
+  {{- $json := dict "apps" $apps "icons" $data.icons | jsonify (dict "indent" "  ") -}}
+  {{- (resources.FromString "apps.json" $json).Publish -}}
+{{- end -}}
+<div class="app-launcher">
+  <button
+    type="button"
+    class="app-launcher__button"
+    aria-label="Apps"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls="app-launcher-panel"
+    popovertarget="app-launcher-panel">
+    <svg class="app-launcher__dots" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/>
+      <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
+      <circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
+    </svg>
+  </button>
+  <div class="app-launcher__panel" id="app-launcher-panel" role="dialog" aria-label="Apps" popover>
+    <ul class="app-launcher__list">
+      {{- range $data.apps }}
+      <li>
+        <a class="app-launcher__tile" href="{{ .url }}"{{ if eq .id $current }} aria-current="page"{{ end }}>
+          <span class="app-launcher__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              {{- range index $data.icons .icon }}<path d="{{ . }}"/>{{ end -}}
+            </svg>
+          </span>
+          <span class="app-launcher__label">{{ .name }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</div>
